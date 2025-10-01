@@ -1,0 +1,10 @@
+schema_version = "1.0.0"
+id = "TestAddon" # должен совпадать с именем папки аддона
+name = "Test Addon"
+version = "0.0.0"
+tagline = "Test Addon"
+maintainer = "Roman Askarov"
+license = ["SPDX:GPL-2.0-or-later"]
+type = "add-on"
+tags = ["test"]
+blender_version_min = "4.3.0"

@@ -1,0 +1,10 @@
+schema_version = "1.0.0"
+id = "XD_Info" # должен совпадать с именем папки аддона
+name = "XD Info"
+version = "11.12.2024"
+tagline = "Info"
+maintainer = "Roman Askarov"
+type = "add-on"
+tags = ["info, comment"]
+blender_version_min = "4.2.0"
+license = ["XDevs Internal License"]
