@@ -25,7 +25,8 @@
         "3.11"
       ],
       "archive_url": "https://github.com/elevenlevel/BlAddons/releases/download/Blender/XD_Info.zip",
-      "archive_size": 35781251
+      "archive_size": 35781251,
+      "archive_hash": "sha256:ec827be3ea50c933171ddcd05e88381231269017f69c70bbd354cd852f945b36"
     }
   ]
 }
