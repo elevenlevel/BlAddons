@@ -11,7 +11,7 @@
       "type": "add-on",
       "maintainer": "XDevs",
       "license": [
-        "XDevs Internal License"
+        "GPL-3.0-or-later"
       ],
       "blender_version_min": "4.2.0",
       "permissions": {
@@ -24,7 +24,8 @@
       "python_versions": [
         "3.11"
       ],
-      "archive_url": "https://github.com/elevenlevel/BlAddons/releases/download/Blender/XD_Info.zip"
+      "archive_url": "https://github.com/elevenlevel/BlAddons/releases/download/Blender/XD_Info.zip",
+      "archive_size": 35781251
     }
   ]
 }
