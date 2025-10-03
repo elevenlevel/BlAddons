@@ -27,6 +27,32 @@
       "archive_url": "https://github.com/elevenlevel/BlAddons/releases/download/Blender/XD_Info.zip",
       "archive_size": 5854,
       "archive_hash": "sha256:C01C7E495DDE66553756AEA81109961FCEBB046BFF2255A40C8D93DE88914542"
+    },
+    {
+      "schema_version": "1.0.0",
+      "id": "TestAddon",
+      "name": "TestAddon",
+      "tagline": "Test Addon",
+      "version": "0.0.1",
+      "type": "add-on",
+      "maintainer": "XDevs",
+      "license": [
+        "GPL-3.0-or-later"
+      ],
+      "blender_version_min": "4.2.0",
+      "permissions": {
+        "files": "Importing data files from disk, writing to cache folder",
+        "network": "Loading OME-zarr files from the internet from a given URL"
+      },
+      "tags": [
+        "Test"
+      ],
+      "python_versions": [
+        "3.11"
+      ],
+      "archive_url": "https://github.com/elevenlevel/BlAddons/releases/download/Blender/TestAddon.zip",
+      "archive_size": 1111,
+      "archive_hash": "sha256:4D9321E486653786C93E016E8620A1844F56B39CA2A9202E71C1530B982D99DC"
     }
   ]
 }
