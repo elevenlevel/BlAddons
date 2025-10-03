@@ -24,7 +24,7 @@
       "python_versions": [
         "3.11"
       ],
-      "archive_url": "https://github.com/elevenlevel/BlAddons/blob/main/XD_Info.zip",
+      "archive_url": "https://github.com/elevenlevel/BlAddons/raw/main/XD_Info.zip",
       "archive_size": 5854,
       "archive_hash": "sha256:a906b488b7864f88898105c1f9240e0c09981d11481e223a7929fd6df4435809"
     },
@@ -50,7 +50,7 @@
       "python_versions": [
         "3.11"
       ],
-      "archive_url": "https://github.com/elevenlevel/BlAddons/blob/main/TestAddon.zip",
+      "archive_url": "https://github.com/elevenlevel/BlAddons/raw/main/TestAddon.zip",
       "archive_size": 1111,
       "archive_hash": "sha256:4D9321E486653786C93E016E8620A1844F56B39CA2A9202E71C1530B982D99DC"
     }
