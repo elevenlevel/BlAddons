@@ -33,7 +33,7 @@
       "id": "TestAddon",
       "name": "TestAddon",
       "tagline": "Test Addon",
-      "version": "0.0.1",
+      "version": "0.0.0",
       "type": "add-on",
       "maintainer": "XDevs",
       "license": [
