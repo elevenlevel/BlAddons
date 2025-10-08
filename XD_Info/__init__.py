@@ -83,8 +83,8 @@ class INFO_PT_Panel(bpy.types.Panel):
     bl_label = ""
     bl_category = "XD Info"
 
-    def __init__(self):
-        pass
+    # def __init__(self):
+    #     pass
 
     def draw_header(self, context):
         layout = self.layout
