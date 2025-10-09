@@ -26,7 +26,7 @@
       ],
       "archive_url": "https://github.com/elevenlevel/BlAddons/Extensions/raw/main/XD_Info.zip",
       "archive_size": 5881,
-      "archive_hash": "sha256:2510E52293029EB68420EC0CC8FD5561E528299BFDDA5A4216CEE74D23FC39DE"
+      "archive_hash": "sha256:2510e52293029eb68420ec0cc8fd5561e528299bfdda5a4216cee74d23fc39de"
     },
     {
       "schema_version": "1.0.0",
@@ -52,7 +52,7 @@
       ],
       "archive_url": "https://github.com/elevenlevel/BlAddons/Extensions/raw/main/TestAddon.zip",
       "archive_size": 1111,
-      "archive_hash": "sha256:975F561106D1F7DD61FA55C69F3917002F6E406A087898F527BCB322BE1CB68E"
+      "archive_hash": "sha256:975f561106d1f7dd61fa55c69f3917002f6e406a087898f527bcb322be1cb68e"
     }
   ]
 }
