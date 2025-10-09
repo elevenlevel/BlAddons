@@ -25,8 +25,8 @@
         "3.11"
       ],
       "archive_url": "https://raw.githubusercontent.com/elevenlevel/BlAddons/refs/heads/main/Extensions/XD_Info.zip",
-      "archive_size": 5881,
-      "archive_hash": "sha256:2510e52293029eb68420ec0cc8fd5561e528299bfdda5a4216cee74d23fc39de"
+      "archive_size": 5836,
+      "archive_hash": "sha256:d73e2f32d25673973560262d6b30fb354543f5fbd16a2d9b02509726ffe8cdb2"
     },
     {
       "schema_version": "1.0.0",
@@ -51,8 +51,8 @@
         "3.11"
       ],
       "archive_url": "https://raw.githubusercontent.com/elevenlevel/BlAddons/refs/heads/main/Extensions/TestAddon.zip",
-      "archive_size": 1111,
-      "archive_hash": "sha256:81eb6317752add433913edea077b99f15c5facccbc3e946100c29b4245c7b1b4"
+      "archive_size": 965,
+      "archive_hash": "sha256:9e353930c602a355953428fa10b78cef29dab2c47afa58ff780ea38fc34984de"
     }
   ]
 }
