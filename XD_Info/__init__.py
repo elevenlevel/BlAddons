@@ -25,8 +25,8 @@ class Edit_Info(bpy.types.Operator):
     bl_property = "s_prop"
     bl_description = "Edit Info for current Object or Collection"
 
-    def __init__(self):
-        pass
+    # def __init__(self):
+    #     pass
 
     def execute(self, context):
         active_thing = get_selected_thing()
@@ -56,8 +56,8 @@ class Add_Info(bpy.types.Operator):
     bl_property = "s_prop"
     bl_description = "Add new Info for current Object or Collection"
 
-    def __init__(self):
-        pass
+    # def __init__(self):
+    #     pass
     
     def execute(self, context):
         active_thing = get_selected_thing()
