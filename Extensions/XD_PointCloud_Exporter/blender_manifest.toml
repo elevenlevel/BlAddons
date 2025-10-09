@@ -1,0 +1,11 @@
+schema_version = "1.0.0"
+id = "XD_PointCloud_Exporter" # должен совпадать с именем папки аддона
+name = "XD PointCloud Exporter"
+version = "0.0.1"
+tagline = "PointCloud Exporter for Blender"
+maintainer = "Roman Askarov"
+type = "add-on"
+tags = ["XDevs"]
+blender_version_min = "4.2.0"
+license = ["SPDX:GPL-2.0-or-later"]
+copyright = ["2024 Extreme Developers"]

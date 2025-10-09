@@ -1,0 +1,12 @@
+schema_version = "21.10.24"
+id = "XD_ModelValidator" # должен совпадать с именем папки аддона
+name = "XD Model Validator"
+website = "https://extreme-developers.ru/"
+version = "0.1.0"
+tagline = "Testing possible problems with scene objects."
+maintainer = "Roman Askarov"
+type = "add-on"
+tags = ["XDevs"]
+blender_version_min = "4.2.0"
+license = ["XDevs Internal License"]
+copyright = ["2024 Extreme Developers"]

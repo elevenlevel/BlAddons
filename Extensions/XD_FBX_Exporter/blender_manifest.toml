@@ -1,0 +1,19 @@
+schema_version = "1.0.0"
+
+id = "XD_FBX_Exporter"
+version = "0.2.25"
+name = "XD FBX Exporter"
+tagline = "XD .fbx Exporter for Static Objects With Modifiers"
+maintainer = "Me"
+type = "add-on"
+
+tags = ["Import-Export"]
+
+blender_version_min = "4.2.0"
+
+license = [
+  "SPDX:GPL-3.0-or-later",
+]
+
+[permissions]
+files = "Export .fbx files"

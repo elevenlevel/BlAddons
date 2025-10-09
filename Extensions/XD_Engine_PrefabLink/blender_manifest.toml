@@ -1,0 +1,11 @@
+schema_version = "1.0.0"
+id = "XD_Engine_PrefabLink" # должен совпадать с именем папки аддона
+name = "XD Engine PrefabLink"
+version = "14.11.24"
+tagline = "XD PrefabLink"
+maintainer = "Roman Askarov"
+type = "add-on"
+tags = ["XDevs, XD, PrefabLink, Prefab, Link"]
+blender_version_min = "4.2.0"
+license = ["XDevs internal license"]
+copyright = ["2024 Extreme Developers"]

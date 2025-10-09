@@ -1,0 +1,11 @@
+schema_version = "1.0.0"
+id = "XD_EngineTags" # должен совпадать с именем папки аддона
+name = "XD Tags"
+version = "14.11.24"
+tagline = "XD Tags"
+maintainer = "Roman Askarov"
+type = "add-on"
+tags = ["XDevs"]
+blender_version_min = "4.2.0"
+license = ["XDevs internal license"]
+copyright = ["2024 Extreme Developers"]
