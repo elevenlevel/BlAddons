@@ -1,0 +1,240 @@
+{
+  "version": "v1",
+  "blocklist": [],
+  "data": [
+    {
+      "schema_version": "1.0.0",
+      "id": "XD_Info",
+      "name": "XD_Info",
+      "tagline": "Test Addon",
+      "version": "11.12.2024",
+      "type": "add-on",
+      "maintainer": "XDevs",
+      "license": [
+        "GPL-3.0-or-later"
+      ],
+      "blender_version_min": "4.2.0",
+      "permissions": {
+        "files": "Importing data files from disk, writing to cache folder",
+        "network": "Loading OME-zarr files from the internet from a given URL"
+      },
+      "tags": [
+        "Import-Export"
+      ],
+      "python_versions": [
+        "3.11"
+      ],
+      "archive_url": "https://raw.githubusercontent.com/elevenlevel/BlAddons/refs/heads/main/Extensions/XD_Info.zip",
+      "archive_size": 5836,
+      "archive_hash": "sha256:d73e2f32d25673973560262d6b30fb354543f5fbd16a2d9b02509726ffe8cdb2"
+    },
+    {
+      "schema_version": "1.0.0",
+      "id": "TestAddon",
+      "name": "TestAddon",
+      "tagline": "Test Addon",
+      "version": "0.0.0",
+      "type": "add-on",
+      "maintainer": "XDevs",
+      "license": [
+        "GPL-3.0-or-later"
+      ],
+      "blender_version_min": "4.2.0",
+      "permissions": {
+        "files": "Importing data files from disk, writing to cache folder",
+        "network": "Loading OME-zarr files from the internet from a given URL"
+      },
+      "tags": [
+        "Test"
+      ],
+      "python_versions": [
+        "3.11"
+      ],
+      "archive_url": "https://raw.githubusercontent.com/elevenlevel/BlAddons/refs/heads/main/Extensions/TestAddon.zip",
+      "archive_size": 965,
+      "archive_hash": "sha256:9e353930c602a355953428fa10b78cef29dab2c47afa58ff780ea38fc34984de"
+    },
+    {
+      "schema_version": "1.0.0",
+      "id": "XD_Baker",
+      "name": "XD_Baker",
+      "tagline": "Test Addon",
+      "version": "11.12.2024",
+      "type": "add-on",
+      "maintainer": "XDevs",
+      "license": [
+        "GPL-3.0-or-later"
+      ],
+      "blender_version_min": "4.2.0",
+      "permissions": {
+        "files": "Importing data files from disk, writing to cache folder",
+        "network": "Loading OME-zarr files from the internet from a given URL"
+      },
+      "tags": [
+        "Import-Export"
+      ],
+      "python_versions": [
+        "3.11"
+      ],
+      "archive_url": "https://raw.githubusercontent.com/elevenlevel/BlAddons/refs/heads/main/Extensions/XD_Baker.zip",
+      "archive_size": 0000,
+      "archive_hash": "sha256:"
+    },
+    {
+      "schema_version": "1.0.0",
+      "id": "XD_Engine_PrefabLink",
+      "name": "XD_Engine_PrefabLink",
+      "tagline": "Test Addon",
+      "version": "11.12.2024",
+      "type": "add-on",
+      "maintainer": "XDevs",
+      "license": [
+        "GPL-3.0-or-later"
+      ],
+      "blender_version_min": "4.2.0",
+      "permissions": {
+        "files": "Importing data files from disk, writing to cache folder",
+        "network": "Loading OME-zarr files from the internet from a given URL"
+      },
+      "tags": [
+        "Import-Export"
+      ],
+      "python_versions": [
+        "3.11"
+      ],
+      "archive_url": "https://raw.githubusercontent.com/elevenlevel/BlAddons/refs/heads/main/Extensions/XD_Engine_PrefabLink.zip",
+      "archive_size": 0000,
+      "archive_hash": "sha256:"
+    },
+    {
+      "schema_version": "1.0.0",
+      "id": "XD_Engine_Tags",
+      "name": "XD_Engine_Tags",
+      "tagline": "Test Addon",
+      "version": "11.12.2024",
+      "type": "add-on",
+      "maintainer": "XDevs",
+      "license": [
+        "GPL-3.0-or-later"
+      ],
+      "blender_version_min": "4.2.0",
+      "permissions": {
+        "files": "Importing data files from disk, writing to cache folder",
+        "network": "Loading OME-zarr files from the internet from a given URL"
+      },
+      "tags": [
+        "Import-Export"
+      ],
+      "python_versions": [
+        "3.11"
+      ],
+      "archive_url": "https://raw.githubusercontent.com/elevenlevel/BlAddons/refs/heads/main/Extensions/XD_Engine_Tags.zip",
+      "archive_size": 0000,
+      "archive_hash": "sha256:"
+    },
+    {
+      "schema_version": "1.0.0",
+      "id": "XD_FBX_Exporter",
+      "name": "XD_FBX_Exporter",
+      "tagline": "Test Addon",
+      "version": "11.12.2024",
+      "type": "add-on",
+      "maintainer": "XDevs",
+      "license": [
+        "GPL-3.0-or-later"
+      ],
+      "blender_version_min": "4.2.0",
+      "permissions": {
+        "files": "Importing data files from disk, writing to cache folder",
+        "network": "Loading OME-zarr files from the internet from a given URL"
+      },
+      "tags": [
+        "Import-Export"
+      ],
+      "python_versions": [
+        "3.11"
+      ],
+      "archive_url": "https://raw.githubusercontent.com/elevenlevel/BlAddons/refs/heads/main/Extensions/XD_FBX_Exporter.zip",
+      "archive_size": 0000,
+      "archive_hash": "sha256:"
+    },
+    {
+      "schema_version": "1.0.0",
+      "id": "XD_Helpers",
+      "name": "XD_Helpers",
+      "tagline": "Test Addon",
+      "version": "11.12.2024",
+      "type": "add-on",
+      "maintainer": "XDevs",
+      "license": [
+        "GPL-3.0-or-later"
+      ],
+      "blender_version_min": "4.2.0",
+      "permissions": {
+        "files": "Importing data files from disk, writing to cache folder",
+        "network": "Loading OME-zarr files from the internet from a given URL"
+      },
+      "tags": [
+        "Import-Export"
+      ],
+      "python_versions": [
+        "3.11"
+      ],
+      "archive_url": "https://raw.githubusercontent.com/elevenlevel/BlAddons/refs/heads/main/Extensions/XD_Helpers.zip",
+      "archive_size": 0000,
+      "archive_hash": "sha256:"
+    },
+    {
+      "schema_version": "1.0.0",
+      "id": "XD_ModelValidator",
+      "name": "XD_ModelValidator",
+      "tagline": "Test Addon",
+      "version": "11.12.2024",
+      "type": "add-on",
+      "maintainer": "XDevs",
+      "license": [
+        "GPL-3.0-or-later"
+      ],
+      "blender_version_min": "4.2.0",
+      "permissions": {
+        "files": "Importing data files from disk, writing to cache folder",
+        "network": "Loading OME-zarr files from the internet from a given URL"
+      },
+      "tags": [
+        "Import-Export"
+      ],
+      "python_versions": [
+        "3.11"
+      ],
+      "archive_url": "https://raw.githubusercontent.com/elevenlevel/BlAddons/refs/heads/main/Extensions/XD_ModelValidator.zip",
+      "archive_size": 0000,
+      "archive_hash": "sha256:"
+    },
+    {
+      "schema_version": "1.0.0",
+      "id": "XD_PointCloud_Exporter",
+      "name": "XD_PointCloud_Exporter",
+      "tagline": "Test Addon",
+      "version": "11.12.2024",
+      "type": "add-on",
+      "maintainer": "XDevs",
+      "license": [
+        "GPL-3.0-or-later"
+      ],
+      "blender_version_min": "4.2.0",
+      "permissions": {
+        "files": "Importing data files from disk, writing to cache folder",
+        "network": "Loading OME-zarr files from the internet from a given URL"
+      },
+      "tags": [
+        "Import-Export"
+      ],
+      "python_versions": [
+        "3.11"
+      ],
+      "archive_url": "https://raw.githubusercontent.com/elevenlevel/BlAddons/refs/heads/main/Extensions/XD_PointCloud_Exporter.zip",
+      "archive_size": 0000,
+      "archive_hash": "sha256:"
+    }
+  ]
+}

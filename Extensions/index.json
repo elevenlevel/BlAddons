@@ -4,55 +4,196 @@
   "data": [
     {
       "schema_version": "1.0.0",
-      "id": "XD_Info",
-      "name": "XD_Info",
+      "id": "TestAddon",
+      "name": "Test Addon",
       "tagline": "Test Addon",
-      "version": "11.12.2024",
+      "version": "0.0.0",
       "type": "add-on",
-      "maintainer": "XDevs",
+      "maintainer": "Roman Askarov",
       "license": [
-        "GPL-3.0-or-later"
+        "SPDX:GPL-2.0-or-later"
+      ],
+      "blender_version_min": "4.3.0",
+      "tags": [
+        "test"
+      ],
+      "archive_url": "./TestAddon.zip",
+      "archive_size": 965,
+      "archive_hash": "sha256:01720bda46c54fc45142b1049b456ff40a3c2ef3be9154dc7d8ea0026194c358"
+    },
+    {
+      "schema_version": "1.0.0",
+      "id": "XD_Baker",
+      "name": "XD_Baker",
+      "tagline": "Maps bake Addon for Blender",
+      "version": "1.0.0",
+      "type": "add-on",
+      "maintainer": "Roman Askarov",
+      "license": [
+        "SPDX:GPL-2.0-or-later"
+      ],
+      "blender_version_min": "4.2.0",
+      "copyright": [
+        "2024 Extreme Developers"
+      ],
+      "tags": [
+        "XDevs"
+      ],
+      "python_versions": [
+        "3.11"
+      ],
+      "archive_url": "./XD_Baker.zip",
+      "archive_size": 2822768,
+      "archive_hash": "sha256:0b6fe32cc30207fcf82e50121ed521755b2a39ce9d8499364c5648080aa70d13"
+    },
+    {
+      "schema_version": "1.0.0",
+      "id": "XD_EngineTags",
+      "name": "XD Tags",
+      "tagline": "XD Tags",
+      "version": "14.11.24",
+      "type": "add-on",
+      "maintainer": "Roman Askarov",
+      "license": [
+        "XDevs internal license"
+      ],
+      "blender_version_min": "4.2.0",
+      "copyright": [
+        "2024 Extreme Developers"
+      ],
+      "tags": [
+        "XDevs"
+      ],
+      "archive_url": "./XD_EngineTags.zip",
+      "archive_size": 15998,
+      "archive_hash": "sha256:fba1b5869c744a163251830106da4dfaf51b891b851ef7e7cf303bf93bfc950d"
+    },
+    {
+      "schema_version": "1.0.0",
+      "id": "XD_Engine_PrefabLink",
+      "name": "XD Engine PrefabLink",
+      "tagline": "XD PrefabLink",
+      "version": "14.11.24",
+      "type": "add-on",
+      "maintainer": "Roman Askarov",
+      "license": [
+        "XDevs internal license"
+      ],
+      "blender_version_min": "4.2.0",
+      "copyright": [
+        "2024 Extreme Developers"
+      ],
+      "tags": [
+        "XDevs, XD, PrefabLink, Prefab, Link"
+      ],
+      "archive_url": "./XD_Engine_PrefabLink.zip",
+      "archive_size": 20557,
+      "archive_hash": "sha256:fcc4a8df0971ee1eb3f45dd7fc82fc700edde4efecb9f928380e22bdf8132c58"
+    },
+    {
+      "schema_version": "1.0.0",
+      "id": "XD_FBX_Exporter",
+      "name": "XD FBX Exporter",
+      "tagline": "XD .fbx Exporter for Static Objects With Modifiers",
+      "version": "0.2.25",
+      "type": "add-on",
+      "maintainer": "Me",
+      "license": [
+        "SPDX:GPL-3.0-or-later"
       ],
       "blender_version_min": "4.2.0",
       "permissions": {
-        "files": "Importing data files from disk, writing to cache folder",
-        "network": "Loading OME-zarr files from the internet from a given URL"
+        "files": "Export .fbx files"
       },
       "tags": [
         "Import-Export"
       ],
-      "python_versions": [
-        "3.11"
-      ],
-      "archive_url": "https://raw.githubusercontent.com/elevenlevel/BlAddons/refs/heads/main/Extensions/XD_Info.zip",
-      "archive_size": 5836,
-      "archive_hash": "sha256:d73e2f32d25673973560262d6b30fb354543f5fbd16a2d9b02509726ffe8cdb2"
+      "archive_url": "./XD_FBX_Exporter.zip",
+      "archive_size": 139544,
+      "archive_hash": "sha256:99496423353f2b6a8fcf094d0640aec20e530ab7bd0ecbaca0730150800ffce3"
     },
     {
       "schema_version": "1.0.0",
-      "id": "TestAddon",
-      "name": "TestAddon",
-      "tagline": "Test Addon",
+      "id": "XD_Helpers",
+      "name": "XD Helpers",
+      "tagline": "XD Helpers",
       "version": "0.0.0",
       "type": "add-on",
-      "maintainer": "XDevs",
+      "maintainer": "Roman Askarov",
       "license": [
-        "GPL-3.0-or-later"
+        "XDevs Internal License"
       ],
       "blender_version_min": "4.2.0",
-      "permissions": {
-        "files": "Importing data files from disk, writing to cache folder",
-        "network": "Loading OME-zarr files from the internet from a given URL"
-      },
       "tags": [
-        "Test"
+        "xd, helper"
       ],
-      "python_versions": [
-        "3.11"
+      "archive_url": "./XD_Helpers.zip",
+      "archive_size": 1030,
+      "archive_hash": "sha256:d7a9020aa3706c0a1de5bc8b4a4e476ba005aff7fcc245fc0ea2a387ca1890a7"
+    },
+    {
+      "schema_version": "1.0.0",
+      "id": "XD_Info",
+      "name": "XD Info",
+      "tagline": "Info",
+      "version": "11.12.2024",
+      "type": "add-on",
+      "maintainer": "Roman Askarov",
+      "license": [
+        "XDevs Internal License"
       ],
-      "archive_url": "https://raw.githubusercontent.com/elevenlevel/BlAddons/refs/heads/main/Extensions/TestAddon.zip",
-      "archive_size": 965,
-      "archive_hash": "sha256:9e353930c602a355953428fa10b78cef29dab2c47afa58ff780ea38fc34984de"
+      "blender_version_min": "4.2.0",
+      "tags": [
+        "info, comment"
+      ],
+      "archive_url": "./XD_Info.zip",
+      "archive_size": 1819,
+      "archive_hash": "sha256:5327de66bad593584ee8c5103ba8f8b46f972ab3f5c605116155e2ee70d8d5c5"
+    },
+    {
+      "schema_version": "21.10.24",
+      "id": "XD_ModelValidator",
+      "name": "XD Model Validator",
+      "tagline": "Testing possible problems with scene objects.",
+      "version": "0.1.0",
+      "type": "add-on",
+      "maintainer": "Roman Askarov",
+      "license": [
+        "XDevs Internal License"
+      ],
+      "blender_version_min": "4.2.0",
+      "website": "https://extreme-developers.ru/",
+      "copyright": [
+        "2024 Extreme Developers"
+      ],
+      "tags": [
+        "XDevs"
+      ],
+      "archive_url": "./XD_ModelValidator.zip",
+      "archive_size": 36084,
+      "archive_hash": "sha256:baa45a86b00fcbe9f0183a5c833688911a9a197ad9012c8b1073ef4ebae9ae86"
+    },
+    {
+      "schema_version": "1.0.0",
+      "id": "XD_PointCloud_Exporter",
+      "name": "XD PointCloud Exporter",
+      "tagline": "PointCloud Exporter for Blender",
+      "version": "0.0.1",
+      "type": "add-on",
+      "maintainer": "Roman Askarov",
+      "license": [
+        "SPDX:GPL-2.0-or-later"
+      ],
+      "blender_version_min": "4.2.0",
+      "copyright": [
+        "2024 Extreme Developers"
+      ],
+      "tags": [
+        "XDevs"
+      ],
+      "archive_url": "./XD_PointCloud_Exporter.zip",
+      "archive_size": 8905384,
+      "archive_hash": "sha256:42eaf49b216bc789e40930ee97204f7911be596b19222c3697aa26d7fc666f90"
     }
   ]
 }
