@@ -1,7 +1,7 @@
 import bpy
 import textwrap
 from bpy.app.handlers import persistent
-
+print("YYYYYYYYYYYYYYYY")
 
 class AddonAttribs():
     def __init__(self):
