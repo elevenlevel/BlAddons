@@ -207,8 +207,9 @@ class ReportListPanel(bpy.types.Panel):
 		buttons_split_right.scale_y = 1.2
 		
 		# активируем кнопку если хоть одна галочка включена
-		if context.scene.mv_attributes.checkboxes_count[0].all_active_count > 0:
-			buttons_split_center.enabled = True
+		if len(context.scene.mv_attributes.checkboxes_count) > 0:
+			if context.scene.mv_attributes.checkboxes_count[0].all_active_count > 0:
+				buttons_split_center.enabled = True
 		
 		# Список найденных проблем
 		list_row = layout.row(align=True)
