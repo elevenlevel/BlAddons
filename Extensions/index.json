@@ -19,7 +19,7 @@
       ],
       "archive_url": "./TestAddon.zip",
       "archive_size": 965,
-      "archive_hash": "sha256:01720bda46c54fc45142b1049b456ff40a3c2ef3be9154dc7d8ea0026194c358"
+      "archive_hash": "sha256:bcbe001f6b12aea98e7dc3dec5f2ed717a2fa2867c8e391c50570e66403105f7"
     },
     {
       "schema_version": "1.0.0",
@@ -44,7 +44,7 @@
       ],
       "archive_url": "./XD_Baker.zip",
       "archive_size": 2822768,
-      "archive_hash": "sha256:0b6fe32cc30207fcf82e50121ed521755b2a39ce9d8499364c5648080aa70d13"
+      "archive_hash": "sha256:959273fc228bb24055da545913d4dc1cbae1162344edc85be5426e364995dda4"
     },
     {
       "schema_version": "1.0.0",
@@ -66,7 +66,7 @@
       ],
       "archive_url": "./XD_EngineTags.zip",
       "archive_size": 15998,
-      "archive_hash": "sha256:fba1b5869c744a163251830106da4dfaf51b891b851ef7e7cf303bf93bfc950d"
+      "archive_hash": "sha256:75feb91f51e3dffbdbaa1cab8a2cf4f662aa86b6763f62400f3ffd43da05b9e5"
     },
     {
       "schema_version": "1.0.0",
@@ -88,7 +88,7 @@
       ],
       "archive_url": "./XD_Engine_PrefabLink.zip",
       "archive_size": 20557,
-      "archive_hash": "sha256:fcc4a8df0971ee1eb3f45dd7fc82fc700edde4efecb9f928380e22bdf8132c58"
+      "archive_hash": "sha256:81c362a25b7504e2f7028cea9a7c47558c47a9b01812990d660176eddbe6681c"
     },
     {
       "schema_version": "1.0.0",
@@ -110,7 +110,7 @@
       ],
       "archive_url": "./XD_FBX_Exporter.zip",
       "archive_size": 139544,
-      "archive_hash": "sha256:99496423353f2b6a8fcf094d0640aec20e530ab7bd0ecbaca0730150800ffce3"
+      "archive_hash": "sha256:99e5b1e1ffedf8825525f766c9318db418707ab07d487cd00894d0ba9f94afdc"
     },
     {
       "schema_version": "1.0.0",
@@ -129,7 +129,7 @@
       ],
       "archive_url": "./XD_Helpers.zip",
       "archive_size": 1030,
-      "archive_hash": "sha256:d7a9020aa3706c0a1de5bc8b4a4e476ba005aff7fcc245fc0ea2a387ca1890a7"
+      "archive_hash": "sha256:e43cdb1feaab074944198721329717b853ca387dddd524c81ea539660dcf3a84"
     },
     {
       "schema_version": "1.0.0",
@@ -147,8 +147,8 @@
         "info, comment"
       ],
       "archive_url": "./XD_Info.zip",
-      "archive_size": 1819,
-      "archive_hash": "sha256:5327de66bad593584ee8c5103ba8f8b46f972ab3f5c605116155e2ee70d8d5c5"
+      "archive_size": 5736,
+      "archive_hash": "sha256:e3d0435b9794d44e25584782da1b43ad5d7dbd84c5cb8abb518b17f359731d96"
     },
     {
       "schema_version": "21.10.24",
@@ -193,7 +193,7 @@
       ],
       "archive_url": "./XD_PointCloud_Exporter.zip",
       "archive_size": 8905384,
-      "archive_hash": "sha256:42eaf49b216bc789e40930ee97204f7911be596b19222c3697aa26d7fc666f90"
+      "archive_hash": "sha256:d6c38690d889b348b46b56ebd2d33cb24afd1d7a8adbea9adfa1a88024ed2095"
     }
   ]
 }

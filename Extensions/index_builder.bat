@@ -10,11 +10,13 @@ pushd %REPO_DIR%
 
 REM Архивация каждой папки в корне REPO_DIR
 for /D %%F in (*) do (
-    REM Проверяем, что нет архивов с таким именем
-    if not exist "%%F.zip" (
-        REM Создание ZIP архива из папки %%F
-        powershell.exe -Command "Compress-Archive -Path '%%F\*' -DestinationPath '%%F.zip' -Force"
+    REM Проверяем наличие архива с таким именем
+    if exist "%%F.zip" (
+	REM Удаление старого ZIP архива из папки %%F
+	del /f /q %%F.zip
     )
+    REM Создание ZIP архива из папки %%F
+    powershell.exe -Command "Compress-Archive -Path '%%F\*' -DestinationPath '%%F.zip' -Force"
 )
 
 REM Возврат в исходную директорию
