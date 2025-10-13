@@ -14,7 +14,7 @@ class ISSUES_UL_ReportList(bpy.types.UIList):
 	'''
 	def draw_item(self, context, layout, data, item, icon, active_data, active_propname):
 		el_type_dict = {"FACE": "faces", "EDGE": "edges", "VERT": "vertices"}
-		color_icons_dict = {"[WARNING]" : "SEQUENCE_COLOR_03", "[FAILED]" : "SEQUENCE_COLOR_01", "[SUCCESS]" : "SEQUENCE_COLOR_04"} # type: ignore
+		color_icons_dict = {"[WARNING]" : "STRIP_COLOR_03", "[FAILED]" : "STRIP_COLOR_01", "[SUCCESS]" : "STRIP_COLOR_04"} # type: ignore
 		icon_value = color_icons_dict[item.success]
 		grid = layout.grid_flow(row_major=True, columns=1, align=True)
 
@@ -109,7 +109,7 @@ def set_check_row(self, context, main_column, item):
 	warning_column.prop(item, "warning_type", icon='EVENT_W' if item.warning_type else 'EVENT_E', expand=False, icon_only=True, emboss=False)
 
 	# цветной лейбл
-	icons = {"GRAY":"BLANK1", "GREEN":"SEQUENCE_COLOR_04", "YELLOW":"SEQUENCE_COLOR_03", "RED":"SEQUENCE_COLOR_01"}
+	icons = {"GRAY":"BLANK1", "GREEN":"STRIP_COLOR_04", "YELLOW":"STRIP_COLOR_03", "RED":"STRIP_COLOR_01"}
 	label_column = check_row.column(align=True)
 	label_column.alignment = 'LEFT'
 	label_column.operator("object.run_single_check", text=item.name, icon=icons[item.color], emboss=False).check_type = item.name

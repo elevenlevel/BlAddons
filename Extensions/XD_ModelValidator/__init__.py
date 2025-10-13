@@ -271,11 +271,14 @@ class RunCheckboxGroup(bpy.types.Operator):
 	bl_options = {'REGISTER', 'INTERNAL'}
 
 	group_name: bpy.props.StringProperty() # type: ignore
-	def __init__(self):
-		bpy.types.Scene.group_name = self.group_name
+	# def __init__(self):
+	# 	bpy.types.Scene.group_name = self.group_name
 
 	@if_scene_dirty
 	def execute(self, context):
+		group_name = self.group_name
+		bpy.types.Scene.group_name = group_name
+
 		start_time = time.time()
 		# очищаем таймеры чекбоксов
 		for item in bpy.context.scene.mv_attributes.checkboxes:
@@ -308,8 +311,8 @@ class RunSingleCheck(bpy.types.Operator):
 
 	
 	check_type : bpy.props.StringProperty() # type: ignore
-	def __init__(self):
-		bpy.types.Scene.check_type = self.check_type
+	# def __init__(self):
+	# 	bpy.types.Scene.check_type = self.check_type
 
 	@classmethod #@property
 	def description(cls, context, properties):
@@ -319,7 +322,9 @@ class RunSingleCheck(bpy.types.Operator):
 
 	@if_scene_dirty
 	def execute(self, context):
-		check_type = bpy.types.Scene.check_type
+		#check_type = bpy.types.Scene.check_type
+		check_type = self.check_type
+		bpy.types.Scene.check_type = check_type
 		context.scene.mv_attributes.spent_time = 0.0
 		start_single_check(context, check_type)
 		print("\a")
