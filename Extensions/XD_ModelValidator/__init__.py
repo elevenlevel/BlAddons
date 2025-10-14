@@ -273,7 +273,7 @@ class RunCheckboxGroup(bpy.types.Operator):
 	group_name: bpy.props.StringProperty() # type: ignore
 	# def __init__(self):
 	# 	bpy.types.Scene.group_name = self.group_name
-
+	
 	@if_scene_dirty
 	def execute(self, context):
 		group_name = self.group_name
@@ -323,11 +323,13 @@ class RunSingleCheck(bpy.types.Operator):
 	@if_scene_dirty
 	def execute(self, context):
 		#check_type = bpy.types.Scene.check_type
-		check_type = self.check_type
-		bpy.types.Scene.check_type = check_type
-		context.scene.mv_attributes.spent_time = 0.0
-		start_single_check(context, check_type)
-		print("\a")
+		try:
+			check_type = self.check_type
+			bpy.types.Scene.check_type = check_type
+			context.scene.mv_attributes.spent_time = 0.0
+			start_single_check(context, check_type)
+		except:
+			pass
 		return {'FINISHED'}
 
 

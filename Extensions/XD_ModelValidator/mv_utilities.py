@@ -25,6 +25,7 @@ def save_scene():
 
 def if_scene_dirty(func):
     '''Если сцена не сохранена'''
+    
     def wrapper(self, context):
         if bpy.data.is_dirty:
             bpy.types.Scene.proceed_function = func
