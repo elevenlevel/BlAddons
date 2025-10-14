@@ -470,7 +470,7 @@ classes = (
 def register():
 	for cls in classes:
 		bpy.utils.register_class(cls)
-
+	
 	bpy.app.handlers.load_post.append(pre_expand_checkboxes)
 	bpy.types.Scene.mv_attributes = bpy.props.PointerProperty(type=AddonAttributes)
 	bpy.types.Scene.issues = bpy.props.CollectionProperty(type=IssuesCollection)

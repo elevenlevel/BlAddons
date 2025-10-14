@@ -144,7 +144,6 @@ class CheckListWindowPanel(bpy.types.Panel):
 
 	def draw(self, context):
 		layout = self.layout
-
 		# нижние кнопки левой колонки
 		buttons_row = layout.row(align=True)
 		buttons_row.alignment = 'CENTER'
