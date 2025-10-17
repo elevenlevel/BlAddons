@@ -1,10 +1,30 @@
 import bpy
+import subprocess
+import sys
+
+# def install_llvmlite():
+#     print("FFFFFFFFFFFFFFFFFFFFFFFFFUUUUUUUUUUUUCCCCCCCCCCCCCCCCCCKKKKKKKKKKKKKK!!!!!!!!!!!!!!!!!")
+#     try:
+#         import llvmlite
+#         return True
+#     except ImportError:
+#         python_exe = sys.executable
+#         try:
+#             subprocess.check_call([python_exe, "-m", "pip", "install", "llvmlite"])
+#             import llvmlite
+#             return True
+#         except Exception as e:
+#             print("Ошибка установки llvmlite:", e)
+#             return False
+# install_llvmlite()
+
 from bpy.props import *
 from bpy.app.handlers import persistent
 from . xd_baker_panel import *
 from . xd_baker_operators import *
 from .utils.functions import draw_low_gpu_cage, draw_high_gpu_cage
 from .addon_data import XDBaker, data_classes, bake_maps_list
+
 
 def update():
     def update_assign_objects():
@@ -137,7 +157,7 @@ def register():
     bpy.types.Scene.xd_baker = bpy.props.PointerProperty(type=XDBaker)
     bpy.app.handlers.load_post.append(initialize_addon)
     bpy.app.handlers.depsgraph_update_post.append(update_addon)
-
+    
     low_cage = bpy.types.SpaceView3D.draw_handler_add(draw_low_gpu_cage, (), 'WINDOW', 'POST_VIEW')
     high_cage = bpy.types.SpaceView3D.draw_handler_add(draw_high_gpu_cage, (), 'WINDOW', 'POST_VIEW')
 
