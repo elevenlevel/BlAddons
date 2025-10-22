@@ -1,4 +1,4 @@
-# импорт локального модуля numba
+    # импорт локального модуля numba
 import sys, os, importlib
 current_script_path = os.path.dirname(os.path.abspath(__file__))
 py_modules_path = os.path.join(current_script_path, 'py_modules')
@@ -12,11 +12,75 @@ sys.path.append(py_modules_path)
 # sys.modules["floyd_steinberg"] = module
 # print("module_path: ", module_path)
 
-import dither
-
 import bpy
 import numpy as np
-#from . dither import floyd_steinberg
+
+import ctypes
+from numpy.ctypeslib import as_array
+import traceback
+# lib_path = os.path.join(current_script_path, 'floyd_steinberg.dll')
+# lib = ctypes.CDLL(lib_path)
+#lib.floyd_steinberg.argtypes = [ctypes.POINTER(ctypes.c_double), ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.c_int]
+#lib.floyd_steinberg.restype = None
+#lib.floyd_steinberg.restype = ctypes.c_char
+
+def floyd_steinberg_c(image, shagreen):
+    image = np.ascontiguousarray(image, dtype=np.float64)
+    Lx, Ly, Lc = image.shape
+    ptr = image.ctypes.data_as(ctypes.POINTER(ctypes.c_double))
+
+    lib_path = os.path.join(current_script_path, 'floyd_steinberg.dll')
+    # Проверяем существование файла
+    if not os.path.exists(lib_path):
+        print(f"DLL not found: {lib_path}")
+    
+    # Загружаем библиотеку
+    try:
+        lib = ctypes.CDLL(lib_path)
+    except OSError as e:
+        print(f"Error loading DLL: {e}")
+    
+    # lib.floyd_steinberg.argtypes = [ctypes.POINTER(ctypes.c_double), ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.c_int]
+    # Устанавливаем типы аргументов и возвращаемого значения
+    lib.floyd_steinberg.argtypes = [
+        ctypes.POINTER(ctypes.c_double), 
+        ctypes.c_int, 
+        ctypes.c_int, 
+        ctypes.c_int, 
+        ctypes.c_float
+    ]
+    lib.floyd_steinberg.restype = None
+
+    if not isinstance(image, np.ndarray):
+        print("image должен быть numpy массивом")
+    if len(image.shape) != 3:
+        print("image должен быть трехмерным массивом")
+    Lx, Ly, Lc = image.shape
+    if Lx <= 0 or Ly <= 0 or Lc <= 0:
+        print("Размеры изображения должны быть положительными")
+    if not isinstance(shagreen, float) or shagreen <= 0.0:
+        print("shagreen должен быть положительным числом")
+
+    print(f"Размеры изображения: {Lx}x{Ly}x{Lc}")
+    print(f"Тип данных: {image.dtype}")
+    print(f"Указатель на данные: {ptr}")
+    print(f"Путь к DLL: {lib_path}")
+
+    try:
+        lib.floyd_steinberg(ptr, Lx, Ly, Lc, shagreen)
+        print("Функция выполнена успешно")
+    except Exception as e:
+        print(f"Ошибка при вызове функции: {e}")
+        traceback.print_exc()
+
+    print("DONE")
+
+    # lib.get_message.restype = ctypes.c_char_p
+    # msg = lib.get_message(b"Hello, World!")
+    # print(msg.decode('utf-8'))
+
+
+    return image
 
 from .sdf_module import distance_transform_edt
 
@@ -42,29 +106,11 @@ from .sdf_module import distance_transform_edt
 #                     image[i + 1, j + 1, c] += quant_error * 1 / sixteen
 #     return image
 
-# def floyd_steinberg(image, levels):
-#     image = image.astype(np.float32)
-#     height, width, channels = image.shape
-#     for y in range(height):
-#         for x in range(width):
-#             for c in range(channels):
-#                 old_pixel = image[y, x, c]
-#                 new_pixel = np.round(old_pixel * levels) / levels
-#                 quant_error = old_pixel - new_pixel
-#                 image[y, x, c] = new_pixel
-#                 if x < width - 1:
-#                     image[y, x+1, c] += quant_error * 7 / 16
-#                 if x > 0 and y < height - 1:
-#                     image[y+1, x-1, c] += quant_error * 3 / 16
-#                 if y < height - 1:
-#                     image[y+1, x, c] += quant_error * 5 / 16
-#                 if x < width - 1 and y < height - 1:
-#                     image[y+1, x+1, c] += quant_error / 16
-#     return np.clip(image, 0, 1)
 
 def filter_dithering(context, image_data, accuracy):
+    print("filter_dithering endbled")
     image_data_copy = image_data.copy()
-    #image_data_copy = floyd_steinberg(image_data_copy, accuracy)
+    image_data_copy = floyd_steinberg_c(image_data_copy, accuracy)
     return image_data_copy
 
 def signed_distance_transform(context, image, sdf_type):

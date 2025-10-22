@@ -1,7 +1,9 @@
+# dither.pyx
+
 import numpy as np
 cimport numpy as np
 
-def floyd_steinberg(np.ndarray[np.float64_t, ndim=3] image, int shagreen):
+cpdef floyd_steinberg(np.ndarray[np.float64_t, ndim=3] image, int shagreen):
     cdef int Lx = image.shape[0]
     cdef int Ly = image.shape[1]
     cdef int Lc = image.shape[2]
