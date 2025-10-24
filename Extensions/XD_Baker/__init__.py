@@ -82,11 +82,11 @@ def initialize_addon(scene): # инициализация аддона
     update()
 
     scene = bpy.context.scene
-    mycollection = scene.xd_baker.attributes.my_collection
+    my_collection = scene.xd_baker.attributes.my_collection
 
     # если коллекция пустая, то добавляем один элемент
-    if len(mycollection.group)==0:
-        item = mycollection.group.add()
+    if len(my_collection.group)==0:
+        item = my_collection.group.add()
         item.name = ""
         item.index = 0
 

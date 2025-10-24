@@ -17,7 +17,7 @@ bake_maps_list = {"Diffuse": {"unfolded":False, "enabled":False, "colorspace":'s
                   "Normal": {"unfolded":False, "enabled":False, "colorspace":'Non-Color', "alpha":False, "depth":8, "options":{
                                                                                                                                                 "Invert Green":{"type":"BOOL", "value":False},
                                                                                                                                                 "Dithering":{"type":"BOOL", "value":False},
-                                                                                                                                                "Accuracy":{"type":"FLOAT", "value":16.0}
+                                                                                                                                                "Accuracy":{"type":"FLOAT", "value":30.0}
                                                                                                                                                 }},
                   "Normal os": {"unfolded":False, "enabled":False, "colorspace":'Non-Color', "alpha":False, "depth":16, "options":{
                                                                                                                                                 }},

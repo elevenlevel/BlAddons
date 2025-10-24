@@ -61,19 +61,17 @@ def floyd_steinberg_c(image, shagreen):
     if not isinstance(shagreen, float) or shagreen <= 0.0:
         print("shagreen должен быть положительным числом")
 
-    print(f"Размеры изображения: {Lx}x{Ly}x{Lc}")
-    print(f"Тип данных: {image.dtype}")
-    print(f"Указатель на данные: {ptr}")
-    print(f"Путь к DLL: {lib_path}")
+    if True==False:
+        print(f"Размеры изображения: {Lx}x{Ly}x{Lc}")
+        print(f"Тип данных: {image.dtype}")
+        print(f"Указатель на данные: {ptr}")
+        print(f"Путь к DLL: {lib_path}")
 
     try:
         lib.floyd_steinberg(ptr, Lx, Ly, Lc, shagreen)
-        print("Функция выполнена успешно")
     except Exception as e:
         print(f"Ошибка при вызове функции: {e}")
         traceback.print_exc()
-
-    print("DONE")
 
     # lib.get_message.restype = ctypes.c_char_p
     # msg = lib.get_message(b"Hello, World!")
@@ -84,31 +82,7 @@ def floyd_steinberg_c(image, shagreen):
 
 from .sdf_module import distance_transform_edt
 
-#@numba.jit("f4[:,:,:](f4[:,:,:])", nopython=True, nogil=True)
-# @numba.jit(nopython=True)
-# def floyd_steinberg(image, shagreen):
-#     # алгоритм дизеринга
-#     Lx, Ly, Lc = image.shape
-#     for j in range(Ly):
-#         for i in range(Lx):
-#             for c in range(Lc):
-#                 rounded = round(image[i, j, c] * shagreen) / shagreen
-#                 quant_error = image[i, j, c] - rounded
-#                 image[i, j, c] = rounded
-#                 sixteen = 16
-#                 if i < Lx - 1:
-#                     image[i + 1, j, c] += quant_error * 7 / sixteen
-#                 if i > 0 and j < Ly - 1:
-#                     image[i - 1, j + 1, c] += quant_error * 3 / sixteen
-#                 if j < Ly - 1:
-#                     image[i, j + 1, c] += quant_error * 5 / sixteen
-#                 if i < Lx - 1 and j < Ly - 1:
-#                     image[i + 1, j + 1, c] += quant_error * 1 / sixteen
-#     return image
-
-
 def filter_dithering(context, image_data, accuracy):
-    print("filter_dithering endbled")
     image_data_copy = image_data.copy()
     image_data_copy = floyd_steinberg_c(image_data_copy, accuracy)
     return image_data_copy

@@ -11,6 +11,22 @@ class XD_PT_Panel(Panel):
     
     @classmethod
     def poll(cls, context):
+        # scene = bpy.context.scene
+        # my_collection = scene.xd_baker.attributes.my_collection
+        # group = my_collection.group
+
+        # if len(group) > 0 and group[-1].name != "":
+        #     count = len(group)
+        #     item = my_collection.group.add()
+        #     item.name = ""
+
+        #     if len(group) > 1:
+        #         item.index = count
+        #     else:
+        #         item.index = 0
+        return True
+    
+    def execute(self, context):
         scene = bpy.context.scene
         my_collection = scene.xd_baker.attributes.my_collection
         group = my_collection.group
@@ -24,22 +40,6 @@ class XD_PT_Panel(Panel):
                 item.index = count
             else:
                 item.index = 0
-        return True
-    
-    # def __init__(self):
-    #     scene = bpy.context.scene
-    #     my_collection = scene.xd_baker.attributes.my_collection
-    #     group = my_collection.group
-
-    #     if len(group) > 0 and group[-1].name != "":
-    #         count = len(group)
-    #         item = my_collection.group.add()
-    #         item.name = ""
-
-    #         if len(group) > 1:
-    #             item.index = count
-    #         else:
-    #             item.index = 0
 
     def draw(self, context):
         scene = context.scene
