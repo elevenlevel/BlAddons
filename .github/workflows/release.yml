@@ -25,7 +25,6 @@ jobs:
     - name: Process changed blender manifests and create zips
       id: pack
       run: |
-        pip install toml
         changed="${{ steps.changed_files.outputs.files }}"
         touched_manifests=0
         for file in $changed; do
@@ -42,7 +41,7 @@ jobs:
         done
         if [ $touched_manifests -eq 0 ]; then
           echo "No changed blender_manifest.toml found, skipping packaging."
-          exit 78  # special code to mark job as skipped
+          exit 0  # normal exit, не ошибка
         fi
 
     - name: Upload release zip files
