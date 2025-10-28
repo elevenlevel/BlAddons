@@ -47,7 +47,7 @@ jobs:
 
     - name: Upload release zip files
       if: success() && steps.pack.outcome != 'skipped'
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: blender-addons-release
         path: "*.zip"
