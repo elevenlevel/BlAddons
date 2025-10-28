@@ -27,6 +27,7 @@ jobs:
       run: |
         changed="${{ steps.changed_files.outputs.files }}"
         touched_manifests=0
+        echo "XXXXXXXXXXXXXXXXXX"
         for file in $changed; do
           if [[ "$file" == */blender_manifest.toml ]]; then
             echo "Found changed manifest: $file"
