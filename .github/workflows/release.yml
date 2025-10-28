@@ -42,9 +42,11 @@ jobs:
             touched_manifests=1
           fi
         done
-        if [ $touched_manifests -eq 0 ]; then
-          echo "No changed blender_manifest.toml found, skipping packaging."
-          exit 0  # normal exit, не ошибка
+        if git diff --name-only origin/main...HEAD | grep 'blender_manifest.toml$'; then
+          # обработка
+        else
+          echo "No changed blender_manifest.toml"
+          exit 0
         fi
 
     - name: Upload release zip files
