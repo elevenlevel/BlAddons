@@ -3,9 +3,7 @@ name: Build and Release ZIP
 on:
   push:
     branches:
-      - master   # или main, ветка релиза
-  release:
-    types: [created]  # запускать при создании релиза
+      - main   # или main или любая ветка, на которую вы пушите
 
 jobs:
   build:
