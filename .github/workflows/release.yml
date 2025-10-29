@@ -54,31 +54,24 @@ jobs:
           echo "No blender_manifest.toml files were processed."
           exit 0
         fi
-
-    - name: Upload release zip files
-      if: success() && steps.pack.outcome != 'skipped'
-      uses: actions/upload-artifact@v4
-      with:
-        name: blender-addons-release
-        path: "**/*.zip"
     
-    # - name: Create GitHub Release
-    #   id: create_release
-    #   uses: actions/create-release@v1
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    #   with:
-    #     tag_name: ${{ github.sha }}  # замените на тег, если есть
-    #     release_name: Release ${{ github.sha }}
-    #     draft: false
-    #     prerelease: false
+    - name: Create GitHub Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.sha }}  # замените на тег, если есть
+        release_name: Release ${{ github.sha }}
+        draft: false
+        prerelease: false
 
     - name: Upload each release zip file to GitHub Release
       shell: bash
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        for zipfile in **/*.zip; do
+        for zipfile in *.zip; do
           echo "Uploading $zipfile"
           gh release upload ${{ steps.create_release.outputs.tag_name }} "$zipfile" --clobber
         done
