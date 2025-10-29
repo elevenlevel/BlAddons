@@ -20,8 +20,8 @@ jobs:
     - name: Get changed files
       id: changed_files
       run: |
-        git fetch --depth=2  # обеспечить наличие последних коммитов
-        echo "files=$(git diff --name-only origin/main...HEAD)" >> $GITHUB_OUTPUT
+        git fetch --depth=2
+        echo "files=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }})" >> $GITHUB_OUTPUT
 
     - name: Process changed blender manifests and create zips
       id: pack
