@@ -30,35 +30,31 @@ jobs:
 
         if [ -z "$changed" ] || ! echo "$changed" | grep -q 'blender_manifest.toml$'; then
           echo "No changed blender_manifest.toml found, skipping packaging."
+          echo "created=false" >> $GITHUB_OUTPUT
           exit 0
         fi
 
         touched_manifests=0
-        echo "XXXXXXXXXXXXXXXXXX"
-
         for file in $changed; do
           if [[ "$file" == */blender_manifest.toml ]]; then
-            echo "Found changed manifest: $file"
-            dir=$(dirname "$file")
-            echo "$dir"
-            id=$(python -c "import toml; print(toml.load('$file')['id'])")
-            version=$(python -c "import toml; print(toml.load('$file')['version'])")
-            blender_version=$(python -c "import toml; print(toml.load('$file')['blender_version_min'])")
-            zipname="${id}_${version}-blender-${blender_version}.zip"
-            zip -r "$zipname" "$dir"
+            # (ваш основной код упаковки)
             touched_manifests=1
           fi
         done
 
         if [ $touched_manifests -eq 0 ]; then
           echo "No blender_manifest.toml files were processed."
+          echo "created=false" >> $GITHUB_OUTPUT
           exit 0
+        else
+          echo "created=true" >> $GITHUB_OUTPUT
         fi
     
     - name: List root dir after zipping
       run: ls -l
 
     - name: Create and push tag
+      if: steps.pack.outputs.created == 'true'
       id: tag
       run: |
         TAG="release-$(date +'%Y%m%d%H%M%S')"
@@ -69,22 +65,30 @@ jobs:
         echo "tag=$TAG" >> $GITHUB_OUTPUT
 
     - name: Create GitHub Release
+      if: steps.pack.outputs.created == 'true'
       id: create_release
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ steps.tag.outputs.tag }}  # замените на тег, если есть
-        release_name: Release ${{ github.sha }}
+        tag_name: ${{ steps.tag.outputs.tag }}
+        release_name: Release ${{ steps.tag.outputs.tag }}
         draft: false
         prerelease: false
 
     - name: Upload each release zip file to GitHub Release
+      if: steps.pack.outputs.created == 'true'
       shell: bash
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        for zipfile in *.zip; do
+        shopt -s nullglob
+        files=(*.zip)
+        if [ ${#files[@]} -eq 0 ]; then
+          echo "No zip files to upload"
+          exit 0
+        fi
+        for zipfile in "${files[@]}"; do
           echo "Uploading $zipfile"
           gh release upload ${{ steps.create_release.outputs.tag_name }} "$zipfile" --clobber
         done
