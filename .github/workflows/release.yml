@@ -54,6 +54,8 @@ jobs:
           version=$(python -c "import toml; print(toml.load('$file')['version'])")
           blender_version=$(python -c "import toml; print(toml.load('$file')['blender_version_min'])")
           echo "release_name=${id}_${version}-blender-${blender_version}.zip" >> $GITHUB_OUTPUT
+
+          (cd "$dir" && zip -r "../${id}_${version}-blender-${blender_version}.zip" .)
         fi
 
     - name: Create and push tag
