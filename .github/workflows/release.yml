@@ -55,6 +55,9 @@ jobs:
           exit 0
         fi
     
+    - name: List root dir after zipping
+      run: ls -l
+
     - name: Create and push tag
       id: tag
       run: |
