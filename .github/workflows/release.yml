@@ -28,7 +28,7 @@ jobs:
       run: |
         changed="${{ steps.changed_files.outputs.files }}"
 
-        if [ -z "$changed" ] || ! echo "$changed" | grep -q 'blender_manifest.toml$'; then
+        if [ -z "$changed" ] || ! echo "$changed" | grep -q 'blender_manifest.toml'; then
           echo "No changed blender_manifest.toml found, skipping packaging."
           echo "created=false" >> $GITHUB_OUTPUT
           exit 0
