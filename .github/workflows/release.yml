@@ -61,8 +61,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ github.ref_name }}  # замените на тег, если есть
-        release_name: Release ${{ github.sha }}
+        tag_name: ${{ steps.tag.outputs.tag }}  # замените на тег, если есть
+        release_name: Release ${{ steps.tag.outputs.tag }}
         draft: false
         prerelease: false
 
