@@ -27,13 +27,20 @@ jobs:
       id: pack
       run: |
         changed="${{ steps.changed_files.outputs.files }}"
+
+        if [ -z "$changed" ] || ! echo "$changed" | grep -q 'blender_manifest.toml$'; then
+          echo "No changed blender_manifest.toml found, skipping packaging."
+          exit 0
+        fi
+
         touched_manifests=0
         echo "XXXXXXXXXXXXXXXXXX"
+
         for file in $changed; do
           if [[ "$file" == */blender_manifest.toml ]]; then
             echo "Found changed manifest: $file"
             dir=$(dirname "$file")
-            echo dir
+            echo "$dir"
             id=$(python -c "import toml; print(toml.load('$file')['id'])")
             version=$(python -c "import toml; print(toml.load('$file')['version'])")
             blender_version=$(python -c "import toml; print(toml.load('$file')['blender_version_min'])")
@@ -42,11 +49,9 @@ jobs:
             touched_manifests=1
           fi
         done
-        if git diff --name-only origin/main...HEAD | grep 'blender_manifest.toml$'; then
-          echo "blender_manifest.toml was changed!"
-          exit 0
-        else
-          echo "No changed blender_manifest.toml"
+
+        if [ $touched_manifests -eq 0 ]; then
+          echo "No blender_manifest.toml files were processed."
           exit 0
         fi
 
