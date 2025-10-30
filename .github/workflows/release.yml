@@ -59,6 +59,8 @@ jobs:
               (cd "$dir" && zip -r "../$zipname" . -x "__pycache__/*" "*.pyc") || (echo "Failed to create zip: $zipname" && exit 1)
               touched_manifests=1
 
+              echo "zip_dir=$dir/.." >> $GITHUB_OUTPUT
+
               echo "zipname variable is: $zipname"
               echo "Archiving directory: $dir"
               ls -la "$dir/.."
@@ -109,12 +111,14 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         shopt -s nullglob
-        files=(*.zip)
+        files=("$dir"/../*.zip)
         if [ ${#files[@]} -eq 0 ]; then
           echo "No zip files to upload"
           exit 0
         fi
         for zipfile in "${files[@]}"; do
           echo "Uploading $zipfile"
-          gh release upload ${{ steps.tag.outputs.tag }} "$zipfile" --clobber
+          zipdir="$ZIP_DIR/$zipfile"
+          # gh release upload ${{ steps.tag.outputs.tag }} "$zipfile" --clobber
+          gh release upload ${{ steps.tag.outputs.tag }} "$zipdir" --clobber
         done 
