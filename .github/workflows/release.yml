@@ -57,7 +57,7 @@ jobs:
               zipname="${id}_${version}-blender-${blender_version}.zip"
               
               # (cd "$dir" && zip -r "../$zipname" . -x "__pycache__/*" "*.pyc") || (echo "Failed to create zip: $zipname" && exit 1)
-              (cd "$dir" && zip -r "/$zipname" . -x "__pycache__/*" "*.pyc") || (echo "Failed to create zip: $zipname" && exit 1)
+              (cd "$dir" && zip -r "./$zipname" . -x "__pycache__/*" "*.pyc") || (echo "Failed to create zip: $zipname" && exit 1)
               touched_manifests=1
 
               echo "zipname variable is: $zipname"
