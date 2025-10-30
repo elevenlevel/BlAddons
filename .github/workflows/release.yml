@@ -116,5 +116,5 @@ jobs:
         fi
         for zipfile in "${files[@]}"; do
           echo "Uploading $zipfile"
-          gh release upload ${{ steps.tag.outputs.tag }} "$dir/../$zipfile" --clobber
+          gh release upload ${{ steps.tag.outputs.tag }} "$zipfile" --clobber
         done 
