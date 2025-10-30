@@ -55,12 +55,12 @@ jobs:
               version=$(python -c "import toml; print(toml.load('$file')['version'])")
               blender_version=$(python -c "import toml; print(toml.load('$file')['blender_version_min'])")
               zipname="${id}_${version}-blender-${blender_version}.zip"
-
-              echo "Archiving directory: $dir"
-              ls -la "$dir"
               
               (cd "$dir" && zip -r "../$zipname" . -x "__pycache__/*" "*.pyc") || (echo "Failed to create zip: $zipname" && exit 1)
               touched_manifests=1
+
+              echo "Archiving directory: $dir"
+              ls -la "$dir"
             fi
           done
 
@@ -76,9 +76,6 @@ jobs:
     
     - name: List created zip files
       run: ls -l *.zip || echo "No zip files found"
-    
-    - name: Show Archiving directory Files
-      run: ls -la "$dir"
 
     - name: Create and push tag
       if: steps.pack.outputs.created == 'true'
