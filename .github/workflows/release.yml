@@ -59,6 +59,7 @@ jobs:
               (cd "$dir" && zip -r "../$zipname" . -x "__pycache__/*" "*.pyc") || (echo "Failed to create zip: $zipname" && exit 1)
               touched_manifests=1
 
+              echo "zipname variable is: $zipname"
               echo "Archiving directory: $dir"
               ls -la "$dir"
             fi
