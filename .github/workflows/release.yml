@@ -74,9 +74,6 @@ jobs:
             echo "release_name=$zipname" >> $GITHUB_OUTPUT
           fi
         fi
-    
-    - name: List created zip files
-      run: ls -l *.zip || echo "No zip files found"
 
     - name: Create and push tag
       if: steps.pack.outputs.created == 'true'
@@ -112,7 +109,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         shopt -s nullglob
-        files=(*.zip)
+        files=(../*.zip)
         if [ ${#files[@]} -eq 0 ]; then
           echo "No zip files to upload"
           exit 0
