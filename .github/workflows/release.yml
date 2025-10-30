@@ -22,9 +22,6 @@ jobs:
       run: |
         git fetch --depth=2
         echo "files=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }})" >> $GITHUB_OUTPUT
-
-    - name: Install zip
-      run: sudo apt-get update && sudo apt-get install -y zip
     
     - name: Process changed blender manifests and create zips
       id: pack
@@ -79,6 +76,9 @@ jobs:
     
     - name: List created zip files
       run: ls -l *.zip || echo "No zip files found"
+    
+    - name: Show Archiving directory Files
+      run: ls -la "$dir"
 
     - name: Create and push tag
       if: steps.pack.outputs.created == 'true'
