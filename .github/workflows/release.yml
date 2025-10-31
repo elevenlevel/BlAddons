@@ -111,7 +111,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         shopt -s nullglob
-        files=("$dir"/../*.zip)
+        zipdir="$ZIP_DIR
+        files=("$zipdir"/*.zip)
         echo "$files"
         if [ ${#files[@]} -eq 0 ]; then
           echo "No zip files to upload"
@@ -119,8 +120,7 @@ jobs:
         fi
         for zipfile in "${files[@]}"; do
           echo "Uploading $zipfile"
-          zipdir="$ZIP_DIR/$zipfile"
           echo "ZIPDIR: $zipdir"
           # gh release upload ${{ steps.tag.outputs.tag }} "$zipfile" --clobber
-          gh release upload ${{ steps.tag.outputs.tag }} "$zipdir" --clobber
+          gh release upload ${{ steps.tag.outputs.tag }} "$zipdir/$zipfile" --clobber
         done 
