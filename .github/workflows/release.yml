@@ -59,13 +59,16 @@ jobs:
               (cd "$dir" && zip -r "../$zipname" . -x "__pycache__/*" "*.pyc") || (echo "Failed to create zip: $zipname" && exit 1)
               touched_manifests=1
 
-              echo "zip_dir=$dir/.." >> $GITHUB_OUTPUT
-
+              zip_paths+="$dir/../$zipname,"
+              
               echo "zipname variable is: $zipname"
               echo "Archiving directory: $dir"
-              ls -la "$dir/.."
+              echo "Zip Path: $zip_paths"
             fi
           done
+
+          zip_paths=${zip_paths%,}
+          echo "zip_paths=$zip_paths" >> $GITHUB_OUTPUT
 
           if [ $touched_manifests -eq 0 ]; then
             echo "No blender_manifest.toml files were processed."
@@ -111,15 +114,12 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         shopt -s nullglob
-        zipdir="$ZIP_DIR
-        files=("$zipdir"/*.zip)
-        echo "$files"
-        if [ ${#files[@]} -eq 0 ]; then
-          echo "No zip files to upload"
-          exit 0
-        fi
-        for zipfile in "${files[@]}"; do
+
+        IFS=',' read -r -a dirs_array <<< "${{ steps.pack.outputs.zip_paths }}"
+
+        for path in "${dirs_array[@]}"; do
+          echo "$path"
+
           echo "Uploading $zipfile"
-          echo "ZIPDIR: $zipdir"
-          gh release upload ${{ steps.tag.outputs.tag }} "$zipfile" --clobber
-        done 
+          gh release upload ${{ steps.tag.outputs.tag }} "$path" --clobber
+          done 
