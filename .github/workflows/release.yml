@@ -112,6 +112,7 @@ jobs:
       run: |
         shopt -s nullglob
         files=("$dir"/../*.zip)
+        echo "$files"
         if [ ${#files[@]} -eq 0 ]; then
           echo "No zip files to upload"
           exit 0
