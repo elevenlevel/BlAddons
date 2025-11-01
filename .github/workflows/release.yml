@@ -78,9 +78,23 @@ jobs:
           zip_paths=${zip_paths%,}
           zip_sizes=${zip_sizes%,}
           zip_hashes=${zip_hashes%,}
-          echo "zip_paths=$zip_paths" >> $GITHUB_OUTPUT
-          echo "zip_sizes=$zip_sizes" >> $GITHUB_OUTPUT
-          echo "zip_hashes=$zip_hashes" >> $GITHUB_OUTPUT
+          # echo "zip_paths=$zip_paths" >> $GITHUB_OUTPUT
+          # echo "zip_sizes=$zip_sizes" >> $GITHUB_OUTPUT
+          # echo "zip_hashes=$zip_hashes" >> $GITHUB_OUTPUT
+
+          description=""
+
+          IFS=',' read -r -a paths_array <<< "$zip_paths"
+          IFS=',' read -r -a sizes_array <<< "$zip_sizes"
+          IFS=',' read -r -a hashes_array <<< "$zip_hashes"
+
+          for i in "${!paths_array[@]}"; do
+            description+="Архив: ${paths_array[i]}
+          Размер: ${sizes_array[i]} байт
+          SHA256: ${hashes_array[i]}
+
+          "
+          done
 
           if [ $touched_manifests -eq 0 ]; then
             echo "No blender_manifest.toml files were processed."
@@ -116,19 +130,18 @@ jobs:
         #tag_name: ${{ steps.pack.outputs.addon_name }}_latest
         #release_name: ${{ steps.pack.outputs.release_name }}
         release_name: ${{ steps.pack.outputs.addon_name }}_latest
-        
-        body: |
-          Версия релиза: ${{ steps.pack.outputs.release_name }}
+        body: ${{ steps.pack.outputs.release_description }}
+        # body: |
+        #   Версия релиза: ${{ steps.pack.outputs.release_name }}
 
-          Вставьте этот путь в качестве репозитория в разделе Git Extensions параметров blender:
-            https://raw.githubusercontent.com/elevenlevel/BlAddons/refs/heads/main/Extensions/index.json
+        #   Вставьте этот путь в качестве репозитория в разделе Git Extensions параметров blender:
+        #     https://raw.githubusercontent.com/elevenlevel/BlAddons/refs/heads/main/Extensions/index.json
           
-          Таким образом у вас всегда будут самые свежие версии аддонов.
+        #   Таким образом у вас всегда будут самые свежие версии аддонов.
 
-          archive_size: ${{ steps.pack.outputs.archive_size }}
-          archive_hash: ${{ steps.pack.outputs.archive_hash }}
-          
-        draft: false
+        #   archive_size: ${{ steps.pack.outputs.archive_size }}
+        #   archive_hash: ${{ steps.pack.outputs.archive_hash }}
+        # draft: false
         prerelease: false
 
     - name: Upload each release zip file to GitHub Release
