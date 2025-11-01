@@ -130,5 +130,5 @@ jobs:
 
           echo "Uploading $zipfile"
           gh release upload ${{ steps.tag.outputs.tag }} "$path" --clobber
-          gh release upload ${{ steps.tag.outputs.zip_name }} "$path" --clobber
+          gh release upload ${{ steps.tag.outputs.addon_name }} "$path" --clobber
           done 
