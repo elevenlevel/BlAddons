@@ -81,6 +81,12 @@ jobs:
             release_name="${id}_${version}-blender-${blender_version}"
             echo "release_name=$release_name" >> $GITHUB_OUTPUT
             echo "addon_name=${id}" >> $GITHUB_OUTPUT
+            # Размер в байтах
+            archive_size=$(stat -c%s "$archive_path")
+            echo "archive_size=$archive_size" >> $GITHUB_OUTPUT
+            # SHA256 hash
+            archive_hash=$(sha256sum "$archive_path" | cut -d' ' -f1)
+            echo "archive_hash=$archive_hash" >> $GITHUB_OUTPUT
           fi
         fi
 
@@ -106,13 +112,18 @@ jobs:
         #tag_name: ${{ steps.pack.outputs.addon_name }}_latest
         #release_name: ${{ steps.pack.outputs.release_name }}
         release_name: ${{ steps.pack.outputs.addon_name }}_latest
+        
         body: |
-          body: |
-            Версия релиза: ${{ steps.pack.outputs.release_name }}
-            Вставьте этот путь в качестве репозитория в разделе Git Extensions параметров blender:
-              https://raw.githubusercontent.com/elevenlevel/BlAddons/refs/heads/main/Extensions/index.json
-            Таким образом у вас всегда будут самые свежие версии аддонов.
-          draft: false
+          Версия релиза: ${{ steps.pack.outputs.release_name }}
+
+          Вставьте этот путь в качестве репозитория в разделе Git Extensions параметров blender:
+            https://raw.githubusercontent.com/elevenlevel/BlAddons/refs/heads/main/Extensions/index.json
+          
+          Таким образом у вас всегда будут самые свежие версии аддонов.
+
+          archive_size: ${{ steps.pack.outputs.archive_size }}
+          archive_hash: ${{ steps.pack.outputs.archive_hash }}
+          
         draft: false
         prerelease: false
 
