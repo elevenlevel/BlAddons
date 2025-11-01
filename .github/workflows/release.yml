@@ -132,5 +132,5 @@ jobs:
           addon_name_latest=${{ steps.pack.outputs.addon_name }}_latest
           echo "Uploading $zipfile"
           # gh release upload ${{ steps.tag.outputs.tag }} "$path" --clobber
-          gh release upload addon_name_latest "$path" --clobber
+          gh release upload $addon_name_latest "$path" --clobber
           done 
