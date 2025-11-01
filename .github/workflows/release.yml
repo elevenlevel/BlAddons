@@ -80,6 +80,7 @@ jobs:
             echo "created=true" >> $GITHUB_OUTPUT
             release_name="Release ${id}_${version}-blender-${blender_version}"
             echo "release_name=$release_name" >> $GITHUB_OUTPUT
+            echo "addon_name=${id}" >> $GITHUB_OUTPUT
           fi
         fi
 
@@ -105,9 +106,10 @@ jobs:
         release_name: ${{ steps.pack.outputs.release_name }}
         body: |
           body: |
+            Имя релиза: ${id}
             Дата релиза: TAG
             Вставьте этот путь в качестве репозитория в разделе Git Extensions параметров blender:
-              https://github.com/elevenlevel/BlAddons/releases/latest
+              https://raw.githubusercontent.com/elevenlevel/BlAddons/refs/heads/main/Extensions/index.json
             Таким образом у вас всегда будут самые свежие версии аддонов.
           draft: false
         draft: false
@@ -128,4 +130,5 @@ jobs:
 
           echo "Uploading $zipfile"
           gh release upload ${{ steps.tag.outputs.tag }} "$path" --clobber
+          gh release upload ${{ steps.tag.outputs.zip_name }} "$path" --clobber
           done 
