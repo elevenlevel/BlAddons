@@ -63,10 +63,12 @@ jobs:
               (cd "$dir" && zip -r "../$zipname" . -x "__pycache__/*" "*.pyc" ".vscode/*") || (echo "Failed to create zip: $zipname" && exit 1)
               touched_manifests=1
 
-              zip_path="$dir/../$zipname,"
-              zip_paths+=zip_path
-              zip_sizes+=$(stat -c%s "$zip_path")
-              zip_hashes+=$(sha256sum "$zip_path" | cut -d' ' -f1)
+              zip_path="$dir/../$zipname"
+              size=$(stat -c%s "$zip_path")
+              hash=$(sha256sum "$zip_path" | cut -d' ' -f1)
+              zip_paths+="$zip_path,"
+              zip_sizes+="${size},"
+              zip_hashes+="${hash},"
 
               echo "zipname variable is: $zipname"
               echo "Archiving directory: $dir"
@@ -123,7 +125,8 @@ jobs:
           
           Таким образом у вас всегда будут самые свежие версии аддонов.
 
-
+          #archive_size: ${{ steps.pack.outputs.archive_size }}
+          #archive_hash: ${{ steps.pack.outputs.archive_hash }}
           
         draft: false
         prerelease: false
