@@ -37,6 +37,8 @@ jobs:
         # проверяем есть ли файл blender_manifest.toml в текущем коммите
         touched_manifests=0
         zip_paths=""
+        zip_sizes=0
+        zip_hashes=0
 
         for file in $changed; do
           if [[ "$file" == */blender_manifest.toml ]]; then
@@ -61,16 +63,22 @@ jobs:
               (cd "$dir" && zip -r "../$zipname" . -x "__pycache__/*" "*.pyc" ".vscode/*") || (echo "Failed to create zip: $zipname" && exit 1)
               touched_manifests=1
 
-              zip_paths+="$dir/../$zipname,"
-              
+              zip_path="$dir/../$zipname,"
+              zip_paths+=zip_path
+              zip_sizes+=$(stat -c%s "$zip_path")
+              zip_hashes+=$(sha256sum "$zip_path" | cut -d' ' -f1)
+
               echo "zipname variable is: $zipname"
               echo "Archiving directory: $dir"
-              echo "Zip Path: $zip_paths"
             fi
           done
 
           zip_paths=${zip_paths%,}
+          zip_sizes=${zip_sizes%,}
+          zip_hashes=${zip_hashes%,}
           echo "zip_paths=$zip_paths" >> $GITHUB_OUTPUT
+          echo "zip_sizes=$zip_sizes" >> $GITHUB_OUTPUT
+          echo "zip_hashes=$zip_hashes" >> $GITHUB_OUTPUT
 
           if [ $touched_manifests -eq 0 ]; then
             echo "No blender_manifest.toml files were processed."
@@ -81,12 +89,6 @@ jobs:
             release_name="${id}_${version}-blender-${blender_version}"
             echo "release_name=$release_name" >> $GITHUB_OUTPUT
             echo "addon_name=${id}" >> $GITHUB_OUTPUT
-            # Размер в байтах
-            archive_size=$(stat -c%s "$archive_path")
-            echo "archive_size=$archive_size" >> $GITHUB_OUTPUT
-            # SHA256 hash
-            archive_hash=$(sha256sum "$archive_path" | cut -d' ' -f1)
-            echo "archive_hash=$archive_hash" >> $GITHUB_OUTPUT
           fi
         fi
 
@@ -121,8 +123,8 @@ jobs:
           
           Таким образом у вас всегда будут самые свежие версии аддонов.
 
-          archive_size: ${{ steps.pack.outputs.archive_size }}
-          archive_hash: ${{ steps.pack.outputs.archive_hash }}
+          #archive_size: ${{ steps.pack.outputs.archive_size }}
+          #archive_hash: ${{ steps.pack.outputs.archive_hash }}
           
         draft: false
         prerelease: false
