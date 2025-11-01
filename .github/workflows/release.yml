@@ -125,8 +125,8 @@ jobs:
           
           Таким образом у вас всегда будут самые свежие версии аддонов.
 
-          #archive_size: ${{ steps.pack.outputs.archive_size }}
-          #archive_hash: ${{ steps.pack.outputs.archive_hash }}
+          archive_size: ${{ steps.pack.outputs.archive_size }}
+          archive_hash: ${{ steps.pack.outputs.archive_hash }}
           
         draft: false
         prerelease: false
