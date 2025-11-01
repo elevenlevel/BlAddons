@@ -102,8 +102,10 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ steps.tag.outputs.tag }}
-        release_name: ${{ steps.pack.outputs.release_name }}
+        #tag_name: ${{ steps.tag.outputs.tag }}
+        tag_name: ${{ steps.pack.outputs.addon_name }}_latest
+        #release_name: ${{ steps.pack.outputs.release_name }}
+        release_name: ${{ steps.pack.outputs.addon_name }}_latest
         body: |
           body: |
             Имя релиза: ${id}
@@ -127,8 +129,8 @@ jobs:
 
         for path in "${dirs_array[@]}"; do
           echo "$path"
-
+          addon_name_latest = ${{ steps.pack.outputs.addon_name }}_latest
           echo "Uploading $zipfile"
           # gh release upload ${{ steps.tag.outputs.tag }} "$path" --clobber
-          gh release upload ${{ steps.pack.outputs.addon_name }} "$path" --clobber
+          gh release upload addon_name_latest "$path" --clobber
           done 
