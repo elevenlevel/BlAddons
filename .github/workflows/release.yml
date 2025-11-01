@@ -76,8 +76,7 @@ jobs:
             exit 0
           else
             echo "created=true" >> $GITHUB_OUTPUT
-            release_name = "Release ${id}_${version}-blender-${blender_version}"
-            echo "$release_name" >> $GITHUB_OUTPUT
+
           fi
         fi
 
