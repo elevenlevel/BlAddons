@@ -102,12 +102,10 @@ jobs:
         tag_name: ${{ steps.tag.outputs.tag }}
         release_name: ${{ steps.pack.outputs.release_name }}
         body: |
-          Release date: 
-          Download zip:
-          for path in "${dirs_array[@]}"; do
-
+            Release date: TAG
+            Download zip:
             [${{ steps.pack.outputs.release_name }}] (https://github.com/elevenlevel/BlAddons/releases/download/${{ steps.tag.outputs.tag }}/${{ steps.pack.outputs.release_name }})
-          done
+            
         draft: false
         prerelease: false
 
