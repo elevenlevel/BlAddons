@@ -77,7 +77,7 @@ jobs:
           else
             echo "created=true" >> $GITHUB_OUTPUT
             release_name = "Release ${id}_${version}-blender-${blender_version}"
-            echo "release_name=$release_name" >> $GITHUB_OUTPUT
+            echo "$release_name" >> $GITHUB_OUTPUT
           fi
         fi
 
@@ -102,11 +102,15 @@ jobs:
         tag_name: ${{ steps.tag.outputs.tag }}
         release_name: ${{ steps.pack.outputs.release_name }}
         body: |
-          Release date: 
-          Download zip:
           for path in "${dirs_array[@]}"; do
+            body: |
+              Release date: 
+              Download zip:
+              
 
-            [${{ steps.pack.outputs.release_name }}] (https://github.com/elevenlevel/BlAddons/releases/download/${{ steps.tag.outputs.tag }}/${{ steps.pack.outputs.release_name }})
+                [${{ steps.pack.outputs.release_name }}] (https://github.com/elevenlevel/BlAddons/releases/download/${{ steps.tag.outputs.tag }}/${{ steps.pack.outputs.release_name }})
+              
+            draft: false
           done
         draft: false
         prerelease: false
