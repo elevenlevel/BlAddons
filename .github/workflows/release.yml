@@ -36,6 +36,8 @@ jobs:
 
         # проверяем есть ли файл blender_manifest.toml в текущем коммите
         touched_manifests=0
+        zip_paths=""
+
         for file in $changed; do
           if [[ "$file" == */blender_manifest.toml ]]; then
             touched_manifests=1
@@ -76,7 +78,8 @@ jobs:
             exit 0
           else
             echo "created=true" >> $GITHUB_OUTPUT
-
+            release_name="Release ${id}_${version}-blender-${blender_version}"
+            echo "release_name=$release_name" >> $GITHUB_OUTPUT
           fi
         fi
 
@@ -101,16 +104,14 @@ jobs:
         tag_name: ${{ steps.tag.outputs.tag }}
         release_name: ${{ steps.pack.outputs.release_name }}
         body: |
-          for path in "${dirs_array[@]}"; do
-            body: |
-              Release date: 
-              Download zip:
-              
+          body: |
+            Release date: 
+            Download zip:
+            
 
-                [${{ steps.pack.outputs.release_name }}] (https://github.com/elevenlevel/BlAddons/releases/download/${{ steps.tag.outputs.tag }}/${{ steps.pack.outputs.release_name }})
-              
-            draft: false
-          done
+              [${{ steps.pack.outputs.release_name }}] (https://github.com/elevenlevel/BlAddons/releases/download/${{ steps.tag.outputs.tag }}/${{ steps.pack.outputs.release_name }})
+            
+          draft: false
         draft: false
         prerelease: false
 
