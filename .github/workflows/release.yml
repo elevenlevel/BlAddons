@@ -116,6 +116,22 @@ jobs:
           fi
         fi
 
+    - name: Edit index.json
+      if: steps.pack.outputs.created == 'true'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        file_path="../../index.json"
+        
+        DO SOMETHING
+
+        git config user.name "github-actions"
+        git config user.email "actions@github.com"
+        git add "$file_path"
+        git commit -m "Update index.json"
+        git push
+
+
     - name: Create and push tag
       if: steps.pack.outputs.created == 'true'
       id: tag
