@@ -37,8 +37,8 @@ jobs:
         # проверяем есть ли файл blender_manifest.toml в текущем коммите
         touched_manifests=0
         zip_paths=""
-        zip_sizes=0
-        zip_hashes=0
+        zip_sizes=""
+        zip_hashes=""
 
         for file in $changed; do
           if [[ "$file" == */blender_manifest.toml ]]; then
@@ -66,21 +66,21 @@ jobs:
               zip_path="$dir/../$zipname"
               size=$(stat -c%s "$zip_path")
               hash=$(sha256sum "$zip_path" | cut -d' ' -f1)
-              zip_paths+="$zip_path,"
-              zip_sizes+="${size},"
-              zip_hashes+="${hash},"
+              _zip_paths+="$zip_path,"
+              _zip_sizes+="${size},"
+              _zip_hashes+="${hash},"
 
               echo "zipname variable is: $zipname"
               echo "Archiving directory: $dir"
             fi
           done
 
-          zip_paths=${zip_paths%,}
-          zip_sizes=${zip_sizes%,}
-          zip_hashes=${zip_hashes%,}
-          # echo "zip_paths=$zip_paths" >> $GITHUB_OUTPUT
-          # echo "zip_sizes=$zip_sizes" >> $GITHUB_OUTPUT
-          # echo "zip_hashes=$zip_hashes" >> $GITHUB_OUTPUT
+          zip_paths=${_zip_paths%,}
+          zip_sizes=${_zip_sizes%,}
+          zip_hashes=${_zip_hashes%,}
+          echo "zip_paths=$zip_paths" >> $GITHUB_OUTPUT
+          echo "zip_sizes=$zip_sizes" >> $GITHUB_OUTPUT
+          echo "zip_hashes=$zip_hashes" >> $GITHUB_OUTPUT
 
           description=""
 
@@ -90,8 +90,8 @@ jobs:
 
           for i in "${!paths_array[@]}"; do
             description+="Архив: ${paths_array[i]}
-            ${sizes_array[i]}
-            ${hashes_array[i]}
+          ${sizes_array[i]}
+          ${hashes_array[i]}
 
           "
           done
