@@ -88,10 +88,14 @@ jobs:
           IFS=',' read -r -a sizes_array <<< "$zip_sizes"
           IFS=',' read -r -a hashes_array <<< "$zip_hashes"
 
-          # for i in "${!paths_array[@]}"; do
-          #   description+="Архив: ${paths_array[i]}
-          # ${sizes_array[i]}
-          # ${hashes_array[i]}
+          for i in "${!paths_array[@]}"; do
+            size_clean=$(echo "${sizes_array[i]}" | xargs)
+            hash_clean=$(echo "${hashes_array[i]}" | xargs)
+            path_clean=$(echo "${paths_array[i]}" | xargs)
+
+            description+="Архив: $path_clean
+          Размер: $size_clean байт
+          SHA256: $hash_clean
 
           "
           done
