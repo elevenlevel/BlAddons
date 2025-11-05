@@ -100,7 +100,9 @@ jobs:
           "
           done
 
-          echo "release_description=$description" >> $GITHUB_OUTPUT
+          echo "release_description<<EOF" >> $GITHUB_OUTPUT
+          echo "$description" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
           if [ $touched_manifests -eq 0 ]; then
             echo "No blender_manifest.toml files were processed."
