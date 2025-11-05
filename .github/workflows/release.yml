@@ -88,10 +88,10 @@ jobs:
           IFS=',' read -r -a sizes_array <<< "$zip_sizes"
           IFS=',' read -r -a hashes_array <<< "$zip_hashes"
 
-          for i in "${!paths_array[@]}"; do
-            description+="Архив: ${paths_array[i]}
-          ${sizes_array[i]}
-          ${hashes_array[i]}
+          # for i in "${!paths_array[@]}"; do
+          #   description+="Архив: ${paths_array[i]}
+          # ${sizes_array[i]}
+          # ${hashes_array[i]}
 
           "
           done
