@@ -90,8 +90,8 @@ jobs:
 
           for i in "${!paths_array[@]}"; do
             description+="Архив: ${paths_array[i]}
-          Размер: ${sizes_array[i]} байт
-          SHA256: ${hashes_array[i]}
+          ${sizes_array[i]}
+          ${hashes_array[i]}
 
           "
           done
