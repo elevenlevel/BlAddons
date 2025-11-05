@@ -93,7 +93,7 @@ jobs:
             ${sizes_array[i]}
             ${hashes_array[i]}
 
-          
+          "
           done
 
           echo "release_description=$description" >> $GITHUB_OUTPUT
