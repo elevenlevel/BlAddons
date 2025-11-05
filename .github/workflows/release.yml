@@ -89,11 +89,11 @@ jobs:
           IFS=',' read -r -a hashes_array <<< "$zip_hashes"
 
           for i in "${!paths_array[@]}"; do
-            description+="Архив:${paths_array[i]}
-          ${sizes_array[i]}
-          ${hashes_array[i]}
+            description+="Архив: ${paths_array[i]}
+            ${sizes_array[i]}
+            ${hashes_array[i]}
 
-          "
+          
           done
 
           echo "release_description=$description" >> $GITHUB_OUTPUT
