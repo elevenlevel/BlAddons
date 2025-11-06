@@ -121,7 +121,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        json_path = "index.json"
+        json_path="index.json"
         if [ -f json_path ]; then
           echo "index.json exists"
         else
