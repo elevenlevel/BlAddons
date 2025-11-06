@@ -121,7 +121,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        file_path="index.json"
+        file_path="../index.json"
         
         # DO SOMETHING с index.json
         if [ -f file_path ]; then
