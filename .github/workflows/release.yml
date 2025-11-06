@@ -161,8 +161,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        echo "tag_name: ${{ steps.tag.outputs.tag }}"
-        tag_name: ${{ steps.tag.outputs.tag }}
+        #tag_name: ${{ steps.tag.outputs.tag }}
         #tag_name: ${{ steps.pack.outputs.addon_name }}_latest
         #release_name: ${{ steps.pack.outputs.release_name }}
         release_name: ${{ steps.pack.outputs.addon_name }}_latest
