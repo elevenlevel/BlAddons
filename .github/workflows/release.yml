@@ -127,9 +127,42 @@ jobs:
         else
           echo "index.json not found"
         fi
-
-        # jq '.extensions += [{ "id": "example", "version": "1.0.0" }]' "$file_path" > tmp.json && mv tmp.json "$file_path"
-
+        
+        # блок внесения изменений в json файл =======================================================================================
+        jq --arg id "$addon_id" --arg ver "$version" --arg url "$archive_url" --arg size "$archive_size" --arg hash "$archive_hash" '
+        # Проверяем, есть ли элемент с id
+        if (.data | map(.id) | index($id)) != null then
+          # Обновляем элемент
+          (.data[] | select(.id == $id)) |=
+            . + {
+              version: $ver,
+              archive_url: $url,
+              archive_size: ($size | tonumber),
+              archive_hash: $hash
+            }
+        else
+          # Добавляем новый объект в массив data
+          .data += [{
+            schema_version: "1.0.0",
+            id: $id,
+            name: $id,
+            tagline: "New Addon",
+            version: $ver,
+            type: "add-on",
+            maintainer: "Unknown",
+            license: ["GPL-3.0-or-later"],
+            blender_version_min: "4.0.0",
+            permissions: {},
+            tags: [],
+            python_versions: [],
+            archive_url: $url,
+            archive_size: ($size | tonumber),
+            archive_hash: $hash
+          }]
+        end
+        ' index.json > tmp.json && mv tmp.json index.json
+        # =========================================================================================================================
+        
         # git config user.name "github-actions"
         # git config user.email "actions@github.com"
         # git add "$file_path"
