@@ -123,13 +123,20 @@ jobs:
       run: |
         file_path="../../index.json"
         
-        DO SOMETHING
+        # DO SOMETHING с index.json
+        if [ -f "../../index.json" ]; then
+          echo "index.json exists"
+        else
+          echo "index.json does not exist"
+        fi
+        
+        # jq '.extensions += [{ "id": "example", "version": "1.0.0" }]' "$file_path" > tmp.json && mv tmp.json "$file_path"
 
-        git config user.name "github-actions"
-        git config user.email "actions@github.com"
-        git add "$file_path"
-        git commit -m "Update index.json"
-        git push
+        # git config user.name "github-actions"
+        # git config user.email "actions@github.com"
+        # git add "$file_path"
+        # git commit -m "Update index.json"
+        # git push
 
 
     - name: Create and push tag
@@ -139,9 +146,13 @@ jobs:
         TAG="release-$(date +'%Y%m%d%H%M%S')"
         git config user.name "github-actions"
         git config user.email "actions@github.com"
-        git tag $TAG
-        git push origin $TAG
-        echo "tag=$TAG" >> $GITHUB_OUTPUT
+
+        if ! git diff --cached --quiet; then
+          git commit -m "Update index.json"
+          git push
+        else
+          echo "No changes to commit"
+        fi
 
     - name: Create GitHub Release
       if: steps.pack.outputs.created == 'true'
