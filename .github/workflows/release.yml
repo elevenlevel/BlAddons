@@ -121,15 +121,15 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        file_path="../../index.json"
+        file_path="./index.json"
         
         # DO SOMETHING с index.json
-        if [ -f "../../index.json" ]; then
+        if [ -f file_path ]; then
           echo "index.json exists"
         else
           echo "index.json does not exist"
         fi
-        
+
         # jq '.extensions += [{ "id": "example", "version": "1.0.0" }]' "$file_path" > tmp.json && mv tmp.json "$file_path"
 
         # git config user.name "github-actions"
