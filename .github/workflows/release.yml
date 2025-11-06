@@ -121,13 +121,26 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        file_path="../index.json"
+        file_path1="index.json"
+        file_path2="./index.json"
+        file_path3="../index.json"
+        file_path4="../../index.json"
+        file_path5="../../../index.json"
+        file_path6="../../../../index.json"
         
         # DO SOMETHING с index.json
-        if [ -f file_path ]; then
-          echo "index.json exists"
-        else
-          echo "index.json does not exist"
+        if [ -f file_path1 ]; then
+          echo "file_path1 exists"
+        elif [ -f file_path2 ]; then
+          echo "file_path2 exists"
+        elif [ -f file_path3 ]; then
+          echo "file_path3 exists"
+        elif [ -f file_path4 ]; then
+          echo "file_path4 exists"
+        elif [ -f file_path5 ]; then
+          echo "file_path5 exists"
+        elif [ -f file_path6 ]; then
+          echo "file_path6 exists"
         fi
 
         # jq '.extensions += [{ "id": "example", "version": "1.0.0" }]' "$file_path" > tmp.json && mv tmp.json "$file_path"
