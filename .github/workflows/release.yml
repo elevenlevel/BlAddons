@@ -150,19 +150,6 @@ jobs:
         else
           echo "index.json not found"
         fi
-
-        # Собираем значения полей из toml
-        schema_version=$addon_schema_version
-        id=$addon_id
-        name=$addon_name
-        version=$addon_version
-        tagline=$addon_tagline
-        maintainer=$addon_maintainer
-        type=$addon_type
-        tags=$addon_tags
-        blender_version=$addon_blender_version
-        license=$addon_license
-        copyright=$addon_copyright
         
         # блок внесения изменений в json файл =======================================================================================
         jq --arg id "$addon_id" --arg ver "$addon_version" --arg url "$archive_url" --arg size "$archive_size" --arg hash "$archive_hash" '
