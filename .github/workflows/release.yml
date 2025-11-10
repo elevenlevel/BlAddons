@@ -56,7 +56,7 @@ jobs:
             if [[ "$file" == */blender_manifest.toml ]]; then
               dir=$(dirname "$file")
 
-              schema_version=$(python -c "import toml; print(str(toml.load('$file')['schema_version']))")
+              schema_version=$(python -c "import toml; print(toml.load('$file')['schema_version'])")
               name=$(python -c "import toml; print(toml.load('$file')['name'])")
               id=$(python -c "import toml; print(toml.load('$file')['id'])")
               version=$(python -c "import toml; print(toml.load('$file')['version'])")
@@ -67,6 +67,8 @@ jobs:
               blender_version=$(python -c "import toml; print(toml.load('$file')['blender_version_min'])")
               license=$(python -c "import toml; print(toml.load('$file')['license'])")
               copyright=$(python -c "import toml; print(toml.load('$file')['copyright'])")
+
+              schema_version="$schema_version"
 
               zipname="${id}_${version}-blender-${blender_version}.zip"
               
