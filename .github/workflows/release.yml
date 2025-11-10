@@ -174,7 +174,7 @@ jobs:
           # Обновляем элемент
           (.data[] | select(.id == $id)) |=
             . + {
-              schema_version: $schema_version,
+              schema_version: ($schema_version | tonumber),
               id: $id,
               name: $name,
               tagline: $tagline,
@@ -193,7 +193,7 @@ jobs:
         else
           # Добавляем новый объект в массив data
           .data += [{
-            schema_version: $schema_version,
+            schema_version: ($schema_version | tonumber),
             id: $id,
             name: $name,
             tagline: $tagline,
