@@ -174,25 +174,25 @@ jobs:
               archive_size: ($size | tonumber),
               archive_hash: $hash
             }
-        else
-          # Добавляем новый объект в массив data
-          .data += [{
-            schema_version: $addon_schema_version,
-            id: $addon_id,
-            name: $addon_name,
-            tagline: $addon_tagline,
-            version: $addon_version,
-            type: $addon_type,
-            maintainer: $addon_maintainer,
-            license: $addon_license,
-            blender_version_min: $addon_blender_version,
-            permissions: {},
-            tags: $addon_tags,
-            python_versions: $python_versions,
-            archive_url: $url,
-            archive_size: ($size | tonumber),
-            archive_hash: $hash
-          }]
+        # else
+        #   # Добавляем новый объект в массив data
+        #   .data += [{
+        #     schema_version: $addon_schema_version,
+        #     id: $addon_id,
+        #     name: $addon_name,
+        #     tagline: $addon_tagline,
+        #     version: $addon_version,
+        #     type: $addon_type,
+        #     maintainer: $addon_maintainer,
+        #     license: $addon_license,
+        #     blender_version_min: $addon_blender_version,
+        #     permissions: {},
+        #     tags: $addon_tags,
+        #     python_versions: $python_versions,
+        #     archive_url: $url,
+        #     archive_size: ($size | tonumber),
+        #     archive_hash: $hash
+        #   }]
         end
         ' index.json > tmp.json && mv tmp.json index.json
         # =========================================================================================================================
