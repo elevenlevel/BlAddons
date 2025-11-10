@@ -237,7 +237,7 @@ jobs:
           git commit -m "Update index.json"
           git push
         else
-          echo "No changes to commit"
+          echo "No_changes_to_commit"
         fi
 
         echo "tag=$TAG" >> $GITHUB_OUTPUT
