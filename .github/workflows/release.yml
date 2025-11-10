@@ -68,7 +68,7 @@ jobs:
               license=$(python -c "import toml; print(toml.load('$file')['license'])")
               copyright=$(python -c "import toml; print(toml.load('$file')['copyright'])")
 
-              schema_version = ($schema_version | tostring)
+              schema_version = $schema_version | tostring
 
               zipname="${id}_${version}-blender-${blender_version}.zip"
               
