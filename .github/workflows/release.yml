@@ -153,6 +153,7 @@ jobs:
         
         # блок внесения изменений в json файл =======================================================================================
         jq --arg id "$addon_id" --arg ver "$addon_version" --arg url "$archive_url" --arg size "$archive_size" --arg hash "$archive_hash" '
+        
         # Проверяем, есть ли элемент с id
         if (.data | map(.id) | index($id)) != null then
           schema_version=${{ steps.pack.outputs.addon_schema_version }}
