@@ -165,11 +165,11 @@ jobs:
           --arg version "$addon_version" \
           --arg type "$addon_type" \
           --arg maintainer "$addon_maintainer" \
-          --argjson license "$addon_license" \
+          --argjson license ("$addon_license" | fromjson) \
           --arg blender_version_min "$addon_blender_version" \
-          --argjson permissions "$addon_permissions" \
-          --argjson tags "$addon_tags" \
-          --argjson python_versions "$addon_python_versions" \
+          --argjson permissions ("$addon_permissions" | fromjson) \
+          --argjson tags ("$addon_tags" | fromjson) \
+          --argjson python_versions ("$addon_python_versions" | fromjson) \
           --arg archive_url "$archive_url" \
           --arg archive_size "$archive_size" \
           --arg archive_hash "$archive_hash" '
