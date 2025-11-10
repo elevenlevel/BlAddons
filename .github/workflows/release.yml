@@ -165,11 +165,11 @@ jobs:
           --arg version "$addon_version" \
           --arg type "$addon_type" \
           --arg maintainer "$addon_maintainer" \
-          --arg license "$addon_license" \
+          --argjson license "$addon_license" \
           --arg blender_version_min "$addon_blender_version" \
-          --arg permissions "$addon_permissions" \
-          --arg tags "$addon_tags" \
-          --arg python_versions "$addon_python_versions" \
+          --argjson permissions "$addon_permissions" \
+          --argjson tags "$addon_tags" \
+          --argjson python_versions "$addon_python_versions" \
           --arg archive_url "$archive_url" \
           --arg archive_size "$archive_size" \
           --arg archive_hash "$archive_hash" '
@@ -237,7 +237,7 @@ jobs:
           git commit -m "Update index.json"
           git push
         else
-          echo "No_changes_to_commit"
+          echo "No changes to commit"
         fi
 
         echo "tag=$TAG" >> $GITHUB_OUTPUT
