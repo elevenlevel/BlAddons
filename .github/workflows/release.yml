@@ -153,26 +153,24 @@ jobs:
         fi
         
         # блок внесения изменений в json файл =======================================================================================
-        jq --arg id "$addon_id" --arg ver "$addon_version" --arg url "$archive_url" --arg size "$archive_size" --arg hash "$archive_hash" '
+        jq --arg schema_version "$addon_schema_version" \
+          --arg id "$addon_id" \
+          --arg name "$addon_name" \
+          --arg tagline "$addon_tagline" \
+          --arg version "$addon_version" \
+          --arg type "$addon_type" \
+          --arg maintainer "$addon_maintainer" \
+          --arg license "$addon_license" \
+          --arg blender_version_min "$addon_blender_version" \
+          --arg permissions "$addon_permissions" \
+          --arg tags "$addon_tags" \
+          --arg python_versions "$addon_python_versions" \
+          --arg url "$archive_url" \
+          --arg size "$archive_size" \
+          --arg hash "$archive_hash" '
         
         # Проверяем, есть ли элемент с id
         if (.data | map(.id) | index($id)) != null then
-          schema_version=${{ steps.pack.outputs.addon_schema_version }}
-          id=${{ steps.pack.outputs.addon_id }}
-          name=${{ steps.pack.outputs.addon_name }}
-          tagline=${{ steps.pack.outputs.addon_tagline }}
-          version=${{ steps.pack.outputs.addon_version }}
-          type=${{ steps.pack.outputs.addon_type }}
-          maintainer=${{ steps.pack.outputs.addon_maintainer }}
-          license=${{ steps.pack.outputs.addon_license }}
-          blender_version_min=${{ steps.pack.outputs.addon_blender_version }}
-          permissions=${{ steps.pack.outputs.addon_permissions }}
-          tags=${{ steps.pack.outputs.addon_tags }}
-          python_versions=${{ steps.pack.outputs.python_versions }}
-          archive_url=${{ steps.pack.outputs.url }}
-          archive_size=${{ steps.pack.outputs.size }}
-          archive_hash=${{ steps.pack.outputs.hash }}
-
           # Обновляем элемент
           (.data[] | select(.id == $id)) |=
             . + {
