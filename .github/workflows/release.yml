@@ -109,7 +109,7 @@ jobs:
           Размер: $size_clean байт
           SHA256: $hash_clean
 
-          archive_url=$("https://")
+          archive_url="https://"
 
           "
           done
@@ -170,9 +170,9 @@ jobs:
           --arg permissions "$addon_permissions" \
           --arg tags "$addon_tags" \
           --arg python_versions "$addon_python_versions" \
-          --arg url "$archive_url" \
-          --arg size "$archive_size" \
-          --arg hash "$archive_hash" '
+          --arg archive_url "$archive_url" \
+          --arg archive_size "$archive_size" \
+          --arg archive_hash "$archive_hash" '
         
         # Проверяем, есть ли элемент с id
         if (.data | map(.id) | index($id)) != null then
@@ -198,7 +198,7 @@ jobs:
         else
           # Добавляем новый объект в массив data
           .data += [{
-            schema_version: ($schema_version | tonumber),
+            schema_version: $schema_version,
             id: $id,
             name: $name,
             tagline: $tagline,
