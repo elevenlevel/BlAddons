@@ -155,43 +155,59 @@ jobs:
         jq --arg id "$addon_id" --arg ver "$addon_version" --arg url "$archive_url" --arg size "$archive_size" --arg hash "$archive_hash" '
         # Проверяем, есть ли элемент с id
         if (.data | map(.id) | index($id)) != null then
+          schema_version=${{ steps.pack.outputs.addon_schema_version }}
+          id=${{ steps.pack.outputs.addon_id }}
+          name=${{ steps.pack.outputs.addon_name }}
+          tagline=${{ steps.pack.outputs.addon_tagline }}
+          version=${{ steps.pack.outputs.addon_version }}
+          type=${{ steps.pack.outputs.addon_type }}
+          maintainer=${{ steps.pack.outputs.addon_maintainer }}
+          license=${{ steps.pack.outputs.addon_license }}
+          blender_version_min=${{ steps.pack.outputs.addon_blender_version }}
+          permissions=${{ steps.pack.outputs.addon_permissions }}
+          tags=${{ steps.pack.outputs.addon_tags }}
+          python_versions=${{ steps.pack.outputs.python_versions }}
+          archive_url=${{ steps.pack.outputs.url }}
+          archive_size=${{ steps.pack.outputs.size }}
+          archive_hash=${{ steps.pack.outputs.hash }}
+
           # Обновляем элемент
           (.data[] | select(.id == $id)) |=
             . + {
-              schema_version: ${{ steps.pack.outputs.addon_schema_version }},
-              id: ${{ steps.pack.outputs.addon_id }},
-              name: ${{ steps.pack.outputs.addon_name }},
-              tagline: ${{ steps.pack.outputs.addon_tagline }},
-              version: ${{ steps.pack.outputs.addon_version }},
-              type: ${{ steps.pack.outputs.addon_type }},
-              maintainer: ${{ steps.pack.outputs.addon_maintainer }},
-              license: ${{ steps.pack.outputs.addon_license }},
-              blender_version_min: ${{ steps.pack.outputs.addon_blender_version }},
-              permissions: ${{ steps.pack.outputs.addon_permissions }},
-              tags: ${{ steps.pack.outputs.addon_tags }},
-              python_versions: ${{ steps.pack.outputs.python_versions }},
-              archive_url: ${{ steps.pack.outputs.url }},
-              archive_size: ${{ steps.pack.outputs.size }} | tonumber,
-              archive_hash: ${{ steps.pack.outputs.hash }}
+              schema_version: $schema_version,
+              id: $id,
+              name: $name,
+              tagline: $tagline,
+              version: $version,
+              type: $type,
+              maintainer: $maintainer,
+              license: $license,
+              blender_version_min: $blender_version_min,
+              permissions: $permissions,
+              tags: $tags,
+              python_versions: $python_versions,
+              archive_url: $archive_url,
+              archive_size: ($archive_size | tonumber),
+              archive_hash: $archive_hash
             }
         else
           # Добавляем новый объект в массив data
           .data += [{
-            schema_version: ${{ steps.pack.outputs.addon_schema_version }},
-            id: ${{ steps.pack.outputs.addon_id }},
-            name: ${{ steps.pack.outputs.addon_name }},
-            tagline: ${{ steps.pack.outputs.addon_tagline }},
-            version: ${{ steps.pack.outputs.addon_version }},
-            type: ${{ steps.pack.outputs.addon_type }},
-            maintainer: ${{ steps.pack.outputs.addon_maintainer }},
-            license: ${{ steps.pack.outputs.addon_license }},
-            blender_version_min: ${{ steps.pack.outputs.addon_blender_version }},
-            permissions: ${{ steps.pack.outputs.addon_permissions }},
-            tags: ${{ steps.pack.outputs.addon_tags }},
-            python_versions: ${{ steps.pack.outputs.python_versions }},
-            archive_url: ${{ steps.pack.outputs.url }},
-            archive_size: ${{ steps.pack.outputs.size }} | tonumber,
-            archive_hash: ${{ steps.pack.outputs.hash }}
+            schema_version: $schema_version,
+            id: $id,
+            name: $name,
+            tagline: $tagline,
+            version: $version,
+            type: $type,
+            maintainer: $maintainer,
+            license: $license,
+            blender_version_min: $blender_version_min,
+            permissions: $permissions,
+            tags: $tags,
+            python_versions: $python_versions,
+            archive_url: $archive_url,
+            archive_size: ($archive_size | tonumber),
+            archive_hash: $archive_hash
           }]
         end
         ' index.json > tmp.json && mv tmp.json index.json
