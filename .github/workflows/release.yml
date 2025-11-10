@@ -142,6 +142,11 @@ jobs:
             echo "archive_url=$archive_url" >> $GITHUB_OUTPUT
             echo "archive_size=$size_clean" >> $GITHUB_OUTPUT
             echo "archive_hash=$hash_clean" >> $GITHUB_OUTPUT
+            
+            echo $addon_tags
+            echo $addon_license
+            echo $addon_blender_version
+            echo $addon_license
           fi
         fi
 
@@ -165,11 +170,11 @@ jobs:
           --arg version "$addon_version" \
           --arg type "$addon_type" \
           --arg maintainer "$addon_maintainer" \
-          --argjson license ("$addon_license" | fromjson) \
+          --argjson license "$addon_license" \
           --arg blender_version_min "$addon_blender_version" \
-          --argjson permissions ("$addon_permissions" | fromjson) \
-          --argjson tags ("$addon_tags" | fromjson) \
-          --argjson python_versions ("$addon_python_versions" | fromjson) \
+          --argjson permissions "$addon_permissions" \
+          --argjson tags "$addon_tags" \
+          --argjson python_versions "$addon_python_versions" \
           --arg archive_url "$archive_url" \
           --arg archive_size "$archive_size" \
           --arg archive_hash "$archive_hash" '
