@@ -176,7 +176,7 @@ jobs:
           # Обновляем элемент
           (.data[] | select(.id == $id)) |=
             . + {
-              schema_version: ($schema_version | tostring),
+              schema_version: $schema_version,
               id: $id,
               name: $name,
               tagline: $tagline,
