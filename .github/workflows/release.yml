@@ -109,6 +109,7 @@ jobs:
           Размер: $size_clean байт
           SHA256: $hash_clean
 
+          archive_url="https://"
           "
           done
 
@@ -137,6 +138,9 @@ jobs:
             echo "addon_blender_version=$blender_version" >> $GITHUB_OUTPUT
             echo "addon_license=$license" >> $GITHUB_OUTPUT
             echo "addon_copyright=$copyright" >> $GITHUB_OUTPUT
+            echo "archive_url=$archive_url" >> $GITHUB_OUTPUT
+            echo "archive_size=$size_clean" >> $GITHUB_OUTPUT
+            echo "archive_hash=$hash_clean" >> $GITHUB_OUTPUT
           fi
         fi
 
