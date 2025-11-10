@@ -124,7 +124,7 @@ jobs:
             release_name="${id}_${version}-blender-${blender_version}"
             echo "release_name=$release_name" >> $GITHUB_OUTPUT
             echo "addon_name=${id}" >> $GITHUB_OUTPUT
-            echo "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+            
             echo "addon_schema_version=$schema_version" >> $GITHUB_OUTPUT
             echo "addon_id=$id" >> $GITHUB_OUTPUT
             echo "addon_name=$name" >> $GITHUB_OUTPUT
@@ -158,40 +158,40 @@ jobs:
           # Обновляем элемент
           (.data[] | select(.id == $id)) |=
             . + {
-              schema_version: $addon_schema_version,
-              id: $addon_id,
-              name: $addon_name,
-              tagline: $addon_tagline,
-              version: $addon_version,
-              type: $addon_type,
-              maintainer: $addon_maintainer,
-              license: $addon_license,
-              blender_version_min: $addon_blender_version,
-              permissions: {},
-              tags: $addon_tags,
-              python_versions: $python_versions,
-              archive_url: $url,
-              archive_size: ($size | tonumber),
-              archive_hash: $hash
+              schema_version: ${{ steps.pack.outputs.addon_schema_version }},
+              id: ${{ steps.pack.outputs.addon_id }},
+              name: ${{ steps.pack.outputs.addon_name }},
+              tagline: ${{ steps.pack.outputs.addon_tagline }},
+              version: ${{ steps.pack.outputs.addon_version }},
+              type: ${{ steps.pack.outputs.addon_type }},
+              maintainer: ${{ steps.pack.outputs.addon_maintainer }},
+              license: ${{ steps.pack.outputs.addon_license }},
+              blender_version_min: ${{ steps.pack.outputs.addon_blender_version }},
+              permissions: ${{ steps.pack.outputs.addon_permissions }},
+              tags: ${{ steps.pack.outputs.addon_tags }},
+              python_versions: ${{ steps.pack.outputs.python_versions }},
+              archive_url: ${{ steps.pack.outputs.url }},
+              archive_size: ${{ steps.pack.outputs.size }} | tonumber,
+              archive_hash: ${{ steps.pack.outputs.hash }}
             }
         else
           # Добавляем новый объект в массив data
           .data += [{
-            schema_version: $addon_schema_version,
-            id: $addon_id,
-            name: $addon_name,
-            tagline: $addon_tagline,
-            version: $addon_version,
-            type: $addon_type,
-            maintainer: $addon_maintainer,
-            license: $addon_license,
-            blender_version_min: $addon_blender_version,
-            permissions: {},
-            tags: $addon_tags,
-            python_versions: $python_versions,
-            archive_url: $url,
-            archive_size: ($size | tonumber),
-            archive_hash: $hash
+            schema_version: ${{ steps.pack.outputs.addon_schema_version }},
+            id: ${{ steps.pack.outputs.addon_id }},
+            name: ${{ steps.pack.outputs.addon_name }},
+            tagline: ${{ steps.pack.outputs.addon_tagline }},
+            version: ${{ steps.pack.outputs.addon_version }},
+            type: ${{ steps.pack.outputs.addon_type }},
+            maintainer: ${{ steps.pack.outputs.addon_maintainer }},
+            license: ${{ steps.pack.outputs.addon_license }},
+            blender_version_min: ${{ steps.pack.outputs.addon_blender_version }},
+            permissions: ${{ steps.pack.outputs.addon_permissions }},
+            tags: ${{ steps.pack.outputs.addon_tags }},
+            python_versions: ${{ steps.pack.outputs.python_versions }},
+            archive_url: ${{ steps.pack.outputs.url }},
+            archive_size: ${{ steps.pack.outputs.size }} | tonumber,
+            archive_hash: ${{ steps.pack.outputs.hash }}
           }]
         end
         ' index.json > tmp.json && mv tmp.json index.json
