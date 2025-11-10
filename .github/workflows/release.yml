@@ -125,7 +125,7 @@ jobs:
             echo "release_name=$release_name" >> $GITHUB_OUTPUT
             echo "addon_name=${id}" >> $GITHUB_OUTPUT
             
-            echo "addon_schema_version=$schema_version" >> $GITHUB_OUTPUT
+            echo "addon_schema_version=$schema_version" | tostring >> $GITHUB_OUTPUT
             echo "addon_id=$id" >> $GITHUB_OUTPUT
             echo "addon_name=$name" >> $GITHUB_OUTPUT
             echo "addon_version=$version" >> $GITHUB_OUTPUT
