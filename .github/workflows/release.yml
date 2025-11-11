@@ -146,9 +146,9 @@ jobs:
             echo "hash_clean=$hash_clean" >> $GITHUB_OUTPUT
 
             echo "tags=$tags" >> $GITHUB_OUTPUT
-            echo "license=$license_json" >> $GITHUB_OUTPUT
-            echo "copyright=$copyright_json" >> $GITHUB_OUTPUT
-            echo "python_versions=$python_versions_json" >> $GITHUB_OUTPUT
+            echo "license=$license" >> $GITHUB_OUTPUT
+            echo "copyright=$copyright" >> $GITHUB_OUTPUT
+            echo "python_versions=$python_versions" >> $GITHUB_OUTPUT
             
             echo "XXXXXXXXXXX"
             echo $schema_version
@@ -163,10 +163,10 @@ jobs:
             echo $size_clean
             echo $hash_clean
 
-            echo $tags_json
-            echo $license_json
-            echo $copyright_json
-            echo $python_versions_json
+            echo $tags
+            echo $license
+            echo $copyright
+            echo $python_versions
           fi
         fi
 
