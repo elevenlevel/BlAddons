@@ -144,11 +144,11 @@ jobs:
             echo "archive_hash=$hash_clean" >> $GITHUB_OUTPUT
             
             echo "XXXXXXXXXXX"
-            echo $addon_name
-            echo $addon_tags
-            echo $addon_license
-            echo $addon_blender_version
-            echo $addon_license
+            echo $name
+            echo $tags
+            echo $license
+            echo $blender_version
+            echo $license
           fi
         fi
 
