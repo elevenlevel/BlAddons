@@ -159,10 +159,10 @@ jobs:
             echo $size_clean
             echo $hash_clean
 
-            echo $tags
-            echo $license
-            echo $copyright
-            echo $python_versions
+            echo "tags=$tags"
+            echo "license=$license"
+            echo "copyright=$copyright"
+            echo "python_versions=$python_versions"
           fi
         fi
 
