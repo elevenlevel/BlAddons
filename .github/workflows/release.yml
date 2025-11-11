@@ -151,6 +151,18 @@ jobs:
             echo "python_versions=$python_versions_json" >> $GITHUB_OUTPUT
             
             echo "XXXXXXXXXXX"
+            echo $schema_version
+            echo $id
+            echo $name
+            echo $version
+            echo $tagline
+            echo $maintainer
+            echo $type
+            echo $blender_version
+            echo $archive_url
+            echo $size_clean
+            echo $hash_clean
+
             echo $tags_json
             echo $license_json
             echo $copyright_json
