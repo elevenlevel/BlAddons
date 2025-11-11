@@ -66,7 +66,7 @@ jobs:
               type=$(python -c "import toml; print(toml.load('$file')['type'])")
               blender_version=$(python -c "import toml; print(toml.load('$file')['blender_version_min'])")
 
-              tags=$(python -c "import toml; print(toml.load('$file')['tags'])")
+              tags=$(python -c "import json, toml; print(json.dumps(toml.load('$file')['tags']))")
               tags_json=$(echo "$tags" | jq -R 'split(",")')
               license=$(python -c "import toml; print(toml.load('$file')['license'])")
               license_json=$(echo "$license" | jq -R 'split(",")')
