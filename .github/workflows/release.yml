@@ -191,9 +191,9 @@ jobs:
           --arg archive_size "$size_clean" \
           --arg archive_hash "$hash_clean" \
           --argjson tags "$tags" \
-          --argjson license "$license" \
-          --argjson copyright "$copyright" \
-          --argjson python_versions "$python_versions" '
+          # --argjson license "$license" \
+          # --argjson copyright "$copyright" \
+          # --argjson python_versions "$python_versions" '
         
         echo "tags: " $tags
         echo "license: " $license
@@ -212,11 +212,11 @@ jobs:
               version: $version,
               type: $type,
               maintainer: $maintainer,
-              license: $license,
               blender_version_min: $blender_version_min,
               tags: $tags,
-              copyright: $copyright,
-              python_versions: $python_versions,
+              # license: $license,
+              # copyright: $copyright,
+              # python_versions: $python_versions,
               archive_url: $archive_url,
               archive_size: ($archive_size | tonumber),
               archive_hash: $archive_hash
@@ -231,11 +231,11 @@ jobs:
             version: $version,
             type: $type,
             maintainer: $maintainer,
-            license: $license,
             blender_version_min: $blender_version_min,
             tags: $tags,
-            copyright: $copyright,
-            python_versions: $python_versions,
+            # license: $license,
+            # copyright: $copyright,
+            # python_versions: $python_versions,
             archive_url: $archive_url,
             archive_size: ($archive_size | tonumber),
             archive_hash: $archive_hash
