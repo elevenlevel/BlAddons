@@ -181,6 +181,11 @@ jobs:
           --arg archive_size "$size_clean" \
           --arg archive_hash "$hash_clean" '
         
+        echo "id: " $id
+        echo "archive_url: " $archive_url
+        echo "archive_size: " $archive_size
+        echo "archive_hash: " $archive_hash
+
         # Проверяем, есть ли элемент с id
         if (.data | map(.id) | index($id)) != null then
           # Обновляем элемент
