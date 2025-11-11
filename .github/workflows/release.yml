@@ -128,20 +128,20 @@ jobs:
             echo "release_name=$release_name" >> $GITHUB_OUTPUT
             echo "addon_name=${id}" >> $GITHUB_OUTPUT
             
-            echo "addon_schema_version=$schema_version" >> $GITHUB_OUTPUT
-            echo "addon_id=$id" >> $GITHUB_OUTPUT
-            echo "addon_name=$name" >> $GITHUB_OUTPUT
-            echo "addon_version=$version" >> $GITHUB_OUTPUT
-            echo "addon_tagline=$tagline" >> $GITHUB_OUTPUT
-            echo "addon_maintainer=$maintainer" >> $GITHUB_OUTPUT
-            echo "addon_type=$type" >> $GITHUB_OUTPUT
-            echo "addon_tags=$tags" >> $GITHUB_OUTPUT
-            echo "addon_blender_version=$blender_version" >> $GITHUB_OUTPUT
-            echo "addon_license=$license" >> $GITHUB_OUTPUT
-            echo "addon_copyright=$copyright" >> $GITHUB_OUTPUT
+            echo "schema_version=$schema_version" >> $GITHUB_OUTPUT
+            echo "id=$id" >> $GITHUB_OUTPUT
+            echo "name=$name" >> $GITHUB_OUTPUT
+            echo "version=$version" >> $GITHUB_OUTPUT
+            echo "tagline=$tagline" >> $GITHUB_OUTPUT
+            echo "maintainer=$maintainer" >> $GITHUB_OUTPUT
+            echo "type=$type" >> $GITHUB_OUTPUT
+            echo "tags=$tags" >> $GITHUB_OUTPUT
+            echo "blender_version=$blender_version" >> $GITHUB_OUTPUT
+            echo "license=$license" >> $GITHUB_OUTPUT
+            echo "copyright=$copyright" >> $GITHUB_OUTPUT
             echo "archive_url=$archive_url" >> $GITHUB_OUTPUT
-            echo "archive_size=$size_clean" >> $GITHUB_OUTPUT
-            echo "archive_hash=$hash_clean" >> $GITHUB_OUTPUT
+            echo "size_clean=$size_clean" >> $GITHUB_OUTPUT
+            echo "hash_clean=$hash_clean" >> $GITHUB_OUTPUT
             
             echo "XXXXXXXXXXX"
             echo $name
@@ -166,20 +166,20 @@ jobs:
         
         # блок внесения изменений в json файл =======================================================================================
         jq --arg schema_version "$addon_schema_version" \
-          --arg id "$addon_id" \
-          --arg name "$addon_name" \
-          --arg tagline "$addon_tagline" \
-          --arg version "$addon_version" \
-          --arg type "$addon_type" \
-          --arg maintainer "$addon_maintainer" \
-          --argjson license "$addon_license" \
-          --arg blender_version_min "$addon_blender_version" \
-          --argjson permissions "$addon_permissions" \
-          --argjson tags "$addon_tags" \
-          --argjson python_versions "$addon_python_versions" \
+          --arg id "$id" \
+          --arg name "$name" \
+          --arg tagline "$tagline" \
+          --arg version "$version" \
+          --arg type "$type" \
+          --arg maintainer "$maintainer" \
+          --argjson license "$license" \
+          --arg blender_version_min "$blender_version" \
+          --argjson permissions "$permissions" \
+          --argjson tags "$tags" \
+          --argjson python_versions "$python_versions" \
           --arg archive_url "$archive_url" \
-          --arg archive_size "$archive_size" \
-          --arg archive_hash "$archive_hash" '
+          --arg archive_size "$size_clean" \
+          --arg archive_hash "$hash_clean" '
         
         # Проверяем, есть ли элемент с id
         if (.data | map(.id) | index($id)) != null then
