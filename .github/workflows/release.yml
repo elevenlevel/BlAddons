@@ -114,7 +114,7 @@ jobs:
           Размер: $size_clean байт
           SHA256: $hash_clean
 
-          archive_url="https://"
+          archive_url="Hello wwworld!"
 
           "
           done
