@@ -143,6 +143,8 @@ jobs:
             echo "archive_size=$size_clean" >> $GITHUB_OUTPUT
             echo "archive_hash=$hash_clean" >> $GITHUB_OUTPUT
             
+            echo "XXXXXXXXXXX"
+            echo $addon_name
             echo $addon_tags
             echo $addon_license
             echo $addon_blender_version
