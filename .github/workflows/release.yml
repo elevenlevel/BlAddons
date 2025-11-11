@@ -67,13 +67,9 @@ jobs:
               blender_version=$(python -c "import toml; print(toml.load('$file')['blender_version_min'])")
 
               tags=$(python -c "import json, toml; print(json.dumps(toml.load('$file')['tags']))")
-              tags_json=$(echo "$tags" | jq -R 'split(",")')
-              license=$(python -c "import toml; print(toml.load('$file')['license'])")
-              license_json=$(echo "$license" | jq -R 'split(",")')
-              copyright=$(python -c "import toml; print(toml.load('$file')['copyright'])")
-              copyright_json=$(echo "$copyright" | jq -R 'split(",")')
-              python_versions=$(python -c "import toml; print(toml.load('$file')['python_versions'])")
-              python_versions_json=$(echo "$python_versions" | jq -R 'split(",")')
+              license=$(python -c "import json, toml; print(json.dumps(toml.load('$file')['license']))")
+              copyright=$(python -c "import json, toml; print(json.dumps(toml.load('$file')['copyright']))")
+              python_versions=$(python -c "import json, toml; print(json.dumps(toml.load('$file')['python_versions']))")
               
               zipname="${id}_${version}-blender-${blender_version}.zip"
               
