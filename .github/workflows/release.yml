@@ -87,6 +87,8 @@ jobs:
               _zip_sizes+="${size},"
               _zip_hashes+="${hash},"
 
+              archive_url="Hello wwworld!"
+
               echo "zipname variable is: $zipname"
               echo "Archiving directory: $dir"
             fi
@@ -113,8 +115,6 @@ jobs:
             description+="Архив: $path_clean
           Размер: $size_clean байт
           SHA256: $hash_clean
-
-          archive_url="Hello wwworld!"
 
           "
           done
