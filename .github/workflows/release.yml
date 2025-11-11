@@ -64,14 +64,16 @@ jobs:
               tagline=$(python -c "import toml; print(toml.load('$file')['tagline'])")
               maintainer=$(python -c "import toml; print(toml.load('$file')['maintainer'])")
               type=$(python -c "import toml; print(toml.load('$file')['type'])")
+              blender_version=$(python -c "import toml; print(toml.load('$file')['blender_version_min'])")
+
               tags=$(python -c "import toml; print(toml.load('$file')['tags'])")
               tags_json=$(echo "$tags" | jq -R 'split(",")')
-              python_versions=$(python -c "import toml; print(toml.load('$file')['python_versions'])")
-              python_versions_json=$(echo "$python_versions" | jq -R 'split(",")')
-              blender_version=$(python -c "import toml; print(toml.load('$file')['blender_version_min'])")
               license=$(python -c "import toml; print(toml.load('$file')['license'])")
               license_json=$(echo "$license" | jq -R 'split(",")')
               copyright=$(python -c "import toml; print(toml.load('$file')['copyright'])")
+              copyright_json=$(echo "$copyright" | jq -R 'split(",")')
+              python_versions=$(python -c "import toml; print(toml.load('$file')['python_versions'])")
+              python_versions_json=$(echo "$python_versions" | jq -R 'split(",")')
               
               zipname="${id}_${version}-blender-${blender_version}.zip"
               
@@ -138,21 +140,22 @@ jobs:
             echo "tagline=$tagline" >> $GITHUB_OUTPUT
             echo "maintainer=$maintainer" >> $GITHUB_OUTPUT
             echo "type=$type" >> $GITHUB_OUTPUT
-            echo "tags=$tags" >> $GITHUB_OUTPUT
-            echo "python_versions=$python_versions" >> $GITHUB_OUTPUT
             echo "blender_version=$blender_version" >> $GITHUB_OUTPUT
-            echo "license=$license" >> $GITHUB_OUTPUT
-            echo "copyright=$copyright" >> $GITHUB_OUTPUT
             echo "archive_url=$archive_url" >> $GITHUB_OUTPUT
             echo "size_clean=$size_clean" >> $GITHUB_OUTPUT
             echo "hash_clean=$hash_clean" >> $GITHUB_OUTPUT
+
+            echo "tags=$tags" >> $GITHUB_OUTPUT
+            echo "license=$license" >> $GITHUB_OUTPUT
+            echo "copyright=$copyright" >> $GITHUB_OUTPUT
+            echo "python_versions=$python_versions" >> $GITHUB_OUTPUT
             
             echo "XXXXXXXXXXX"
             echo $name
             echo $tags
             echo $license
-            echo $blender_version
-            echo $license
+            echo $copyright
+            echo $python_versions
           fi
         fi
 
@@ -176,18 +179,19 @@ jobs:
           --arg version "$version" \
           --arg type "$type" \
           --arg maintainer "$maintainer" \
-          --argjson license "$license" \
           --arg blender_version_min "$blender_version" \
-          --argjson tags "$tags" \
-          --argjson python_versions "$python_versions" \
           --arg archive_url "$archive_url" \
           --arg archive_size "$size_clean" \
-          --arg archive_hash "$hash_clean" '
+          --arg archive_hash "$hash_clean" \
+          --argjson tags "$tags" \
+          --argjson license "$license" \
+          --argjson copyright "$copyright" \
+          --argjson python_versions "$python_versions" '
         
-        echo "id: " $id
-        echo "archive_url: " $archive_url
-        echo "archive_size: " $archive_size
-        echo "archive_hash: " $archive_hash
+        echo "tags: " $tags
+        echo "license: " $license
+        echo "copyright: " $copyright
+        echo "python_versions: " $python_versions
 
         # Проверяем, есть ли элемент с id
         if (.data | map(.id) | index($id)) != null then
@@ -204,6 +208,7 @@ jobs:
               license: $license,
               blender_version_min: $blender_version_min,
               tags: $tags,
+              copyright: $copyright,
               python_versions: $python_versions,
               archive_url: $archive_url,
               archive_size: ($archive_size | tonumber),
@@ -222,6 +227,7 @@ jobs:
             license: $license,
             blender_version_min: $blender_version_min,
             tags: $tags,
+            copyright: $copyright,
             python_versions: $python_versions,
             archive_url: $archive_url,
             archive_size: ($archive_size | tonumber),
