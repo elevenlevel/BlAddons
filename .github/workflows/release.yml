@@ -145,7 +145,7 @@ jobs:
             echo "size_clean=$size_clean" >> $GITHUB_OUTPUT
             echo "hash_clean=$hash_clean" >> $GITHUB_OUTPUT
 
-            echo "tags=$tags_json" >> $GITHUB_OUTPUT
+            echo "tags=$tags" >> $GITHUB_OUTPUT
             echo "license=$license_json" >> $GITHUB_OUTPUT
             echo "copyright=$copyright_json" >> $GITHUB_OUTPUT
             echo "python_versions=$python_versions_json" >> $GITHUB_OUTPUT
