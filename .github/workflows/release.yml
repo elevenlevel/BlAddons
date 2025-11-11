@@ -57,6 +57,7 @@ jobs:
               dir=$(dirname "$file")
 
               schema_version=$(python -c "import toml; print(toml.load('$file')['schema_version'])")
+              schema_version="$schema_version"
               name=$(python -c "import toml; print(toml.load('$file')['name'])")
               id=$(python -c "import toml; print(toml.load('$file')['id'])")
               version=$(python -c "import toml; print(toml.load('$file')['version'])")
@@ -64,12 +65,14 @@ jobs:
               maintainer=$(python -c "import toml; print(toml.load('$file')['maintainer'])")
               type=$(python -c "import toml; print(toml.load('$file')['type'])")
               tags=$(python -c "import toml; print(toml.load('$file')['tags'])")
+              tags_json=$(echo "$tags" | jq -R 'split(",")')
+              python_versions=$(python -c "import toml; print(toml.load('$file')['python_versions'])")
+              python_versions_json=$(echo "$python_versions" | jq -R 'split(",")')
               blender_version=$(python -c "import toml; print(toml.load('$file')['blender_version_min'])")
               license=$(python -c "import toml; print(toml.load('$file')['license'])")
+              license_json=$(echo "$license" | jq -R 'split(",")')
               copyright=$(python -c "import toml; print(toml.load('$file')['copyright'])")
-
-              schema_version="$schema_version"
-
+              
               zipname="${id}_${version}-blender-${blender_version}.zip"
               
               (cd "$dir" && zip -r "../$zipname" . -x "__pycache__/*" "*.pyc" ".vscode/*") || (echo "Failed to create zip: $zipname" && exit 1)
@@ -136,6 +139,7 @@ jobs:
             echo "maintainer=$maintainer" >> $GITHUB_OUTPUT
             echo "type=$type" >> $GITHUB_OUTPUT
             echo "tags=$tags" >> $GITHUB_OUTPUT
+            echo "python_versions=$python_versions" >> $GITHUB_OUTPUT
             echo "blender_version=$blender_version" >> $GITHUB_OUTPUT
             echo "license=$license" >> $GITHUB_OUTPUT
             echo "copyright=$copyright" >> $GITHUB_OUTPUT
@@ -174,7 +178,6 @@ jobs:
           --arg maintainer "$maintainer" \
           --argjson license "$license" \
           --arg blender_version_min "$blender_version" \
-          --argjson permissions "$permissions" \
           --argjson tags "$tags" \
           --argjson python_versions "$python_versions" \
           --arg archive_url "$archive_url" \
@@ -200,7 +203,6 @@ jobs:
               maintainer: $maintainer,
               license: $license,
               blender_version_min: $blender_version_min,
-              permissions: $permissions,
               tags: $tags,
               python_versions: $python_versions,
               archive_url: $archive_url,
@@ -219,7 +221,6 @@ jobs:
             maintainer: $maintainer,
             license: $license,
             blender_version_min: $blender_version_min,
-            permissions: $permissions,
             tags: $tags,
             python_versions: $python_versions,
             archive_url: $archive_url,
