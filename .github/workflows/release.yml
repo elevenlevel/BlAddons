@@ -179,20 +179,20 @@ jobs:
         fi
         
         # блок внесения изменений в json файл =======================================================================================
-        jq --arg schema_version "$addon_schema_version" \
-          --arg id "$id" \
-          --arg name "$name" \
-          --arg tagline "$tagline" \
-          --arg version "$version" \
-          --arg type "$type" \
-          --arg maintainer "$maintainer" \
-          --arg blender_version_min "$blender_version" \
-          --arg archive_url "$archive_url" \
-          --arg archive_size "$size_clean" \
-          --arg archive_hash "$hash_clean" \
-          --arg tags "$tags" \
-          --arg license "$license" \
-          --arg copyright "$copyright" \
+        jq --arg schema_version "$addon_schema_version"
+          --arg id "$id"
+          --arg name "$name"
+          --arg tagline "$tagline"
+          --arg version "$version"
+          --arg type "$type"
+          --arg maintainer "$maintainer"
+          --arg blender_version_min "$blender_version"
+          --arg archive_url "$archive_url"
+          --arg archive_size "$size_clean"
+          --arg archive_hash "$hash_clean"
+          --arg tags "$tags"
+          --arg license "$license"
+          --arg copyright "$copyright"
           --arg python_versions "$python_versions" '
         
         echo tags: "$tags"
