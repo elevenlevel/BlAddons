@@ -162,7 +162,8 @@ jobs:
             echo $size_clean
             echo $hash_clean
 
-            echo "tags=$tags"
+            # echo "tags=$tags"
+            echo "tags=["XDevs"]"
             echo "license=$license"
             echo "copyright=$copyright"
             echo "python_versions=$python_versions"
