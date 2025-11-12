@@ -202,47 +202,47 @@ jobs:
         # echo "python_versions: " $python_versions
 
         # Проверяем, есть ли элемент с id
-        # if (.data | map(.id) | index($id)) != null then
+        if (.data | map(.id) | index($id)) != null then
           # Обновляем элемент
-        #   (.data[] | select(.id == $id)) |=
-        #     . + {
-        #       schema_version: $schema_version,
-        #       id: $id,
-        #       name: $name,
-        #       tagline: $tagline,
-        #       version: $version,
-        #       type: $type,
-        #       maintainer: $maintainer,
-        #       blender_version_min: $blender_version_min,
-        #       tags: $tags,
-        #       # license: $license,
-        #       # copyright: $copyright,
-        #       # python_versions: $python_versions,
-        #       archive_url: $archive_url,
-        #       archive_size: ($archive_size | tonumber),
-        #       archive_hash: $archive_hash
-        #     }
-        # else
-        #   # Добавляем новый объект в массив data
-        #   .data += [{
-        #     schema_version: $schema_version,
-        #     id: $id,
-        #     name: $name,
-        #     tagline: $tagline,
-        #     version: $version,
-        #     type: $type,
-        #     maintainer: $maintainer,
-        #     blender_version_min: $blender_version_min,
-        #     tags: $tags,
-        #     # license: $license,
-        #     # copyright: $copyright,
-        #     # python_versions: $python_versions,
-        #     archive_url: $archive_url,
-        #     archive_size: ($archive_size | tonumber),
-        #     archive_hash: $archive_hash
-        #   }]
-        # end
-        # ' index.json > tmp.json && mv tmp.json index.json
+          (.data[] | select(.id == $id)) |=
+            . + {
+              schema_version: $schema_version,
+              id: $id,
+              name: $name,
+              tagline: $tagline,
+              version: $version,
+              type: $type,
+              maintainer: $maintainer,
+              blender_version_min: $blender_version_min,
+              tags: $tags,
+              # license: $license,
+              # copyright: $copyright,
+              # python_versions: $python_versions,
+              archive_url: $archive_url,
+              archive_size: ($archive_size | tonumber),
+              archive_hash: $archive_hash
+            }
+        else
+          # Добавляем новый объект в массив data
+          .data += [{
+            schema_version: $schema_version,
+            id: $id,
+            name: $name,
+            tagline: $tagline,
+            version: $version,
+            type: $type,
+            maintainer: $maintainer,
+            blender_version_min: $blender_version_min,
+            tags: $tags,
+            # license: $license,
+            # copyright: $copyright,
+            # python_versions: $python_versions,
+            archive_url: $archive_url,
+            archive_size: ($archive_size | tonumber),
+            archive_hash: $archive_hash
+          }]
+        end
+        ' index.json > tmp.json && mv tmp.json index.json
         # =========================================================================================================================
         
         # git config user.name "github-actions"
