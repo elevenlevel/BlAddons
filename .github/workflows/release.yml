@@ -67,7 +67,7 @@ jobs:
               blender_version=$(python -c "import toml; print(toml.load('$file')['blender_version_min'])")
 
               # tags=$(python -c "import json, toml; print(json.dumps(toml.load('$file')['tags']))")
-              tags="["XDevs"]"
+              tags=[\"XDevs\"]
               license=$(python -c "import json, toml; print(json.dumps(toml.load('$file')['license']))")
               copyright=$(python -c "import json, toml; print(json.dumps(toml.load('$file')['copyright']))")
               python_versions=$(python -c "import json, toml; print(json.dumps(toml.load('$file')['python_versions']))")
