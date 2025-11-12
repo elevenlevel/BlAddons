@@ -190,10 +190,10 @@ jobs:
           --arg archive_url "$archive_url" \
           --arg archive_size "$size_clean" \
           --arg archive_hash "$hash_clean" \
-          --argjson tags '"$tags"'
-          --argjson license '"$license"' \
-          --argjson copyright '"$copyright"' \
-          --argjson python_versions '"$python_versions"' '
+          --arg tags '"$tags"'
+          --arg license '"$license"' \
+          --arg copyright '"$copyright"' \
+          --arg python_versions '"$python_versions"' '
         
         echo "tags: " $tags
         # echo "license: " $license
@@ -213,7 +213,7 @@ jobs:
               type: $type,
               maintainer: $maintainer,
               blender_version_min: $blender_version_min,
-              tags: $tags,
+              # tags: $tags,
               # license: $license,
               # copyright: $copyright,
               # python_versions: $python_versions,
@@ -232,7 +232,7 @@ jobs:
             type: $type,
             maintainer: $maintainer,
             blender_version_min: $blender_version_min,
-            tags: $tags,
+            # tags: $tags,
             # license: $license,
             # copyright: $copyright,
             # python_versions: $python_versions,
