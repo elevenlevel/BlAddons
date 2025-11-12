@@ -199,9 +199,9 @@ jobs:
           # --argjson python_versions "$python_versions" '
         
         echo "tags: " $tags
-        echo "license: " $license
-        echo "copyright: " $copyright
-        echo "python_versions: " $python_versions
+        # echo "license: " $license
+        # echo "copyright: " $copyright
+        # echo "python_versions: " $python_versions
 
         # Проверяем, есть ли элемент с id
         if (.data | map(.id) | index($id)) != null then
