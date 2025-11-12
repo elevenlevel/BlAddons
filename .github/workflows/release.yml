@@ -238,7 +238,7 @@ jobs:
         end
         ' index.json > tmp.json && mv tmp.json index.json
 
-        echo "tags: " $tags
+        echo "tags=$tags"
         # echo "license: " $license
         # echo "copyright: " $copyright
         # echo "python_versions: " $python_versions
