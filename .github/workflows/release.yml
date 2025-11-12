@@ -195,7 +195,7 @@ jobs:
           --arg copyright "$copyright" \
           --arg python_versions "$python_versions" '
         
-        echo tags: "$tags"
+        # echo tags: "$tags"
         # echo "license: " $license
         # echo "copyright: " $copyright
         # echo "python_versions: " $python_versions
