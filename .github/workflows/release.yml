@@ -66,8 +66,7 @@ jobs:
               type=$(python -c "import toml; print(toml.load('$file')['type'])")
               blender_version=$(python -c "import toml; print(toml.load('$file')['blender_version_min'])")
 
-              # tags=$(python -c "import json, toml; print(json.dumps(toml.load('$file')['tags']))")
-              tags=[\"XDevs\"]
+              tags=$(python -c "import json, toml; print(json.dumps(toml.load('$file')['tags']))")
               license=$(python -c "import json, toml; print(json.dumps(toml.load('$file')['license']))")
               copyright=$(python -c "import json, toml; print(json.dumps(toml.load('$file')['copyright']))")
               python_versions=$(python -c "import json, toml; print(json.dumps(toml.load('$file')['python_versions']))")
@@ -142,10 +141,7 @@ jobs:
             echo "size_clean=$size_clean" >> $GITHUB_OUTPUT
             echo "hash_clean=$hash_clean" >> $GITHUB_OUTPUT
 
-            echo "tags<<EOF" >> $GITHUB_OUTPUT
-            echo "$tags" >> $GITHUB_OUTPUT
-            echo "EOF" >> $GITHUB_OUTPUT
-
+            echo "tags=$tags" >> $GITHUB_OUTPUT
             echo "license=$license" >> $GITHUB_OUTPUT
             echo "copyright=$copyright" >> $GITHUB_OUTPUT
             echo "python_versions=$python_versions" >> $GITHUB_OUTPUT
@@ -194,7 +190,7 @@ jobs:
           --arg archive_url "$archive_url" \
           --arg archive_size "$size_clean" \
           --arg archive_hash "$hash_clean" \
-          --argjson tags "$tags" \
+          --arg tags "$tags" \
           # --argjson license "$license" \
           # --argjson copyright "$copyright" \
           # --argjson python_versions "$python_versions" '
