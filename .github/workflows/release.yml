@@ -141,10 +141,10 @@ jobs:
             echo "size_clean=$size_clean" >> $GITHUB_OUTPUT
             echo "hash_clean=$hash_clean" >> $GITHUB_OUTPUT
 
-            echo "tags=$tags" >> $GITHUB_OUTPUT
-            echo "license=$license" >> $GITHUB_OUTPUT
-            echo "copyright=$copyright" >> $GITHUB_OUTPUT
-            echo "python_versions=$python_versions" >> $GITHUB_OUTPUT
+            echo "tags='$tags'" >> $GITHUB_OUTPUT
+            echo "license='$license'" >> $GITHUB_OUTPUT
+            echo "copyright='$copyright'" >> $GITHUB_OUTPUT
+            echo "python_versions='$python_versions'" >> $GITHUB_OUTPUT
             
             echo "XXXXXXXXXXX"
             echo $schema_version
@@ -217,9 +217,9 @@ jobs:
               # license: $license,
               # copyright: $copyright,
               # python_versions: $python_versions,
-              archive_url: $archive_url,
-              archive_size: ($archive_size | tonumber),
-              archive_hash: $archive_hash
+              # archive_url: $archive_url,
+              # archive_size: ($archive_size | tonumber),
+              # archive_hash: $archive_hash
             }
         else
           # Добавляем новый объект в массив data
@@ -236,9 +236,9 @@ jobs:
             # license: $license,
             # copyright: $copyright,
             # python_versions: $python_versions,
-            archive_url: $archive_url,
-            archive_size: ($archive_size | tonumber),
-            archive_hash: $archive_hash
+            # archive_url: $archive_url,
+            # archive_size: ($archive_size | tonumber),
+            # archive_hash: $archive_hash
           }]
         end
         ' index.json > tmp.json && mv tmp.json index.json
