@@ -190,10 +190,10 @@ jobs:
           --arg archive_url "$archive_url" \
           --arg archive_size "$size_clean" \
           --arg archive_hash "$hash_clean" \
-          --arg tags '"$tags"'
-          # --argjson license "$license" \
-          # --argjson copyright "$copyright" \
-          # --argjson python_versions "$python_versions" '
+          --argjson tags '"$tags"'
+          --argjson license '"$license"' \
+          --argjson copyright '"$copyright"' \
+          --argjson python_versions '"$python_versions"' '
         
         echo "tags: " $tags
         # echo "license: " $license
