@@ -195,7 +195,7 @@ jobs:
           --arg copyright "$copyright" \
           --arg python_versions "$python_versions" '
         
-        echo tags: "$tags"
+        # echo tags: "$tags"
         # echo "license: " $license
         # echo "copyright: " $copyright
         # echo "python_versions: " $python_versions
@@ -213,7 +213,7 @@ jobs:
               type: $type,
               maintainer: $maintainer,
               blender_version_min: $blender_version_min,
-              # tags: $tags,
+              tags: $tags,
               # license: $license,
               # copyright: $copyright,
               # python_versions: $python_versions,
@@ -232,7 +232,7 @@ jobs:
             type: $type,
             maintainer: $maintainer,
             blender_version_min: $blender_version_min,
-            # tags: $tags,
+            tags: $tags,
             # license: $license,
             # copyright: $copyright,
             # python_versions: $python_versions,
