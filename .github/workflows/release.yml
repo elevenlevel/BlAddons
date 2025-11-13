@@ -177,7 +177,7 @@ jobs:
         else
           echo "index.json not found"
         fi
-        echo "tags=XXX"
+        echo "XXX"
         # блок внесения изменений в json файл =======================================================================================
         jq --arg schema_version "$addon_schema_version" \
           --arg id "$id" \
