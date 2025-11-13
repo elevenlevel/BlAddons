@@ -77,7 +77,7 @@
         "3.11"
       ],
       "archive_url": "https://raw.githubusercontent.com/elevenlevel/BlAddons/refs/heads/main/Extensions/XD_Baker.zip",
-      "archive_size": 0000,
+      "archive_size": 0,
       "archive_hash": "sha256:"
     },
     {
@@ -103,7 +103,7 @@
         "3.11"
       ],
       "archive_url": "https://raw.githubusercontent.com/elevenlevel/BlAddons/refs/heads/main/Extensions/XD_Engine_PrefabLink.zip",
-      "archive_size": 0000,
+      "archive_size": 0,
       "archive_hash": "sha256:"
     },
     {
@@ -129,7 +129,7 @@
         "3.11"
       ],
       "archive_url": "https://raw.githubusercontent.com/elevenlevel/BlAddons/refs/heads/main/Extensions/XD_Engine_Tags.zip",
-      "archive_size": 0000,
+      "archive_size": 0,
       "archive_hash": "sha256:"
     },
     {
@@ -155,7 +155,7 @@
         "3.11"
       ],
       "archive_url": "https://raw.githubusercontent.com/elevenlevel/BlAddons/refs/heads/main/Extensions/XD_FBX_Exporter.zip",
-      "archive_size": 0000,
+      "archive_size": 0,
       "archive_hash": "sha256:"
     },
     {
@@ -181,7 +181,7 @@
         "3.11"
       ],
       "archive_url": "https://raw.githubusercontent.com/elevenlevel/BlAddons/refs/heads/main/Extensions/XD_Helpers.zip",
-      "archive_size": 0000,
+      "archive_size": 0,
       "archive_hash": "sha256:"
     },
     {
@@ -207,7 +207,7 @@
         "3.11"
       ],
       "archive_url": "https://raw.githubusercontent.com/elevenlevel/BlAddons/refs/heads/main/Extensions/XD_ModelValidator.zip",
-      "archive_size": 0000,
+      "archive_size": 0,
       "archive_hash": "sha256:"
     },
     {
@@ -233,7 +233,7 @@
         "3.11"
       ],
       "archive_url": "https://raw.githubusercontent.com/elevenlevel/BlAddons/refs/heads/main/Extensions/XD_PointCloud_Exporter.zip",
-      "archive_size": 0000,
+      "archive_size": 0,
       "archive_hash": "sha256:"
     }
   ]
