@@ -241,22 +241,22 @@ jobs:
         with open('index.json', 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
         EOF
-          env:
-            id: ${{ steps.pack.outputs.addon_name }}
-            schema_version: ${{ steps.pack.outputs.schema_version }}
-            name: ${{ steps.pack.outputs.name }}
-            tagline: ${{ steps.pack.outputs.tagline }}
-            version: ${{ steps.pack.outputs.version }}
-            type: ${{ steps.pack.outputs.type }}
-            maintainer: ${{ steps.pack.outputs.maintainer }}
-            blender_version: ${{ steps.pack.outputs.blender_version }}
-            archive_url: ${{ steps.pack.outputs.archive_url }}
-            size_clean: ${{ steps.pack.outputs.size_clean }}
-            hash_clean: ${{ steps.pack.outputs.hash_clean }}
-            tags: ${{ steps.pack.outputs.tags }}
-            license: ${{ steps.pack.outputs.license }}
-            copyright: ${{ steps.pack.outputs.copyright }}
-            python_versions: ${{ steps.pack.outputs.python_versions }}
+      env:
+        id: ${{ steps.pack.outputs.addon_name }}
+        schema_version: ${{ steps.pack.outputs.schema_version }}
+        name: ${{ steps.pack.outputs.name }}
+        tagline: ${{ steps.pack.outputs.tagline }}
+        version: ${{ steps.pack.outputs.version }}
+        type: ${{ steps.pack.outputs.type }}
+        maintainer: ${{ steps.pack.outputs.maintainer }}
+        blender_version: ${{ steps.pack.outputs.blender_version }}
+        archive_url: ${{ steps.pack.outputs.archive_url }}
+        size_clean: ${{ steps.pack.outputs.size_clean }}
+        hash_clean: ${{ steps.pack.outputs.hash_clean }}
+        tags: ${{ steps.pack.outputs.tags }}
+        license: ${{ steps.pack.outputs.license }}
+        copyright: ${{ steps.pack.outputs.copyright }}
+        python_versions: ${{ steps.pack.outputs.python_versions }}
 
 
     
