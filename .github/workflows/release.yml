@@ -166,90 +166,97 @@ jobs:
           fi
         fi
 
-    - name: Edit index.json
+    - name: Edit index.json with Python
       if: steps.pack.outputs.created == 'true'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        json_path="index.json"
-        if [ -f "$json_path" ]; then
-          echo "index.json exists"
+        python3 - <<EOF
+        import json
+        import os
+
+        with open('index.json', 'r', encoding='utf-8') as f:
+            data = json.load(f)
+
+        id = os.environ['id']
+        addon_schema_version = os.environ['addon_schema_version']
+        name = os.environ['name']
+        tagline = os.environ['tagline']
+        version = os.environ['version']
+        type_ = os.environ['type']
+        maintainer = os.environ['maintainer']
+        blender_version = os.environ['blender_version']
+        archive_url = os.environ['archive_url']
+        size_clean = int(os.environ['size_clean'])
+        hash_clean = os.environ['hash_clean']
+        tags = json.loads(os.environ['tags'])
+        license = json.loads(os.environ['license'])
+        copyright = json.loads(os.environ['copyright'])
+        python_versions = json.loads(os.environ['python_versions'])
+
+        item = None
+        for elem in data.get('data', []):
+            if elem.get('id') == id:
+                item = elem
+                break
+
+        new_entry = {
+            'schema_version': addon_schema_version,
+            'id': id,
+            'name': name,
+            'tagline': tagline,
+            'version': version,
+            'type': type_,
+            'maintainer': maintainer,
+            'blender_version_min': blender_version,
+            'tags': tags,
+            'license': license,
+            'copyright': copyright,
+            'python_versions': python_versions,
+            'archive_url': archive_url,
+            'archive_size': size_clean,
+            'archive_hash': hash_clean
+        }
+
+        if item:
+            item.update(new_entry)
+        else:
+            if 'data' not in data:
+                data['data'] = []
+            data['data'].append(new_entry)
+
+        with open('index.json', 'w', encoding='utf-8') as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+        EOF
+          env:
+            id: ${{ steps.pack.outputs.addon_name }}
+            addon_schema_version: ${{ steps.pack.outputs.schema_version }}
+            name: ${{ steps.pack.outputs.name }}
+            tagline: ${{ steps.pack.outputs.tagline }}
+            version: ${{ steps.pack.outputs.version }}
+            type: ${{ steps.pack.outputs.type }}
+            maintainer: ${{ steps.pack.outputs.maintainer }}
+            blender_version: ${{ steps.pack.outputs.blender_version }}
+            archive_url: ${{ steps.pack.outputs.archive_url }}
+            size_clean: ${{ steps.pack.outputs.size_clean }}
+            hash_clean: ${{ steps.pack.outputs.hash_clean }}
+            tags: ${{ steps.pack.outputs.tags }}
+            license: ${{ steps.pack.outputs.license }}
+            copyright: ${{ steps.pack.outputs.copyright }}
+            python_versions: ${{ steps.pack.outputs.python_versions }}
+
+
+    
+    - name: Commit and push changes
+      if: steps.pack.outputs.created == 'true'
+      run: |
+        git config user.name "github-actions"
+        git config user.email "actions@github.com"
+        git add index.json
+        if ! git diff --cached --quiet; then
+          git commit -m "Update index.json"
+          git push
         else
-          echo "index.json not found"
+          echo "No changes to commit"
         fi
-        
-        # блок внесения изменений в json файл =======================================================================================
-        jq --arg schema_version "$addon_schema_version" \
-          --arg id "$id" \
-          --arg name "$name" \
-          --arg tagline "$tagline" \
-          --arg version "$version" \
-          --arg type "$type" \
-          --arg maintainer "$maintainer" \
-          --arg blender_version_min "$blender_version" \
-          --arg archive_url "$archive_url" \
-          --arg archive_size "$size_clean" \
-          --arg archive_hash "$hash_clean" \
-          --arg tags "$tags" \
-          --arg license "$license" \
-          --arg copyright "$copyright" \
-          --arg python_versions "$python_versions" '
-        
-        # Проверяем, есть ли элемент с id
-        if (.data | map(.id) | index($id)) != null then
-          # Обновляем элемент
-          (.data[] | select(.id == $id)) |=
-            . + {
-              schema_version: $schema_version,
-              id: $id,
-              name: $name,
-              tagline: $tagline,
-              version: $version,
-              type: $type,
-              maintainer: $maintainer,
-              blender_version_min: $blender_version_min,
-              tags: $tags,
-              # license: $license,
-              # copyright: $copyright,
-              # python_versions: $python_versions,
-              archive_url: $archive_url,
-              archive_size: ($archive_size | tonumber),
-              archive_hash: $archive_hash
-            }
-        else
-          # Добавляем новый объект в массив data
-          .data += [{
-            schema_version: $schema_version,
-            id: $id,
-            name: $name,
-            tagline: $tagline,
-            version: $version,
-            type: $type,
-            maintainer: $maintainer,
-            blender_version_min: $blender_version_min,
-            tags: $tags,
-            # license: $license,
-            # copyright: $copyright,
-            # python_versions: $python_versions,
-            archive_url: $archive_url,
-            archive_size: ($archive_size | tonumber),
-            archive_hash: $archive_hash
-          }]
-        end
-        ' index.json > tmp.json && mv tmp.json index.json
-
-        # echo "tags=$tags"
-        # echo "license: " $license
-        # echo "copyright: " $copyright
-        # echo "python_versions: " $python_versions
-        # =========================================================================================================================
-        
-        # git config user.name "github-actions"
-        # git config user.email "actions@github.com"
-        # git add "$file_path"
-        # git commit -m "Update index.json"
-        # git push
-
 
     - name: Create and push tag
       if: steps.pack.outputs.created == 'true'
