@@ -216,6 +216,7 @@ jobs:
               archive_size: ($archive_size | tonumber),
               archive_hash: $archive_hash
             }
+          echo "tags=$tags"
         else
           # Добавляем новый объект в массив data
           .data += [{
@@ -235,10 +236,11 @@ jobs:
             archive_size: ($archive_size | tonumber),
             archive_hash: $archive_hash
           }]
+          echo "tags=$tags"
         end
         ' index.json > tmp.json && mv tmp.json index.json
 
-        echo "tags=$tags"
+        # echo "tags=$tags"
         # echo "license: " $license
         # echo "copyright: " $copyright
         # echo "python_versions: " $python_versions
