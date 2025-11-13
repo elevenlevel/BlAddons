@@ -175,7 +175,7 @@ jobs:
 
         with open('index.json', 'r', encoding='utf-8') as f:
             data = json.load(f)
-
+        print(data)
         id = os.environ['id']
         addon_schema_version = os.environ['addon_schema_version']
         name = os.environ['name']
