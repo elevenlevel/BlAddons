@@ -58,27 +58,22 @@
       "schema_version": "1.0.0",
       "id": "XD_Baker",
       "name": "XD_Baker",
-      "tagline": "Test Addon",
-      "version": "11.12.2024",
+      "tagline": "Maps bake Addon for Blender",
+      "version": "0.1.1",
       "type": "add-on",
-      "maintainer": "XDevs",
-      "license": [
-        "GPL-3.0-or-later"
-      ],
-      "blender_version_min": "4.2.0",
+      "maintainer": "Roman Askarov",
+      "license": "[\"SPDX:GPL-2.0-or-later\"]",
+      "blender_version_min": "4.5.1",
       "permissions": {
         "files": "Importing data files from disk, writing to cache folder",
         "network": "Loading OME-zarr files from the internet from a given URL"
       },
-      "tags": [
-        "Import-Export"
-      ],
-      "python_versions": [
-        "3.11"
-      ],
-      "archive_url": "https://raw.githubusercontent.com/elevenlevel/BlAddons/refs/heads/main/Extensions/XD_Baker.zip",
-      "archive_size": 0,
-      "archive_hash": "sha256:"
+      "tags": "[\"XDevs\"]",
+      "python_versions": "[\"3.11\"]",
+      "archive_url": "Hello wwworld!",
+      "archive_size": 358906,
+      "archive_hash": "0fd42297b404dcffae126e596b21a1d13cfc0548c83d7d8d74648dcc5e188452",
+      "copyright": "[\"2025 Extreme Developers\"]"
     },
     {
       "schema_version": "1.0.0",
