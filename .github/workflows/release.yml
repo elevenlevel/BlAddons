@@ -219,7 +219,7 @@ jobs:
             'name': name,
             'tagline': tagline,
             'version': version,
-            'type': type_,
+            'type': type,
             'maintainer': maintainer,
             'blender_version_min': blender_version,
             'tags': tags,
