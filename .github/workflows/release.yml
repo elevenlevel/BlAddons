@@ -197,7 +197,7 @@ jobs:
         # size_clean = int(os.environ['size_clean'])
         size_clean = ${{ steps.pack.outputs.size_clean }}
         # hash_clean = os.environ['hash_clean']
-        hash_clean = ${{ steps.pack.outputs.hash_clean }}
+        hash_clean = "${{ steps.pack.outputs.hash_clean }}"
         # tags = json.loads(os.environ['tags'])
         tags = ${{ steps.pack.outputs.tags }}
         # license = json.loads(os.environ['license'])
