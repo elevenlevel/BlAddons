@@ -178,7 +178,7 @@ jobs:
         
         # id = os.environ['id']
         id = "${{ steps.pack.outputs.id }}"
-        # addon_schema_version = os.environ['addon_schema_version']
+        # schema_version = os.environ['schema_version']
         schema_version = "${{ steps.pack.outputs.schema_version }}"
         # name = os.environ['name']
         name = "${{ steps.pack.outputs.name }}"
@@ -214,7 +214,7 @@ jobs:
                 break
 
         new_entry = {
-            'schema_version': addon_schema_version,
+            'schema_version': schema_version,
             'id': id,
             'name': name,
             'tagline': tagline,
@@ -243,7 +243,7 @@ jobs:
         EOF
           env:
             id: ${{ steps.pack.outputs.addon_name }}
-            addon_schema_version: ${{ steps.pack.outputs.schema_version }}
+            schema_version: ${{ steps.pack.outputs.schema_version }}
             name: ${{ steps.pack.outputs.name }}
             tagline: ${{ steps.pack.outputs.tagline }}
             version: ${{ steps.pack.outputs.version }}
