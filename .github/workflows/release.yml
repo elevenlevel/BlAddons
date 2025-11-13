@@ -177,7 +177,7 @@ jobs:
         else
           echo "index.json not found"
         fi
-        
+        echo "tags=$tags"
         # блок внесения изменений в json файл =======================================================================================
         jq --arg schema_version "$addon_schema_version" \
           --arg id "$id" \
@@ -216,7 +216,6 @@ jobs:
               archive_size: ($archive_size | tonumber),
               archive_hash: $archive_hash
             }
-          echo "tags=$tags"
         else
           # Добавляем новый объект в массив data
           .data += [{
@@ -236,7 +235,6 @@ jobs:
             archive_size: ($archive_size | tonumber),
             archive_hash: $archive_hash
           }]
-          echo "tags=$tags"
         end
         ' index.json > tmp.json && mv tmp.json index.json
 
