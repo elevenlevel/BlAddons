@@ -176,36 +176,27 @@ jobs:
         with open('index.json', 'r', encoding='utf-8') as f:
             data = json.load(f)
         
-        # id = os.environ['id']
         id = "${{ steps.pack.outputs.id }}"
-        # schema_version = os.environ['schema_version']
         schema_version = "${{ steps.pack.outputs.schema_version }}"
-        # name = os.environ['name']
         name = "${{ steps.pack.outputs.name }}"
-        # tagline = os.environ['tagline']
         tagline = "${{ steps.pack.outputs.tagline }}"
-        # version = os.environ['version']
         version = "${{ steps.pack.outputs.version }}"
-        # type = os.environ['type']
         type = "${{ steps.pack.outputs.type }}"
-        # maintainer = os.environ['maintainer']
         maintainer = "${{ steps.pack.outputs.maintainer }}"
-        # blender_version = os.environ['blender_version']
         blender_version = "${{ steps.pack.outputs.blender_version }}"
-        # archive_url = os.environ['archive_url']
         archive_url = "${{ steps.pack.outputs.archive_url }}"
-        # size_clean = int(os.environ['size_clean'])
         size_clean = ${{ steps.pack.outputs.size_clean }}
-        # hash_clean = os.environ['hash_clean']
         hash_clean = "${{ steps.pack.outputs.hash_clean }}"
-        # tags = json.loads(os.environ['tags'])
         tags = ${{ steps.pack.outputs.tags }}
-        # license = json.loads(os.environ['license'])
         license = ${{ steps.pack.outputs.license }}
-        # copyright = json.loads(os.environ['copyright'])
         copyright = ${{ steps.pack.outputs.copyright }}
-        # python_versions = json.loads(os.environ['python_versions'])
         python_versions = ${{ steps.pack.outputs.python_versions }}
+        
+        # превращаем JSON-строки обратно в список Python
+        tags = json.loads(os.environ['tags'])
+        license = json.loads(os.environ['license'])
+        copyright = json.loads(os.environ['copyright'])
+        python_versions = json.loads(os.environ['python_versions'])
 
         item = None
         for elem in data.get('data', []):
