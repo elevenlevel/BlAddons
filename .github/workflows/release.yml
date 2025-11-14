@@ -201,6 +201,11 @@ jobs:
         license = json.loads(license)
         copyright = json.loads(copyright)
         python_versions = json.loads(python_versions)
+
+        tags = json.dumps(tags)
+        license = json.dumps(license)
+        copyright = json.dumps(copyright)
+        python_versions = json.dumps(python_versions)
         
         item = None
         for elem in data.get('data', []):
