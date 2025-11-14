@@ -188,15 +188,15 @@ jobs:
         size_clean = ${{ steps.pack.outputs.size_clean }}
         hash_clean = "${{ steps.pack.outputs.hash_clean }}"
 
-        tags = ${{ steps.pack.outputs.tags }}
-        license = ${{ steps.pack.outputs.license }}
-        copyright = ${{ steps.pack.outputs.copyright }}
-        python_versions = ${{ steps.pack.outputs.python_versions }}
+        tags_json = ${{ steps.pack.outputs.tags }}
+        license_json = ${{ steps.pack.outputs.license }}
+        copyright_json = ${{ steps.pack.outputs.copyright }}
+        python_versions_json = ${{ steps.pack.outputs.python_versions }}
 
-        json.dumps(tags)
-        json.dumps(license)
-        json.dumps(copyright)
-        json.dumps(python_versions)
+        tags = json.dumps(tags_json)
+        license = json.dumps(license_json)
+        copyright = json.dumps(copyright_json)
+        python_versions = json.dumps(python_versions_json)
 
         tags.replace("\\", "_")
         license.replace("\\", "_")
