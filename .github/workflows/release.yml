@@ -193,10 +193,10 @@ jobs:
         copyright = ${{ steps.pack.outputs.copyright }}
         python_versions = ${{ steps.pack.outputs.python_versions }}
 
-        tags = tags.replace('\\', '')
-        license = license.replace('\\', '')
-        copyright = copyright.replace('\\', '')
-        python_versions = python_versions.replace('\\', '')
+        tags = tags.replace("\\", "")
+        license = license.replace("\\", "")
+        copyright = copyright.replace("\\", "")
+        python_versions = python_versions.replace("\\", "")
         
         item = None
         for elem in data.get('data', []):
