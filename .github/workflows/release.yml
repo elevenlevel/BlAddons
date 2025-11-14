@@ -168,24 +168,6 @@ jobs:
 
     - name: Edit index.json with Python
       if: steps.pack.outputs.created == 'true'
-      env:
-        id: "${{ steps.pack.outputs.id }}"
-        schema_version: "${{ steps.pack.outputs.schema_version }}"
-        name: "${{ steps.pack.outputs.name }}"
-        tagline: "${{ steps.pack.outputs.tagline }}"
-        version: "${{ steps.pack.outputs.version }}"
-        type: "${{ steps.pack.outputs.type }}"
-        maintainer: "${{ steps.pack.outputs.maintainer }}"
-        blender_version: "${{ steps.pack.outputs.blender_version }}"
-        archive_url: "${{ steps.pack.outputs.archive_url }}"
-        size_clean: ${{ steps.pack.outputs.size_clean }}
-        hash_clean: "${{ steps.pack.outputs.hash_clean }}"
-
-        tags: ${{ steps.pack.outputs.tags }}
-        license: ${{ steps.pack.outputs.license }}
-        copyright: ${{ steps.pack.outputs.copyright }}
-        python_versions: ${{ steps.pack.outputs.python_versions }}
-
       run: |
         python3 - <<EOF
         import json
@@ -194,24 +176,27 @@ jobs:
         with open('index.json', 'r', encoding='utf-8') as f:
             data = json.load(f)
         
-        # Читаем скалярные переменные
-        id = os.environ["id"]
-        schema_version = os.environ["schema_version"]
-        name = os.environ["name"]
-        tagline = os.environ["tagline"]
-        version = os.environ["version"]
-        type_ = os.environ["type"]
-        maintainer = os.environ["maintainer"]
-        blender_version = os.environ["blender_version"]
-        archive_url = os.environ["archive_url"]
-        size_clean = int(os.environ["size_clean"])
-        hash_clean = os.environ["hash_clean"]
+        id = "${{ steps.pack.outputs.id }}"
+        schema_version = "${{ steps.pack.outputs.schema_version }}"
+        name = "${{ steps.pack.outputs.name }}"
+        tagline = "${{ steps.pack.outputs.tagline }}"
+        version = "${{ steps.pack.outputs.version }}"
+        type = "${{ steps.pack.outputs.type }}"
+        maintainer = "${{ steps.pack.outputs.maintainer }}"
+        blender_version = "${{ steps.pack.outputs.blender_version }}"
+        archive_url = "${{ steps.pack.outputs.archive_url }}"
+        size_clean = ${{ steps.pack.outputs.size_clean }}
+        hash_clean = "${{ steps.pack.outputs.hash_clean }}"
 
-        # Десериализуем JSON-строки в объекты Python (списки)
-        tags = json.loads(os.environ["tags"])
-        license = json.loads(os.environ["license"])
-        copyright = json.loads(os.environ["copyright"])
-        python_versions = json.loads(os.environ["python_versions"])
+        tags = ${{ steps.pack.outputs.tags }}
+        license = ${{ steps.pack.outputs.license }}
+        copyright = ${{ steps.pack.outputs.copyright }}
+        python_versions = ${{ steps.pack.outputs.python_versions }}
+
+        json.dumps(tags)
+        json.dumps(license)
+        json.dumps(copyright)
+        json.dumps(python_versions)
         
         item = None
         for elem in data.get('data', []):
@@ -247,6 +232,22 @@ jobs:
         with open('index.json', 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
         EOF
+      env:
+        id: ${{ steps.pack.outputs.addon_name }}
+        schema_version: ${{ steps.pack.outputs.schema_version }}
+        name: ${{ steps.pack.outputs.name }}
+        tagline: ${{ steps.pack.outputs.tagline }}
+        version: ${{ steps.pack.outputs.version }}
+        type: ${{ steps.pack.outputs.type }}
+        maintainer: ${{ steps.pack.outputs.maintainer }}
+        blender_version: ${{ steps.pack.outputs.blender_version }}
+        archive_url: ${{ steps.pack.outputs.archive_url }}
+        size_clean: ${{ steps.pack.outputs.size_clean }}
+        hash_clean: ${{ steps.pack.outputs.hash_clean }}
+        tags: ${{ steps.pack.outputs.tags }}
+        license: ${{ steps.pack.outputs.license }}
+        copyright: ${{ steps.pack.outputs.copyright }}
+        python_versions: ${{ steps.pack.outputs.python_versions }}
 
 
     
