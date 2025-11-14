@@ -188,24 +188,15 @@ jobs:
         size_clean = ${{ steps.pack.outputs.size_clean }}
         hash_clean = "${{ steps.pack.outputs.hash_clean }}"
 
-        # tags = ${{ steps.pack.outputs.tags }}
-        # license = ${{ steps.pack.outputs.license }}
-        # copyright = ${{ steps.pack.outputs.copyright }}
-        # python_versions = ${{ steps.pack.outputs.python_versions }}
-        tags = os.getenv(${{ steps.pack.outputs.tags }})
-        license = os.getenv(${{ steps.pack.outputs.license }})
-        copyright = os.getenv(${{ steps.pack.outputs.copyright }})
-        python_versions = os.getenv(${{ steps.pack.outputs.python_versions }})
+        tags = ${{ steps.pack.outputs.tags }}
+        license = ${{ steps.pack.outputs.license }}
+        copyright = ${{ steps.pack.outputs.copyright }}
+        python_versions = ${{ steps.pack.outputs.python_versions }}
 
-        tags = json.loads(tags)
-        license = json.loads(license)
-        copyright = json.loads(copyright)
-        python_versions = json.loads(python_versions)
-
-        tags = json.dumps(tags)
-        license = json.dumps(license)
-        copyright = json.dumps(copyright)
-        python_versions = json.dumps(python_versions)
+        tags = tags.replace('\\', '')
+        license = license.replace('\\', '')
+        copyright = copyright.replace('\\', '')
+        python_versions = python_versions.replace('\\', '')
         
         item = None
         for elem in data.get('data', []):
