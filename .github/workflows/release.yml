@@ -168,6 +168,23 @@ jobs:
 
     - name: Edit index.json with Python
       if: steps.pack.outputs.created == 'true'
+      env:
+        id: ${{ steps.pack.outputs.addon_name }}
+        schema_version: ${{ steps.pack.outputs.schema_version }}
+        name: ${{ steps.pack.outputs.name }}
+        tagline: ${{ steps.pack.outputs.tagline }}
+        version: ${{ steps.pack.outputs.version }}
+        type: ${{ steps.pack.outputs.type }}
+        maintainer: ${{ steps.pack.outputs.maintainer }}
+        blender_version: ${{ steps.pack.outputs.blender_version }}
+        archive_url: ${{ steps.pack.outputs.archive_url }}
+        size_clean: ${{ steps.pack.outputs.size_clean }}
+        hash_clean: ${{ steps.pack.outputs.hash_clean }}
+        tags: ${{ steps.pack.outputs.tags }}
+        license: ${{ steps.pack.outputs.license }}
+        copyright: ${{ steps.pack.outputs.copyright }}
+        python_versions: ${{ steps.pack.outputs.python_versions }}
+
       run: |
         python3 - <<EOF
         import json
@@ -176,32 +193,22 @@ jobs:
         with open('index.json', 'r', encoding='utf-8') as f:
             data = json.load(f)
         
-        id = "${{ steps.pack.outputs.id }}"
-        schema_version = "${{ steps.pack.outputs.schema_version }}"
-        name = "${{ steps.pack.outputs.name }}"
-        tagline = "${{ steps.pack.outputs.tagline }}"
-        version = "${{ steps.pack.outputs.version }}"
-        type = "${{ steps.pack.outputs.type }}"
-        maintainer = "${{ steps.pack.outputs.maintainer }}"
-        blender_version = "${{ steps.pack.outputs.blender_version }}"
-        archive_url = "${{ steps.pack.outputs.archive_url }}"
-        size_clean = ${{ steps.pack.outputs.size_clean }}
-        hash_clean = "${{ steps.pack.outputs.hash_clean }}"
+        id = os.environ['id']
+        schema_version = os.environ['schema_version']
+        name = os.environ['name']
+        tagline = os.environ['tagline']
+        version = os.environ['version']
+        type_ = os.environ['type']
+        maintainer = os.environ['maintainer']
+        blender_version = os.environ['blender_version']
+        archive_url = os.environ['archive_url']
+        size_clean = int(os.environ['size_clean'])
+        hash_clean = os.environ['hash_clean']
 
-        tags_json = ${{ steps.pack.outputs.tags }}
-        license_json = ${{ steps.pack.outputs.license }}
-        copyright_json = ${{ steps.pack.outputs.copyright }}
-        python_versions_json = ${{ steps.pack.outputs.python_versions }}
-
-        tags_str = json.dumps(tags_json)
-        license_str = json.dumps(license_json)
-        copyright_str = json.dumps(copyright_json)
-        python_versions_str = json.dumps(python_versions_json)
-
-        tags = tags_str.replace("\\", "_")
-        license = license_str.replace("\\", "_")
-        copyright = copyright_str.replace("\\", "_")
-        python_versions = python_versions_str.replace("\\", "_")
+        tags = safe_json_loads(os.environ.get('tags', ''))
+        license = safe_json_loads(os.environ.get('license', ''))
+        copyright = safe_json_loads(os.environ.get('copyright', ''))
+        python_versions = safe_json_loads(os.environ.get('python_versions', ''))
         
         item = None
         for elem in data.get('data', []):
@@ -234,25 +241,10 @@ jobs:
                 data['data'] = []
             data['data'].append(new_entry)
 
-        with open('index.json', 'w', encoding='utf-8') as f:
-            json.dump(data, f, ensure_ascii=False, indent=2)
+        with open("index.json", "w", encoding="utf-8") as f:
+          json.dump(data, f, ensure_ascii=False, indent=2)
         EOF
-      env:
-        id: ${{ steps.pack.outputs.addon_name }}
-        schema_version: ${{ steps.pack.outputs.schema_version }}
-        name: ${{ steps.pack.outputs.name }}
-        tagline: ${{ steps.pack.outputs.tagline }}
-        version: ${{ steps.pack.outputs.version }}
-        type: ${{ steps.pack.outputs.type }}
-        maintainer: ${{ steps.pack.outputs.maintainer }}
-        blender_version: ${{ steps.pack.outputs.blender_version }}
-        archive_url: ${{ steps.pack.outputs.archive_url }}
-        size_clean: ${{ steps.pack.outputs.size_clean }}
-        hash_clean: ${{ steps.pack.outputs.hash_clean }}
-        tags: ${{ steps.pack.outputs.tags }}
-        license: ${{ steps.pack.outputs.license }}
-        copyright: ${{ steps.pack.outputs.copyright }}
-        python_versions: ${{ steps.pack.outputs.python_versions }}
+
 
 
     
