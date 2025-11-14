@@ -197,6 +197,11 @@ jobs:
         json.dumps(license)
         json.dumps(copyright)
         json.dumps(python_versions)
+
+        tags.replace("\\", "")
+        license.replace("\\", "")
+        copyright.replace("\\", "")
+        python_versions.replace("\\", "")
         
         item = None
         for elem in data.get('data', []):
