@@ -187,17 +187,16 @@ jobs:
         archive_url = "${{ steps.pack.outputs.archive_url }}"
         size_clean = ${{ steps.pack.outputs.size_clean }}
         hash_clean = "${{ steps.pack.outputs.hash_clean }}"
-        tags = ${{ steps.pack.outputs.tags }}
-        license = ${{ steps.pack.outputs.license }}
-        copyright = ${{ steps.pack.outputs.copyright }}
-        python_versions = ${{ steps.pack.outputs.python_versions }}
-        
-        # превращаем JSON-строки обратно в список Python
-        tags = json.loads(os.environ['tags'])
-        license = json.loads(os.environ['license'])
-        copyright = json.loads(os.environ['copyright'])
-        python_versions = json.loads(os.environ['python_versions'])
 
+        # tags = ${{ steps.pack.outputs.tags }}
+        # license = ${{ steps.pack.outputs.license }}
+        # copyright = ${{ steps.pack.outputs.copyright }}
+        # python_versions = ${{ steps.pack.outputs.python_versions }}
+        tags = json.loads(os.environ[${{ steps.pack.outputs.tags }}])
+        license = json.loads(os.environ[${{ steps.pack.outputs.license }}])
+        copyright = json.loads(os.environ[${{ steps.pack.outputs.copyright }}])
+        python_versions = json.loads(os.environ[${{ steps.pack.outputs.python_versions }}])
+        
         item = None
         for elem in data.get('data', []):
             if elem.get('id') == id:
