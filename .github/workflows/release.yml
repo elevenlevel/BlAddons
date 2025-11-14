@@ -193,15 +193,15 @@ jobs:
         copyright_json = ${{ steps.pack.outputs.copyright }}
         python_versions_json = ${{ steps.pack.outputs.python_versions }}
 
-        tags = json.dumps(tags_json)
-        license = json.dumps(license_json)
-        copyright = json.dumps(copyright_json)
-        python_versions = json.dumps(python_versions_json)
+        tags_str = json.dumps(tags_json)
+        license_str = json.dumps(license_json)
+        copyright_str = json.dumps(copyright_json)
+        python_versions_str = json.dumps(python_versions_json)
 
-        tags.replace("\\", "_")
-        license.replace("\\", "_")
-        copyright.replace("\\", "_")
-        python_versions.replace("\\", "_")
+        tags = tags_str.replace("\\", "_")
+        license = license_str.replace("\\", "_")
+        copyright = copyright_str.replace("\\", "_")
+        python_versions = python_versions_str.replace("\\", "_")
         
         item = None
         for elem in data.get('data', []):
