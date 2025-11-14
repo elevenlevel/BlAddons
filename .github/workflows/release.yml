@@ -198,10 +198,10 @@ jobs:
         copyright_str = json.dumps(copyright_json)
         python_versions_str = json.dumps(python_versions_json)
 
-        tags = tags_str.replace(r"\", "_")
-        license = license_str.replace(r"\", "_")
-        copyright = copyright_str.replace(r"\", "_")
-        python_versions = python_versions_str.replace(r"\", "_")
+        tags = tags_str.replace("\\", "_")
+        license = license_str.replace("\\", "_")
+        copyright = copyright_str.replace("\\", "_")
+        python_versions = python_versions_str.replace("\\", "_")
         
         item = None
         for elem in data.get('data', []):
