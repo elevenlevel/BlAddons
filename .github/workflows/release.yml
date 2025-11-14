@@ -192,10 +192,15 @@ jobs:
         # license = ${{ steps.pack.outputs.license }}
         # copyright = ${{ steps.pack.outputs.copyright }}
         # python_versions = ${{ steps.pack.outputs.python_versions }}
-        tags = json.loads(os.environ[${{ steps.pack.outputs.tags }}])
-        license = json.loads(os.environ[${{ steps.pack.outputs.license }}])
-        copyright = json.loads(os.environ[${{ steps.pack.outputs.copyright }}])
-        python_versions = json.loads(os.environ[${{ steps.pack.outputs.python_versions }}])
+        tags = os.getenv(${{ steps.pack.outputs.tags }})
+        license = os.getenv(${{ steps.pack.outputs.license }})
+        copyright = os.getenv(${{ steps.pack.outputs.copyright }})
+        python_versions = os.getenv(${{ steps.pack.outputs.python_versions }})
+
+        tags = json.loads(tags)
+        license = json.loads(license)
+        copyright = json.loads(copyright)
+        python_versions = json.loads(python_versions)
         
         item = None
         for elem in data.get('data', []):
