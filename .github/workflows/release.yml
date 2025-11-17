@@ -216,10 +216,19 @@ jobs:
         # copyright_obj = os.environ['copyright'].replace("'", "")
         # python_versions_obj = os.environ['python_versions'].replace("'", "")
         
-        tags_str = os.environ['tags'][1:-1]
-        license_str = os.environ['license'][1:-1]
-        copyright_str = os.environ['copyright'][1:-1]
-        python_versions_str = os.environ['python_versions'][1:-1]
+        tags_str = os.environ['tags']
+        license_str = os.environ['license']
+        copyright_str = os.environ['copyright']
+        python_versions_str = os.environ['python_versions']
+
+        tags_str = tags_str[1:-1]
+        license_str = license_str[1:-1]
+        copyright_str = copyright_str[1:-1]
+        python_versions_str = python_versions_str[1:-1]
+        tags_str = tags_str.replace(r"\", "")
+        license_str = license_str.replace(r"\", "")
+        copyright_str = copyright_str.replace(r"\", "")
+        python_versions_str = python_versions_str.replace(r"\", "")
 
         print(f'tags_str={repr(tags_str)}')
         print(f'license_str={repr(license_str)}')
