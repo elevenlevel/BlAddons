@@ -211,10 +211,10 @@ jobs:
         # copyright_obj = json.loads(os.environ['copyright'])
         # python_versions_obj = json.loads(os.environ['python_versions'])
 
-        tags_obj = os.environ['tags'].replace(r"\\", "").replace(r"'", "")
-        license_obj = os.environ['license'].replace(r"\\", "").replace(r"'", "")
-        copyright_obj = os.environ['copyright'].replace(r"\\", "").replace(r"'", "")
-        python_versions_obj = os.environ['python_versions'].replace(r"\\", "").replace(r"'", "")
+        tags_obj = os.environ['tags'].replace(r"\\", "")
+        license_obj = os.environ['license'].replace(r"\\", "")
+        copyright_obj = os.environ['copyright'].replace(r"\\", "")
+        python_versions_obj = os.environ['python_versions'].replace(r"\\", "")
         
         item = None
         for elem in data.get('data', []):
