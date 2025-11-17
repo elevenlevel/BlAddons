@@ -204,16 +204,12 @@ jobs:
         archive_url = os.environ['archive_url']
         size_clean = int(os.environ['size_clean'])
         hash_clean = os.environ['hash_clean']
-
-        tags = json.loads(os.environ['tags'])
-        license = json.loads(os.environ['license'])
-        copyright = json.loads(os.environ['copyright'])
-        python_versions = json.loads(os.environ['python_versions'])
         
-        print("tags = ", tags)
-        print("license = ", license)
-        print("copyright = ", copyright)
-        print("python_versions = ", python_versions)
+        # парсим строки в python объект
+        tags_obj = json.loads(os.environ['tags'])
+        license_obj = json.loads(os.environ['license'])
+        copyright_obj = json.loads(os.environ['copyright'])
+        python_versions_obj = json.loads(os.environ['python_versions'])
         
         item = None
         for elem in data.get('data', []):
@@ -230,10 +226,10 @@ jobs:
             'type': type,
             'maintainer': maintainer,
             'blender_version_min': blender_version,
-            'tags': tags,
-            'license': license,
-            'copyright': copyright,
-            'python_versions': python_versions,
+            'tags': tags_obj,
+            'license': license_obj,
+            'copyright': copyright_obj,
+            'python_versions': python_versions_obj,
             'archive_url': archive_url,
             'archive_size': size_clean,
             'archive_hash': hash_clean
@@ -247,7 +243,8 @@ jobs:
             data['data'].append(new_entry)
 
         with open('index.json', 'w', encoding='utf-8') as f:
-            json.dump(data, f, ensure_ascii=False, indent=2)
+            # json.dump(data, f, ensure_ascii=False, indent=2)
+            json.dump(data, f, ensure_ascii=False)
         EOF
 
 
