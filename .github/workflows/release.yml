@@ -205,10 +205,10 @@ jobs:
         size_clean = int(os.environ['size_clean'])
         hash_clean = os.environ['hash_clean']
 
-        tags = json.dumps(os.environ['tags'])
-        license = json.dumps(os.environ['license'])
-        copyright = json.dumps(os.environ['copyright'])
-        python_versions = json.dumps(os.environ['python_versions'])
+        tags = json.loads(os.environ['tags'])
+        license = json.loads(os.environ['license'])
+        copyright = json.loads(os.environ['copyright'])
+        python_versions = json.loads(os.environ['python_versions'])
         
         print("tags = ", tags)
         print("license = ", license)
