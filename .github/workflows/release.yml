@@ -215,16 +215,15 @@ jobs:
         copyright = os.environ['copyright']
         python_versions = os.environ['python_versions']
         
-        print("tags type: ", type(tags))
         print("tags = ", tags)
         print("license = ", license)
         print("copyright = ", copyright)
         print("python_versions = ", python_versions)
 
-        print("conv tags = ", str(tags))
-        print("conv license = ", str(license))
-        print("conv copyright = ", str(copyright))
-        print("conv python_versions = ", str(python_versions))
+        print("conv tags = ", json.dumps(tags))
+        print("conv license = ", json.dumps(license))
+        print("conv copyright = ", json.dumps(copyright))
+        print("conv python_versions = ", json.dumps(python_versions))
         
         item = None
         for elem in data.get('data', []):
