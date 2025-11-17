@@ -221,10 +221,10 @@ jobs:
         copyright_str = os.environ['copyright']
         python_versions_str = os.environ['python_versions']
 
-        print("tags_str = ", tags_str)
-        print("license_str = ", license_str)
-        print("copyright_str = ", copyright_str)
-        print("python_versions_str = ", python_versions_str)
+        print(f'tags_str={repr(tags_str)}')
+        print(f'license_str={repr(license_str)}')
+        print(f'copyright_str={repr(copyright_str)}')
+        print(f'python_versions_str={repr(python_versions_str)}')
 
         tags_list = json.loads(tags_str)
         license_list = json.loads(license_str)
