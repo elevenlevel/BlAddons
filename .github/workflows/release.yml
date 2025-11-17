@@ -211,7 +211,7 @@ jobs:
         # copyright_obj = json.loads(os.environ['copyright'])
         # python_versions_obj = json.loads(os.environ['python_versions'])
 
-        tags_obj = os.environ['tags'].replace("'", "").replace(r""[\", "[").replace(r""\]", "]")
+        tags_obj = os.environ['tags'].replace("'", "").replace("\"[\\", "[").replace(r"\"\\]", "]")
         license_obj = os.environ['license'].replace("'", "")
         copyright_obj = os.environ['copyright'].replace("'", "")
         python_versions_obj = os.environ['python_versions'].replace("'", "")
