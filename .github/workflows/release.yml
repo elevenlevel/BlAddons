@@ -206,15 +206,15 @@ jobs:
         hash_clean = os.environ['hash_clean']
         
         # парсим строки в python объект
-        tags_obj = json.loads(os.environ['tags'])
-        license_obj = json.loads(os.environ['license'])
-        copyright_obj = json.loads(os.environ['copyright'])
-        python_versions_obj = json.loads(os.environ['python_versions'])
+        # tags_obj = json.loads(os.environ['tags'])
+        # license_obj = json.loads(os.environ['license'])
+        # copyright_obj = json.loads(os.environ['copyright'])
+        # python_versions_obj = json.loads(os.environ['python_versions'])
 
-        print("tags_obj = ", str(tags_obj))
-        print("license_obj = ", str(license_obj))
-        print("copyright_obj = ", str(copyright_obj))
-        print("python_versions_obj = ", str(python_versions_obj))
+        tags_obj = os.environ['tags']
+        license_obj = os.environ['license']
+        copyright_obj = os.environ['copyright']
+        python_versions_obj = os.environ['python_versions']
         
         item = None
         for elem in data.get('data', []):
