@@ -220,10 +220,10 @@ jobs:
         print("copyright = ", copyright)
         print("python_versions = ", python_versions)
 
-        print("conv tags = ", json.dumps(tags))
-        print("conv license = ", json.dumps(license))
-        print("conv copyright = ", json.dumps(copyright))
-        print("conv python_versions = ", json.dumps(python_versions))
+        print("conv tags = ", json.dumps(tags).replace('/', r'\/'))
+        print("conv license = ", json.dumps(license).replace('/', r'\/'))
+        print("conv copyright = ", json.dumps(copyright).replace('/', r'\/'))
+        print("conv python_versions = ", json.dumps(python_versions).replace('/', r'\/'))
         
         item = None
         for elem in data.get('data', []):
