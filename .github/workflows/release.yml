@@ -210,6 +210,11 @@ jobs:
         license_obj = json.loads(os.environ['license'])
         copyright_obj = json.loads(os.environ['copyright'])
         python_versions_obj = json.loads(os.environ['python_versions'])
+
+        print("tags_obj = ", tags_obj)
+        print("license_obj = ", license_obj)
+        print("copyright_obj = ", copyright_obj)
+        print("python_versions_obj = ", python_versions_obj)
         
         item = None
         for elem in data.get('data', []):
