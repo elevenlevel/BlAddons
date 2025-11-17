@@ -216,10 +216,10 @@ jobs:
         # copyright_obj = os.environ['copyright'].replace("'", "")
         # python_versions_obj = os.environ['python_versions'].replace("'", "")
         
-        tags_str = os.environ['tags']
-        license_str = os.environ['license']
-        copyright_str = os.environ['copyright']
-        python_versions_str = os.environ['python_versions']
+        tags_str = repr(os.environ['tags'])
+        license_str = repr(os.environ['license'])
+        copyright_str = repr(os.environ['copyright'])
+        python_versions_str = repr(os.environ['python_versions'])
 
         tags_str = tags_str[1:-1]
         license_str = license_str[1:-1]
@@ -230,10 +230,10 @@ jobs:
         copyright_str = copyright_str.replace(r"\", "")
         python_versions_str = python_versions_str.replace(r"\", "")
 
-        print(f'tags_str={repr(tags_str)}')
-        print(f'license_str={repr(license_str)}')
-        print(f'copyright_str={repr(copyright_str)}')
-        print(f'python_versions_str={repr(python_versions_str)}')
+        print(f'tags_str={tags_str}')
+        print(f'license_str={license_str}')
+        print(f'copyright_str={copyright_str}')
+        print(f'python_versions_str={python_versions_str}')
 
         tags_list = json.loads(tags_str)
         license_list = json.loads(license_str)
