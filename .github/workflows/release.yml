@@ -198,7 +198,7 @@ jobs:
         name = os.environ['name']
         tagline = os.environ['tagline']
         version = os.environ['version']
-        type_ = os.environ['type']
+        type = os.environ['type']
         maintainer = os.environ['maintainer']
         blender_version = os.environ['blender_version']
         archive_url = os.environ['archive_url']
