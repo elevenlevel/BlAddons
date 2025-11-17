@@ -205,11 +205,6 @@ jobs:
         size_clean = int(os.environ['size_clean'])
         hash_clean = os.environ['hash_clean']
 
-        # tags = json.loads(os.environ['tags'])  # Превратить JSON-строку в список Python
-        # license = json.loads(os.environ['license'])
-        # copyright = json.loads(os.environ['copyright'])
-        # python_versions = json.loads(os.environ['python_versions'])
-
         tags = os.environ['tags']
         license = os.environ['license']
         copyright = os.environ['copyright']
@@ -219,11 +214,6 @@ jobs:
         print("license = ", license)
         print("copyright = ", copyright)
         print("python_versions = ", python_versions)
-
-        print("conv tags = ", json.dumps(tags))
-        print("conv license = ", json.dumps(license))
-        print("conv copyright = ", json.dumps(copyright))
-        print("conv python_versions = ", json.dumps(python_versions))
         
         item = None
         for elem in data.get('data', []):
