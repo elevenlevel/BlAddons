@@ -211,10 +211,20 @@ jobs:
         # copyright_obj = json.loads(os.environ['copyright'])
         # python_versions_obj = json.loads(os.environ['python_versions'])
 
-        tags_obj = os.environ['tags'].replace("'", "").replace("\"[\\", "[")
-        license_obj = os.environ['license'].replace("'", "")
-        copyright_obj = os.environ['copyright'].replace("'", "")
-        python_versions_obj = os.environ['python_versions'].replace("'", "")
+        # tags_obj = os.environ['tags'].replace("'", "").replace("\"[\\", "[")
+        # license_obj = os.environ['license'].replace("'", "")
+        # copyright_obj = os.environ['copyright'].replace("'", "")
+        # python_versions_obj = os.environ['python_versions'].replace("'", "")
+
+        tags_list = json.loads(os.environ['tags'])
+        license_list = json.loads(os.environ['license'])
+        copyright_list = json.loads(os.environ['copyright'])
+        python_versions_list = json.loads(os.environ['python_versions'])
+
+        tags_json = json.dumps(tags_list, ensure_ascii=False)
+        license_json = json.dumps(license_list, ensure_ascii=False)
+        copyright_json = json.dumps(copyright_list, ensure_ascii=False)
+        python_versions_json = json.dumps(python_versions_list, ensure_ascii=False)
         
         item = None
         for elem in data.get('data', []):
@@ -231,10 +241,10 @@ jobs:
             'type': type,
             'maintainer': maintainer,
             'blender_version_min': blender_version,
-            'tags': tags_obj,
-            'license': license_obj,
-            'copyright': copyright_obj,
-            'python_versions': python_versions_obj,
+            'tags': tags_json,
+            'license': license_json,
+            'copyright': copyright_json,
+            'python_versions': python_versions_json,
             'archive_url': archive_url,
             'archive_size': size_clean,
             'archive_hash': hash_clean
