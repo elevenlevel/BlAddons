@@ -214,6 +214,11 @@ jobs:
         license = os.environ['license']
         copyright = os.environ['copyright']
         python_versions = os.environ['python_versions']
+
+        print("tags = ", tags)
+        print("license = ", license)
+        print("copyright = ", copyright)
+        print("python_versions = ", python_versions)
         
         item = None
         for elem in data.get('data', []):
