@@ -225,10 +225,10 @@ jobs:
         license_str = license_str[1:-1]
         copyright_str = copyright_str[1:-1]
         python_versions_str = python_versions_str[1:-1]
-        tags_str = tags_str.replace("\\", "")
-        license_str = license_str.replace("\\", "")
-        copyright_str = copyright_str.replace("\\", "")
-        python_versions_str = python_versions_str.replace("\\", "")
+        tags_str = tags_str.replace("\"", "")
+        license_str = license_str.replace("\"", "")
+        copyright_str = copyright_str.replace("\"", "")
+        python_versions_str = python_versions_str.replace("\"", "")
         tags_str = tags_str[1:-1]
         license_str = license_str[1:-1]
         copyright_str = copyright_str[1:-1]
