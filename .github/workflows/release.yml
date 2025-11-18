@@ -205,26 +205,10 @@ jobs:
         size_clean = int(os.environ['size_clean'])
         hash_clean = os.environ['hash_clean']
         
-        # парсим строки в python объект
-        # tags_obj = json.loads(os.environ['tags'])
-        # license_obj = json.loads(os.environ['license'])
-        # copyright_obj = json.loads(os.environ['copyright'])
-        # python_versions_obj = json.loads(os.environ['python_versions'])
-
-        # tags_obj = os.environ['tags'].replace("'", "").replace("\"[\\", "[")
-        # license_obj = os.environ['license'].replace("'", "")
-        # copyright_obj = os.environ['copyright'].replace("'", "")
-        # python_versions_obj = os.environ['python_versions'].replace("'", "")
-        
         tags_str = repr(os.environ['tags'])
         license_str = repr(os.environ['license'])
         copyright_str = repr(os.environ['copyright'])
         python_versions_str = repr(os.environ['python_versions'])
-
-        print(f'tags_str={tags_str}')
-        print(f'license_str={license_str}')
-        print(f'copyright_str={copyright_str}')
-        print(f'python_versions_str={python_versions_str}')
 
         tags_str = tags_str[3:-3]
         license_str = license_str[3:-3]
@@ -235,16 +219,6 @@ jobs:
         print(f'license_str={license_str}')
         print(f'copyright_str={copyright_str}')
         print(f'python_versions_str={python_versions_str}')
-
-        # tags_str = tags_str.replace("\"", "")
-        # license_str = license_str.replace("\"", "")
-        # copyright_str = copyright_str.replace("\"", "")
-        # python_versions_str = python_versions_str.replace("\"", "")
-
-        # print(f'tags_str={tags_str}')
-        # print(f'license_str={license_str}')
-        # print(f'copyright_str={copyright_str}')
-        # print(f'python_versions_str={python_versions_str}')
 
         tags_list = json.loads(tags_str)
         license_list = json.loads(license_str)
@@ -290,9 +264,6 @@ jobs:
         with open('index.json', 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
         EOF
-
-
-
     
     - name: Commit and push changes
       if: steps.pack.outputs.created == 'true'
