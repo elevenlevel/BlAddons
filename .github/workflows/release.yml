@@ -29,6 +29,12 @@ jobs:
         TAG="release-$(date +'%Y%m%d%H%M%S')"
         echo "tag=$TAG" >> $GITHUB_OUTPUT
     
+    - name: Repository label
+      id: rep
+      run: |
+        REP="elevenlevel/BlAddons"
+        echo "rep=$REP" >> $GITHUB_OUTPUT
+    
     - name: Process changed blender manifests and create zips
       id: pack
       run: |
@@ -88,9 +94,10 @@ jobs:
               _zip_paths+="$zip_path,"
               _zip_sizes+="${size},"
               _zip_hashes+="${hash},"
-
+              
+              REP=${{ steps.rep.outputs.rep }}
               TAG=${{ steps.tag.outputs.tag }}
-              archive_url="https://github.com/elevenlevel/BlAddons/releases/download/$TAG/$zipname"
+              archive_url="https://github.com/$REP/releases/download/$TAG/$zipname"
 
               echo "zipname variable is: $zipname"
               echo "Archiving directory: $dir"
@@ -314,7 +321,7 @@ jobs:
           Версия релиза: ${{ steps.pack.outputs.release_name }}
 
           Вставьте этот путь в качестве репозитория в разделе Git Extensions параметров blender:
-            https://raw.githubusercontent.com/elevenlevel/BlAddons/refs/heads/main/index.json
+            https://raw.githubusercontent.com/${{ steps.rep.outputs.rep }}/refs/heads/main/index.json
           
           Таким образом у вас всегда будут самые свежие версии аддонов.
 
