@@ -22,6 +22,12 @@ jobs:
       run: |
         git fetch --depth=2
         echo "files=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }})" >> $GITHUB_OUTPUT
+
+    - name: Create TAG
+      id: tag
+      run: |
+        TAG="release-$(date +'%Y%m%d%H%M%S')"
+        echo "tag=$TAG" >> $GITHUB_OUTPUT
     
     - name: Process changed blender manifests and create zips
       id: pack
@@ -83,7 +89,6 @@ jobs:
               _zip_sizes+="${size},"
               _zip_hashes+="${hash},"
 
-              TAG="release-$(date +'%Y%m%d%H%M%S')"
               archive_url="https://github.com/elevenlevel/BlAddons/releases/download/$TAG/$zipname"
 
               echo "zipname variable is: $zipname"
@@ -281,9 +286,8 @@ jobs:
 
     - name: Create and push tag
       if: steps.pack.outputs.created == 'true'
-      id: tag
+      id: push
       run: |
-        TAG="release-$(date +'%Y%m%d%H%M%S')"
         git config user.name "github-actions"
         git config user.email "actions@github.com"
 
@@ -293,8 +297,6 @@ jobs:
         else
           echo "No changes to commit"
         fi
-
-        echo "tag=$TAG" >> $GITHUB_OUTPUT
 
     - name: Create GitHub Release
       if: steps.pack.outputs.created == 'true'
