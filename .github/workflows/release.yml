@@ -225,24 +225,24 @@ jobs:
         license_str = license_str[1:-1]
         copyright_str = copyright_str[1:-1]
         python_versions_str = python_versions_str[1:-1]
-        tags_str = tags_str.replace("\"", "")
-        license_str = license_str.replace("\"", "")
-        copyright_str = copyright_str.replace("\"", "")
-        python_versions_str = python_versions_str.replace("\"", "")
-        tags_str = tags_str[1:-1]
-        license_str = license_str[1:-1]
-        copyright_str = copyright_str[1:-1]
-        python_versions_str = python_versions_str[1:-1]
+        # tags_str = tags_str.replace("\"", "")
+        # license_str = license_str.replace("\"", "")
+        # copyright_str = copyright_str.replace("\"", "")
+        # python_versions_str = python_versions_str.replace("\"", "")
 
         print(f'tags_str={tags_str}')
         print(f'license_str={license_str}')
         print(f'copyright_str={copyright_str}')
         print(f'python_versions_str={python_versions_str}')
 
-        tags_list = json.loads(tags_str)
-        license_list = json.loads(license_str)
-        copyright_list = json.loads(copyright_str)
-        python_versions_list = json.loads(python_versions_str)
+        # tags_list = json.loads(tags_str)
+        # license_list = json.loads(license_str)
+        # copyright_list = json.loads(copyright_str)
+        # python_versions_list = json.loads(python_versions_str)
+        tags_list = tags_str
+        license_list = license_str
+        copyright_list = copyright_str
+        python_versions_list = python_versions_str
 
         tags_json = json.dumps(tags_list, ensure_ascii=False)
         license_json = json.dumps(license_list, ensure_ascii=False)
