@@ -314,7 +314,7 @@ jobs:
           Версия релиза: ${{ steps.pack.outputs.release_name }}
 
           Вставьте этот путь в качестве репозитория в разделе Git Extensions параметров blender:
-            https://raw.githubusercontent.com/elevenlevel/BlAddons/refs/heads/main/Extensions/index.json
+            https://raw.githubusercontent.com/elevenlevel/BlAddons/refs/heads/main/index.json
           
           Таким образом у вас всегда будут самые свежие версии аддонов.
 
