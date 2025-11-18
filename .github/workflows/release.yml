@@ -84,8 +84,7 @@ jobs:
               _zip_hashes+="${hash},"
 
               TAG="release-$(date +'%Y%m%d%H%M%S')"
-              NAME="${id}_latest.zip"
-              archive_url="https://github.com/elevenlevel/BlAddons/releases/download/$TAG/$NAME
+              archive_url="https://github.com/elevenlevel/BlAddons/releases/download/$TAG/$zipname"
 
               echo "zipname variable is: $zipname"
               echo "Archiving directory: $dir"
