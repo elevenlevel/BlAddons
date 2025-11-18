@@ -26,17 +26,17 @@
       "id": "XD_Baker",
       "name": "XD_Baker",
       "tagline": "Maps bake Addon for Blender",
-      "version": "0.1.3",
+      "version": "0.1.4",
       "type": "add-on",
       "maintainer": "Roman Askarov",
-      "license": "\"\\\\'[\\\"SPDX:GPL-2.0-or-later\\\"]\\\\'\"",
+      "license": "\\'[\"SPDX:GPL-2.0-or-later\"]\\'",
       "blender_version_min": "4.5.1",
-      "copyright": "\"\\\\'[\\\"2025 Extreme Developers\\\"]\\\\'\"",
-      "tags": "\"\\\\'[\\\"XDevs\\\"]\\\\'\"",
-      "python_versions": "\"\\\\'[\\\"3.11\\\"]\\\\'\"",
+      "copyright": "\\'[\"2025 Extreme Developers\"]\\'",
+      "tags": "\\'[\"XDevs\"]\\'",
+      "python_versions": "\\'[\"3.11\"]\\'",
       "archive_url": "Hello wwworld!",
       "archive_size": 358907,
-      "archive_hash": "fa54ee7f395e195de55c50e2510c5f794acc8f1298383bd06b7b5e1057ac3f85"
+      "archive_hash": "e73dae165e0fb9911bfccc0e180c8062ca8174457aef174cafc7fee9635b0f99"
     },
     {
       "schema_version": "1.0.0",
