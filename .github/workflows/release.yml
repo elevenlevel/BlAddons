@@ -221,19 +221,20 @@ jobs:
         copyright_str = repr(os.environ['copyright'])
         python_versions_str = repr(os.environ['python_versions'])
 
-        # tags_str = tags_str[1:-1]
-        # license_str = license_str[1:-1]
-        # copyright_str = copyright_str[1:-1]
-        # python_versions_str = python_versions_str[1:-1]
+        tags_str = tags_str[-1:1]
+        license_str = license_str[1:-1]
+        copyright_str = copyright_str[1:-1]
+        python_versions_str = python_versions_str[1:-1]
+
         # tags_str = tags_str.replace("\"", "")
         # license_str = license_str.replace("\"", "")
         # copyright_str = copyright_str.replace("\"", "")
         # python_versions_str = python_versions_str.replace("\"", "")
 
-        print(f'tags_str={tags_str}')
-        print(f'license_str={license_str}')
-        print(f'copyright_str={copyright_str}')
-        print(f'python_versions_str={python_versions_str}')
+        # print(f'tags_str={tags_str}')
+        # print(f'license_str={license_str}')
+        # print(f'copyright_str={copyright_str}')
+        # print(f'python_versions_str={python_versions_str}')
 
         # tags_list = json.loads(tags_str)
         # license_list = json.loads(license_str)
@@ -244,10 +245,10 @@ jobs:
         copyright_list = copyright_str
         python_versions_list = python_versions_str
 
-        tags_json = json.dumps(tags_list, ensure_ascii=False)
-        license_json = json.dumps(license_list, ensure_ascii=False)
-        copyright_json = json.dumps(copyright_list, ensure_ascii=False)
-        python_versions_json = json.dumps(python_versions_list, ensure_ascii=False)
+        # tags_json = json.dumps(tags_list, ensure_ascii=False)
+        # license_json = json.dumps(license_list, ensure_ascii=False)
+        # copyright_json = json.dumps(copyright_list, ensure_ascii=False)
+        # python_versions_json = json.dumps(python_versions_list, ensure_ascii=False)
         
         item = None
         for elem in data.get('data', []):
