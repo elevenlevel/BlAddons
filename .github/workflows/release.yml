@@ -78,7 +78,7 @@ jobs:
 
               zip_path="$dir/../$zipname"
               size=$(stat -c%s "$zip_path")
-              hash=$(sha256sum "$zip_path" | cut -d' ' -f1)
+              hash=sha256:$(sha256sum "$zip_path" | cut -d' ' -f1)
               _zip_paths+="$zip_path,"
               _zip_sizes+="${size},"
               _zip_hashes+="${hash},"
@@ -110,8 +110,8 @@ jobs:
             path_clean=$(echo "${paths_array[i]}" | xargs)
 
             description+="Архив: $path_clean
-          Размер: $size_clean байт
-          SHA256: $hash_clean
+          Size: $size_clean байт
+          Hash: sha256:$hash_clean
 
           "
           done
