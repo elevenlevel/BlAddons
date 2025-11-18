@@ -83,7 +83,7 @@ jobs:
               _zip_sizes+="${size},"
               _zip_hashes+="${hash},"
 
-              archive_url="Hello wwworld!"
+              archive_url=zip_path
 
               echo "zipname variable is: $zipname"
               echo "Archiving directory: $dir"
