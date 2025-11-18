@@ -37,14 +37,15 @@
         "2025 Extreme Developers"
       ],
       "tags": [
-        "XDevs"
+        "XDevs",
+        "BAKER"
       ],
       "python_versions": [
         "3.11"
       ],
       "archive_url": "Hello wwworld!",
-      "archive_size": 358907,
-      "archive_hash": "ceaef6f7a0886f2115d4b943512f61810f35ff48d9c22062385aa19961436374"
+      "archive_size": 358916,
+      "archive_hash": "3d5b347d1f51d769a08a8767726db43f774b2e3dd702bb93ba5d03f1191bea48"
     },
     {
       "schema_version": "1.0.0",
