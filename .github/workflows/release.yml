@@ -27,7 +27,7 @@ jobs:
       id: tag
       run: |
         TAG="release-$(date +'%Y%m%d%H%M%S')"
-        echo "TAG=$TAG" >> $GITHUB_OUTPUT
+        echo "tag=$TAG" >> $GITHUB_OUTPUT
     
     - name: Process changed blender manifests and create zips
       id: pack
@@ -89,6 +89,7 @@ jobs:
               _zip_sizes+="${size},"
               _zip_hashes+="${hash},"
 
+              TAG=${{ steps.tag.outputs.tag }}
               archive_url="https://github.com/elevenlevel/BlAddons/releases/download/$TAG/$zipname"
 
               echo "zipname variable is: $zipname"
