@@ -27,7 +27,7 @@ jobs:
       id: tag
       run: |
         TAG="release-$(date +'%Y%m%d%H%M%S')"
-        echo "tag=$TAG" >> $GITHUB_OUTPUT
+        echo "TAG=$TAG" >> $GITHUB_OUTPUT
     
     - name: Process changed blender manifests and create zips
       id: pack
