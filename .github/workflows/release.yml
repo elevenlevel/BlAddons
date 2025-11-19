@@ -32,7 +32,10 @@ jobs:
     - name: Repository label
       id: rep
       run: |
-        REP="elevenlevel/BlAddons"
+        username="elevenlevel" # заменить на актуальное значение
+        repname="BlAddons" # заменить на актуальное значение
+
+        REP="$username/$repname"
         echo "rep=$REP" >> $GITHUB_OUTPUT
     
     - name: Process changed blender manifests and create zips
