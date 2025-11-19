@@ -61,32 +61,47 @@ jobs:
           fi
         done
 
-        # если файла blender_manifest.toml в коммите нет
+        # проверяем есть ли toml файл в текущем коммите
         if [ $touched_manifests -eq 0 ]; then 
           echo "No blender_manifest.toml files were processed."
           echo "created=false" >> $GITHUB_OUTPUT
           exit 0
         else
+          declare -A toml_fields
+
           for file in $changed; do
             if [[ "$file" == */blender_manifest.toml ]]; then
               dir=$(dirname "$file")
-
-              schema_version=$(python -c "import toml; print(toml.load('$file')['schema_version'])")
-              schema_version="$schema_version"
-              name=$(python -c "import toml; print(toml.load('$file')['name'])")
               id=$(python -c "import toml; print(toml.load('$file')['id'])")
-              version=$(python -c "import toml; print(toml.load('$file')['version'])")
-              tagline=$(python -c "import toml; print(toml.load('$file')['tagline'])")
-              maintainer=$(python -c "import toml; print(toml.load('$file')['maintainer'])")
-              type=$(python -c "import toml; print(toml.load('$file')['type'])")
-              blender_version=$(python -c "import toml; print(toml.load('$file')['blender_version_min'])")
 
-              tags=$(python -c "import json, toml; print(json.dumps(toml.load('$file')['tags']))")
-              license=$(python -c "import json, toml; print(json.dumps(toml.load('$file')['license']))")
-              copyright=$(python -c "import json, toml; print(json.dumps(toml.load('$file')['copyright']))")
-              python_versions=$(python -c "import json, toml; print(json.dumps(toml.load('$file')['python_versions']))")
+              toml_fields["${id}_schema_version"]="1.0.0"
+              toml_fields["${id}_id"]="$id"
+              toml_fields["${id}_name"]="$id"
+              toml_fields["${id}_version"]="0.0.0"
+              toml_fields["${id}_tagline"]="This is Extreme Developers extension"
+              toml_fields["${id}_maintainer"]="Extreme Developers"
+              toml_fields["${id}_type"]="add-on" # Supported types: "add-on", "theme"
+              toml_fields["${id}_blender_version_min"]="0.0.0"
+              toml_fields["${id}_blender_version_max"]="5.1.0"
+              toml_fields["${id}_website"]="https://extreme-developers.ru/"
+              toml_fields["${id}_tags"]='["default"]'
+              toml_fields["${id}_license"]='["SPDX:GPL-3.0-or-later"]'
+              toml_fields["${id}_copyright"]='["2002-%Y Extreme Developers"]'
+              toml_fields["${id}_python_versions"]='[3.11]'
+              toml_fields["${id}_paths_exclude_pattern"]='["__pycache__/", "/.git/", "/*.zip"]'
+
+              for key in "${!toml_fields[@]}"; do
+                if [[ $key == ${id}_* ]]; then
+                  python_key=${key#${id}_}
+                  value=$(python3 -c "import toml; print(toml.load('$file').get('$python_key', ''))" 2>/dev/null)
+                if [ $? -eq 0 ]; then
+                    toml_fields[${id}_${key}]="$value"
+                else
+                    toml_fields[${id}_${key}]=toml_fields[${id}_${key}]
+                fi
+              done
               
-              zipname="${id}_${version}-blender-${blender_version}.zip"
+              zipname="${toml_fields["${id}_id"]}_${toml_fields["${id}_version"]}-blender-${toml_fields["${id}_blender_version_min"]}.zip"
               
               (cd "$dir" && zip -r "../$zipname" . -x "__pycache__/*" "*.pyc" ".vscode/*") || (echo "Failed to create zip: $zipname" && exit 1)
               touched_manifests=1
@@ -142,44 +157,47 @@ jobs:
             exit 0
           else
             echo "created=true" >> $GITHUB_OUTPUT
-            release_name="${id}_${version}-blender-${blender_version}"
+            release_name="${toml_fields["${id}_id"]}_${toml_fields["${id}_version"]}-blender-${toml_fields["${id}_blender_version_min"]}"
             echo "release_name=$release_name" >> $GITHUB_OUTPUT
-            echo "addon_name=${id}" >> $GITHUB_OUTPUT
+            echo "toml_fields=${toml_fields}" >> $GITHUB_OUTPUT
+            # echo "addon_name=${id}" >> $GITHUB_OUTPUT
             
-            echo "schema_version=$schema_version" >> $GITHUB_OUTPUT
-            echo "id=$id" >> $GITHUB_OUTPUT
-            echo "name=$name" >> $GITHUB_OUTPUT
-            echo "version=$version" >> $GITHUB_OUTPUT
-            echo "tagline=$tagline" >> $GITHUB_OUTPUT
-            echo "maintainer=$maintainer" >> $GITHUB_OUTPUT
-            echo "type=$type" >> $GITHUB_OUTPUT
-            echo "blender_version=$blender_version" >> $GITHUB_OUTPUT
-            echo "archive_url=$archive_url" >> $GITHUB_OUTPUT
-            echo "size_clean=$size_clean" >> $GITHUB_OUTPUT
-            echo "hash_clean=$hash_clean" >> $GITHUB_OUTPUT
+            # echo "schema_version=$schema_version" >> $GITHUB_OUTPUT
+            # echo "id=$id" >> $GITHUB_OUTPUT
+            # echo "name=$name" >> $GITHUB_OUTPUT
+            # echo "version=$version" >> $GITHUB_OUTPUT
+            # echo "tagline=$tagline" >> $GITHUB_OUTPUT
+            # echo "maintainer=$maintainer" >> $GITHUB_OUTPUT
+            # echo "type=$type" >> $GITHUB_OUTPUT
+            # echo "blender_version_min=$blender_version_min" >> $GITHUB_OUTPUT
+            # echo "archive_url=$archive_url" >> $GITHUB_OUTPUT
+            # echo "size_clean=$size_clean" >> $GITHUB_OUTPUT
+            # echo "hash_clean=$hash_clean" >> $GITHUB_OUTPUT
 
-            echo "tags='$tags'" >> $GITHUB_OUTPUT
-            echo "license='$license'" >> $GITHUB_OUTPUT
-            echo "copyright='$copyright'" >> $GITHUB_OUTPUT
-            echo "python_versions='$python_versions'" >> $GITHUB_OUTPUT
+            # echo "tags='$tags'" >> $GITHUB_OUTPUT
+            # echo "license='$license'" >> $GITHUB_OUTPUT
+            # echo "copyright='$copyright'" >> $GITHUB_OUTPUT
+            # echo "python_versions='$python_versions'" >> $GITHUB_OUTPUT
             
-            echo "XXXXXXXXXXX"
-            echo $schema_version
-            echo $id
-            echo $name
-            echo $version
-            echo $tagline
-            echo $maintainer
-            echo $type
-            echo $blender_version
-            echo $archive_url
-            echo $size_clean
-            echo $hash_clean
+            for key in "${!toml_fields[@]}"; do
+              # python_key=${key#${id}_}
+              echo "${toml_fields[$key]}"
+            done
+              # echo "${toml_fields[${id}_id"]}"
+              # echo "${toml_fields[${id}_name"]}"
+              # echo "${toml_fields[${id}_version"]}"
+              # echo "${toml_fields[${id}_tagline"]}"
+              # echo "${toml_fields[${id}_maintainer"]}"
+              # echo "${toml_fields[${id}_type"]}"
+              # echo "${toml_fields[${id}_blender_version_min"]}"
+              # echo "${toml_fields[${id}_archive_url"]}"
+              # echo "${toml_fields[${id}_size_clean"]}"
+              # echo "${toml_fields[${id}_hash_clean"]}"
 
-            echo "tags=$tags"
-            echo "license=$license"
-            echo "copyright=$copyright"
-            echo "python_versions=$python_versions"
+              # echo "${toml_fields[${id}_tags"]}"
+              # echo "${toml_fields[${id}_license"]}"
+              # echo "${toml_fields[${id}_copyright"]}"
+              # echo "${toml_fields[${id}_python_versions"]}"
           fi
         fi
 
@@ -193,7 +211,7 @@ jobs:
         version: ${{ steps.pack.outputs.version }}
         type: ${{ steps.pack.outputs.type }}
         maintainer: ${{ steps.pack.outputs.maintainer }}
-        blender_version: ${{ steps.pack.outputs.blender_version }}
+        blender_version_min: ${{ steps.pack.outputs.blender_version_min }}
         archive_url: ${{ steps.pack.outputs.archive_url }}
         size_clean: ${{ steps.pack.outputs.size_clean }}
         hash_clean: ${{ steps.pack.outputs.hash_clean }}
@@ -217,7 +235,7 @@ jobs:
         version = os.environ['version']
         type = os.environ['type']
         maintainer = os.environ['maintainer']
-        blender_version = os.environ['blender_version']
+        blender_version_min = os.environ['blender_version_min']
         archive_url = os.environ['archive_url']
         size_clean = int(os.environ['size_clean'])
         hash_clean = os.environ['hash_clean']
@@ -261,7 +279,7 @@ jobs:
             'version': version,
             'type': type,
             'maintainer': maintainer,
-            'blender_version_min': blender_version,
+            'blender_version_min': blender_version_min,
             'tags': tags_list,
             'license': license_list,
             'copyright': copyright_list,
