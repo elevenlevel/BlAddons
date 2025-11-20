@@ -63,7 +63,7 @@ jobs:
 
         # проверяем есть ли toml файл в текущем коммите
         if [ $touched_manifests -eq 0 ]; then 
-          echo "No blender_manifest.toml files were processed."
+          echo "No blender_manifest.toml files were processed." 
           echo "created=false" >> $GITHUB_OUTPUT
           exit 0
         else
@@ -141,10 +141,9 @@ jobs:
             path_clean=$(echo "${paths_array[i]}" | xargs)
 
             description+="Архив: $path_clean
-          Size: $size_clean байт
-          Hash: sha256:$hash_clean
-
-          "
+            Size: $size_clean байт
+            Hash: sha256:$hash_clean
+            "
           done
 
           echo "release_description<<EOF" >> $GITHUB_OUTPUT
