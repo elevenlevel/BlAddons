@@ -161,8 +161,12 @@ jobs:
             release_name="${toml_fields["${id}_id"]}_${toml_fields["${id}_version"]}-blender-${toml_fields["${id}_blender_version_min"]}"
             echo "release_name=$release_name" >> $GITHUB_OUTPUT
             echo "toml_fields=${toml_fields}" >> $GITHUB_OUTPUT
+
+            echo "archive_url=$archive_url" >> $GITHUB_OUTPUT
+            echo "size_clean=$size_clean" >> $GITHUB_OUTPUT
+            echo "hash_clean=$hash_clean" >> $GITHUB_OUTPUT
+
             # echo "addon_name=${id}" >> $GITHUB_OUTPUT
-            
             # echo "schema_version=$schema_version" >> $GITHUB_OUTPUT
             # echo "id=$id" >> $GITHUB_OUTPUT
             # echo "name=$name" >> $GITHUB_OUTPUT
@@ -171,9 +175,6 @@ jobs:
             # echo "maintainer=$maintainer" >> $GITHUB_OUTPUT
             # echo "type=$type" >> $GITHUB_OUTPUT
             # echo "blender_version_min=$blender_version_min" >> $GITHUB_OUTPUT
-            # echo "archive_url=$archive_url" >> $GITHUB_OUTPUT
-            # echo "size_clean=$size_clean" >> $GITHUB_OUTPUT
-            # echo "hash_clean=$hash_clean" >> $GITHUB_OUTPUT
 
             # echo "tags='$tags'" >> $GITHUB_OUTPUT
             # echo "license='$license'" >> $GITHUB_OUTPUT
