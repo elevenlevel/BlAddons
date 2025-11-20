@@ -187,7 +187,7 @@ jobs:
             
             for key in "${!toml_fields[@]}"; do
               # python_key=${key#${id}_}
-              echo "toml_fields: ${toml_fields[$key]}"
+              echo "toml_fields: $key = ${toml_fields[$key]}"
             done
           fi
         fi
