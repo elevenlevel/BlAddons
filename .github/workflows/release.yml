@@ -89,7 +89,7 @@ jobs:
               toml_fields["${id}_copyright"]='["2002-%Y Extreme Developers"]'
               toml_fields["${id}_python_versions"]='[3.11]'
               toml_fields["${id}_paths_exclude_pattern"]='["__pycache__/", "/.git/", "/*.zip"]'
-
+              echo "XXXXXXXXXXXXXXXXXXXXXXXXXX"
               for key in "${!toml_fields[@]}"; do
                 file_value=$(python3 -c "import toml; data=toml.load('$file'); # получяем значение просто для проверки его наличия
                 python_key="${key#${id}_}"
