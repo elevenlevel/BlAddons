@@ -244,7 +244,7 @@ jobs:
         # python_versions_str = python_versions_str[3:-3]
 
         toml_fields = os.environ['toml_fields']
-        toml_fields_json = json.load(toml_fields)
+        toml_fields_json = json.dumps(toml_fields)
 
         for key in toml_fields_json:
           # if "[" in key or "]" in key:
