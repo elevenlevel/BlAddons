@@ -59,7 +59,7 @@ jobs:
           if [[ "$file" == */blender_manifest.toml ]]; then
             touched_manifests=1
           fi
-          done
+        done
 
         # проверяем есть ли toml файл в текущем коммите
         if [ $touched_manifests -eq 0 ]; then 
@@ -120,7 +120,7 @@ jobs:
               echo "zipname variable is: $zipname"
               echo "Archiving directory: $dir"
             fi
-            done
+          done
 
           zip_paths=${_zip_paths%,}
           zip_sizes=${_zip_sizes%,}
@@ -144,7 +144,7 @@ jobs:
             Size: $size_clean байт
             Hash: sha256:$hash_clean
             "
-            done
+          done
 
           echo "release_description<<EOF" >> $GITHUB_OUTPUT
           echo "$description" >> $GITHUB_OUTPUT
@@ -181,22 +181,7 @@ jobs:
             for key in "${!toml_fields[@]}"; do
               # python_key=${key#${id}_}
               echo "${toml_fields[$key]}"
-              done
-              # echo "${toml_fields[${id}_id"]}"
-              # echo "${toml_fields[${id}_name"]}"
-              # echo "${toml_fields[${id}_version"]}"
-              # echo "${toml_fields[${id}_tagline"]}"
-              # echo "${toml_fields[${id}_maintainer"]}"
-              # echo "${toml_fields[${id}_type"]}"
-              # echo "${toml_fields[${id}_blender_version_min"]}"
-              # echo "${toml_fields[${id}_archive_url"]}"
-              # echo "${toml_fields[${id}_size_clean"]}"
-              # echo "${toml_fields[${id}_hash_clean"]}"
-
-              # echo "${toml_fields[${id}_tags"]}"
-              # echo "${toml_fields[${id}_license"]}"
-              # echo "${toml_fields[${id}_copyright"]}"
-              # echo "${toml_fields[${id}_python_versions"]}"
+            done
           fi
         fi
 
@@ -365,4 +350,4 @@ jobs:
           addon_name_latest=${{ steps.pack.outputs.addon_name }}
           echo "Uploading $zipfile"
           gh release upload ${{ steps.tag.outputs.tag }} "$path" --clobber
-          done 
+        done 
