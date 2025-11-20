@@ -249,7 +249,8 @@ jobs:
           if "[" in field or "]" in field:
             field = field[3:-3]
           
-          print(f'field['id']={feild}')
+          # print(f'field['id']={feild}')
+          print(field)
           # print(f'tags_str={tags_str}')
           # print(f'license_str={license_str}')
           # print(f'copyright_str={copyright_str}')
