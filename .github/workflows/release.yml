@@ -94,6 +94,7 @@ jobs:
                 if [[ $key == ${id}_* ]]; then
                   python_key=${key#${id}_}
                   value=$(python3 -c "import toml; print(toml.load('$file').get('$python_key', ''))" 2>/dev/null)
+                fi
                 if [ $? -eq 0 ]; then
                     toml_fields[${id}_${key}]="$value"
                 else
