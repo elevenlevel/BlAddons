@@ -221,7 +221,7 @@ jobs:
         maintainer = os.environ['maintainer']
         blender_version_min = os.environ['blender_version_min']
         archive_url = os.environ['archive_url']
-        size_clean = int(os.environ['size_clean'])
+        size_clean = int(os.environ[size_clean])
         hash_clean = os.environ['hash_clean']
         
         tags_str = repr(os.environ['tags'])
