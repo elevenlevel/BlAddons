@@ -143,7 +143,9 @@ jobs:
 
             description+="Архив: $path_clean
             Size: $size_clean байт
-            Hash: sha256:$hash_clean"
+            Hash: sha256:$hash_clean
+            
+            "
           done
 
           echo "release_description<<EOF" >> $GITHUB_OUTPUT
