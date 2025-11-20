@@ -221,7 +221,7 @@ jobs:
         maintainer = os.environ['maintainer']
         blender_version_min = os.environ['blender_version_min']
         archive_url = os.environ['archive_url']
-        size_clean = int(os.environ[size_clean])
+        size_clean = int(os.environ['size_clean'])
         hash_clean = os.environ['hash_clean']
         
         tags_str = repr(os.environ['tags'])
@@ -348,6 +348,7 @@ jobs:
         for path in "${dirs_array[@]}"; do
           echo "$path"
           addon_name_latest=${{ steps.pack.outputs.addon_name }}
-          echo "Uploading $zipfile"
+          # echo "Uploading $zipfile"
+          echo "Uploading $path"
           gh release upload ${{ steps.tag.outputs.tag }} "$path" --clobber
         done
