@@ -244,6 +244,7 @@ jobs:
         # python_versions_str = python_versions_str[3:-3]
 
         toml_fields = os.environ['toml_fields']
+        print(toml_fields)
         toml_fields_json = json.dumps(toml_fields)
 
         for key in toml_fields_json:
@@ -251,7 +252,8 @@ jobs:
           #   key = key[3:-3]
           
           # print(f'field['id']={feild}')
-          print(key)
+          # print(key)
+          pass
           # print(f'tags_str={tags_str}')
           # print(f'license_str={license_str}')
           # print(f'copyright_str={copyright_str}')
