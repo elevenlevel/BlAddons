@@ -91,11 +91,11 @@ jobs:
               toml_fields["${id}_paths_exclude_pattern"]='["__pycache__/", "/.git/", "/*.zip"]'
               echo "XXXXXXXXXXXXXXXXXXXXXXXXXX"
               for key in "${!toml_fields[@]}"; do
-                file_value=$(python3 -c "import toml; data=toml.load('$file'); # получяем значение просто для проверки его наличия
-                python_key="${key#${id}_}"
+                # file_value=$(python3 -c "import toml; data=toml.load('$file'); # получяем значение просто для проверки его наличия
+                # python_key="${key#${id}_}"
                 echo "YYYYYYYYYYYYYYYYYYYYYY"
-                echo "file_value=$file_value"
-                echo "python_key=$python_key"
+                # echo "file_value=$file_value"
+                # echo "python_key=$python_key"
                 # print(data.get('$python_key', ''))" 2>/dev/null)
 
                 if [ "$file_value" != "" ]; then # если поле в файле есть
