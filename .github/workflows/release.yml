@@ -91,10 +91,16 @@ jobs:
               toml_fields["${id}_paths_exclude_pattern"]='["__pycache__/", "/.git/", "/*.zip"]'
 
               for key in "${!toml_fields[@]}"; do
-                if [[ $key == ${id}_* ]]; then
-                  python_key=${key#${id}_}
+                file_value=$(python3 -c "import toml; data=toml.load('$file');
+                python_key="${key#${id}_}"
+                print("python_key: ", python_key)
+                print(data.get('$python_key', ''))" 2>/dev/null)
+
+                if [ "$file_value" != "" ]; then # если поле в файле есть
                   value=$(python3 -c "import toml; print(toml.load('$file').get('$python_key', ''))" 2>/dev/null)
+                  toml_fields["${id}_${python_key}"]="$value"
                 fi
+
                 if [ $? -eq 0 ]; then
                     toml_fields[${id}_${key}]="$value"
                 else
