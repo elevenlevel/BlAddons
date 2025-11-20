@@ -238,10 +238,10 @@ jobs:
         # copyright_str = repr(os.environ['copyright'])
         # python_versions_str = repr(os.environ['python_versions'])
 
-        tags_str = tags_str[3:-3]
-        license_str = license_str[3:-3]
-        copyright_str = copyright_str[3:-3]
-        python_versions_str = python_versions_str[3:-3]
+        # tags_str = tags_str[3:-3]
+        # license_str = license_str[3:-3]
+        # copyright_str = copyright_str[3:-3]
+        # python_versions_str = python_versions_str[3:-3]
 
         toml_fields = os.environ['toml_fields']
         toml_fields_json = json.load(toml_fields)
