@@ -244,13 +244,14 @@ jobs:
         python_versions_str = python_versions_str[3:-3]
 
         toml_fields = os.environ['toml_fields']
+        toml_fields_json = json.load(toml_fields)
 
-        for feild in toml_fields:
-          if "[" in field or "]" in field:
-            field = field[3:-3]
+        for key in toml_fields_json:
+          # if "[" in key or "]" in key:
+          #   key = key[3:-3]
           
           # print(f'field['id']={feild}')
-          print(field)
+          print(key)
           # print(f'tags_str={tags_str}')
           # print(f'license_str={license_str}')
           # print(f'copyright_str={copyright_str}')
