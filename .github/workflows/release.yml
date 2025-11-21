@@ -165,7 +165,8 @@ jobs:
             echo "release_name=$release_name" >> $GITHUB_OUTPUT
             # echo "toml_fields=${toml_fields}" >> $GITHUB_OUTPUT
 
-            toml_fields_json=$(python3 -c "import json; import os; print(json.dumps(${toml_fields}, ensure_ascii=False))")
+            toml_fields_json=$(python3 -c "import json; import sys; d=sys.argv[1];
+            print(json.dumps(eval(d)))" "$(declare -p toml_fields)")
             echo "toml_fields=$toml_fields_json" >> $GITHUB_OUTPUT
 
             # echo "archive_url=$archive_url" >> $GITHUB_OUTPUT
