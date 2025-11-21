@@ -236,7 +236,7 @@ jobs:
         
         toml_fields = os.environ['toml_fields']
         # toml_fields = '{' + toml_fields + '}'
-        toml_fields = '{' + s.replace('|', '"') + '}'  # заменяет |, на двойные кавычки
+        toml_fields = '{' + toml_fields.replace('|', '"') + '}'  # заменяет |, на двойные кавычки
         try:
           toml_fields_json = json.loads(toml_fields)
           print(json.dumps(data, indent=2, ensure_ascii=False))
