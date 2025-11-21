@@ -105,7 +105,7 @@ jobs:
                 else # иначе берем дефолтное значение
                   # toml_fields[${id}_${key}]=toml_fields[${id}_${key}]
                   echo "YYY"
-                  toml_fields[${key}]=$toml_fields[$python_key]
+                  toml_fields[${key}]=$toml_fields[${key}]
                 fi
                 
                 # if [ $? -eq 0 ]; then
