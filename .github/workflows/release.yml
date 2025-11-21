@@ -242,7 +242,7 @@ jobs:
         # copyright_str = copyright_str[3:-3]
         # python_versions_str = python_versions_str[3:-3]
 
-        toml_fields = os.environ['toml_fields']
+        toml_fields = str(os.environ['toml_fields'])
         print ("toml_fields = ", toml_fields)
         toml_fields_json = json.dumps(toml_fields)
 
