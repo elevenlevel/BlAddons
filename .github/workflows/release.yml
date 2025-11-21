@@ -135,7 +135,7 @@ jobs:
             fi
 
             for key in "${!toml_fields[@]}"; do
-              echo "key = ${key}"
+              echo "key = ${key} | val = ${toml_fields[${key}]}"
             done
           done
 
