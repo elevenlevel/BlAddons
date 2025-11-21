@@ -100,12 +100,12 @@ jobs:
 
                 if [ "$value" != "" ]; then # если поле в файле toml есть, то берем значение из файла
                   # toml_fields["${id}_${key}"]="$value"
-                  echo "XXX"
+                  echo "XXX = {$value}"
                   toml_fields[${key}]="$value"
                 else # иначе берем дефолтное значение
                   # toml_fields[${id}_${key}]=toml_fields[${id}_${key}]
-                  echo "YYY"
-                  toml_fields[${key}]=$toml_fields[${key}]
+                  echo "YYY = {$toml_fields[${key}}"
+                  toml_fields[${key}]=${toml_fields[${key}}]
                 fi
                 
                 # if [ $? -eq 0 ]; then
