@@ -109,7 +109,7 @@ jobs:
                 #     toml_fields[${id}_${key}]=toml_fields[${id}_${key}]
                 # fi
               done
-              echo "${toml_fields}"
+              echo "toml_fields = ${toml_fields}"
               zipname="${toml_fields["${id}_id"]}_${toml_fields["${id}_version"]}-blender-${toml_fields["${id}_blender_version_min"]}.zip"
               
               (cd "$dir" && zip -r "../$zipname" . -x "__pycache__/*" "*.pyc" ".vscode/*") || (echo "Failed to create zip: $zipname" && exit 1)
@@ -193,10 +193,10 @@ jobs:
             # echo "copyright='$copyright'" >> $GITHUB_OUTPUT
             # echo "python_versions='$python_versions'" >> $GITHUB_OUTPUT
             
-            for key in "${!toml_fields[@]}"; do
+            # for key in "${!toml_fields[@]}"; do
               # python_key=${key#${id}_}
-              echo "toml_fields: $key = ${toml_fields[$key]}"
-            done
+              # echo "toml_fields: $key = ${toml_fields[$key]}"
+            # done
           fi
         fi
 
