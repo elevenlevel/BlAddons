@@ -164,7 +164,19 @@ jobs:
             release_name="${toml_fields["${id}_id"]}_${toml_fields["${id}_version"]}-blender-${toml_fields["${id}_blender_version_min"]}"
             echo "release_name=$release_name" >> $GITHUB_OUTPUT
             # echo "toml_fields='${!toml_fields[@]}'" >> $GITHUB_OUTPUT
-            echo "toml_fields='${toml_fields[@]}'" >> $GITHUB_OUTPUT
+            output=""
+
+            # выводим весь словарь в переменную toml_fields ===========
+            for key in "${!toml_fields[@]}"; do
+              value="${toml_fields[$key]}"
+              # Экранируйте значения при необходимости
+              output+="$key=$value,"
+            done
+            
+            output=${output%,} # Убираем последнюю запятую
+
+            echo "toml_fields=$output" >> $GITHUB_OUTPUT
+            # ============================
 
             # echo "archive_url=$archive_url" >> $GITHUB_OUTPUT
             # echo "size_clean=$size_clean" >> $GITHUB_OUTPUT
