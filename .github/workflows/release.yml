@@ -128,7 +128,10 @@ jobs:
               echo "zipname variable is: $zipname"
               echo "Archiving directory: $dir"
             fi
-            echo "toml_fields = ${toml_fields}"
+
+            for key in "${!toml_fields[@]}"; do
+              echo "key = ${key}"
+            done
           done
 
           zip_paths=${_zip_paths%,}
