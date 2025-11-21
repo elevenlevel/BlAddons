@@ -163,7 +163,10 @@ jobs:
             echo "created=true" >> $GITHUB_OUTPUT
             release_name="${toml_fields["${id}_id"]}_${toml_fields["${id}_version"]}-blender-${toml_fields["${id}_blender_version_min"]}"
             echo "release_name=$release_name" >> $GITHUB_OUTPUT
-            echo "toml_fields=${toml_fields}" >> $GITHUB_OUTPUT
+            # echo "toml_fields=${toml_fields}" >> $GITHUB_OUTPUT
+
+            toml_fields_json=$(python3 -c "import json; import os; print(json.dumps(${toml_fields}))")
+            echo "toml_fields=$toml_fields_json" >> $GITHUB_OUTPUT
 
             # echo "archive_url=$archive_url" >> $GITHUB_OUTPUT
             # echo "size_clean=$size_clean" >> $GITHUB_OUTPUT
@@ -220,6 +223,10 @@ jobs:
         with open('index.json', 'r', encoding='utf-8') as f:
             data = json.load(f)
         
+        toml_fields = os.environ['toml_fields']
+        toml_fields_json = json.dumps(toml_fields)
+        print ("toml_fields_json = ", toml_fields_json)
+
         # id = os.environ['id']
         # schema_version = os.environ['schema_version']
         # name = os.environ['name']
@@ -242,9 +249,7 @@ jobs:
         # copyright_str = copyright_str[3:-3]
         # python_versions_str = python_versions_str[3:-3]
 
-        toml_fields = str(os.environ['toml_fields'])
-        toml_fields_json = json.dumps(toml_fields)
-        print ("toml_fields_json = ", toml_fields_json)
+        
 
         for key in toml_fields_json:
           # if "[" in key or "]" in key:
