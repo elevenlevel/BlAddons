@@ -170,7 +170,7 @@ jobs:
             for key in "${!toml_fields[@]}"; do
               value="${toml_fields[$key]}"
               # Экранируйте значения при необходимости
-              output+='"${key}":"${value}",'
+              output+="'${key}':'${value}',"
             done
             
             output=${output%,} # Убираем последнюю запятую
