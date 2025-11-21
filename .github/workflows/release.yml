@@ -96,11 +96,15 @@ jobs:
 
                 value=$(python3 -c "import toml; print(toml.load('$file').get('$key', ''))" 2>/dev/null)
 
-                # if [ "$value" != "" ]; then # если поле в файле toml есть, то берем значение из файла
-                #   toml_fields["${id}_${key}"]="$value"
-                # else # иначе берем дефолтное значение
-                #   toml_fields[${id}_${key}]=toml_fields[${id}_${key}]
-                # fi
+                if [ "$value" != "" ]; then # если поле в файле toml есть, то берем значение из файла
+                  # toml_fields["${id}_${key}"]="$value"
+                  echo "xxx = "${id}_${key}""
+                  toml_fields[${key}]="$value"
+                else # иначе берем дефолтное значение
+                  # toml_fields[${id}_${key}]=toml_fields[${id}_${key}]
+                  echo "yyy = "${id}_${key}""
+                  toml_fields[${key}]=toml_fields[${id}_${key}]
+                fi
                 
                 # if [ $? -eq 0 ]; then
                 #     toml_fields[${id}_${key}]="$value"
