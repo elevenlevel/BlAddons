@@ -163,7 +163,7 @@ jobs:
             echo "created=true" >> $GITHUB_OUTPUT
             release_name="${toml_fields["${id}_id"]}_${toml_fields["${id}_version"]}-blender-${toml_fields["${id}_blender_version_min"]}"
             echo "release_name=$release_name" >> $GITHUB_OUTPUT
-            echo "toml_fields='${toml_fields}'" >> $GITHUB_OUTPUT
+            echo "toml_fields='${!toml_fields[@]}'" >> $GITHUB_OUTPUT
 
             # echo "archive_url=$archive_url" >> $GITHUB_OUTPUT
             # echo "size_clean=$size_clean" >> $GITHUB_OUTPUT
@@ -184,6 +184,7 @@ jobs:
             # echo "copyright='$copyright'" >> $GITHUB_OUTPUT
             # echo "python_versions='$python_versions'" >> $GITHUB_OUTPUT
             
+            # выводим все поля словаря toml_fields для дебага
             for key in "${!toml_fields[@]}"; do
               python_key=${key#${id}_}
               echo "toml_fields: $key = ${toml_fields[$key]}"
