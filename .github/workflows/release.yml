@@ -93,19 +93,23 @@ jobs:
 
               for key in "${!toml_fields[@]}"; do
                 echo "key = ${key}"
-                python_key="${key#${id}_}"
-                echo "python_key = ${python_key}"
-                if [ "$file_value" != "" ]; then # если поле в файле есть
-                  value=$(python3 -c "import toml; print(toml.load('$file').get('$python_key', ''))" 2>/dev/null)
-                  toml_fields["${id}_${python_key}"]="$value"
-                  
+                # python_key="${key#${id}_}"
+                # echo "python_key = ${python_key}"
+
+                value=$(python3 -c "import toml; print(toml.load('$file').get('$key', ''))" 2>/dev/null)
+
+                if [ "$value" != "" ]; then # если поле в файле есть
+                  toml_fields["${id}_${key}"]="$value"
+                else # если текущая реализация работает, то ветвление можно удалить
+                  toml_fields["${id}_${key}"]="$value"
                 fi
+                
                 echo "YYYYYYYYYYYYYYYYY"
-                if [ $? -eq 0 ]; then
-                    toml_fields[${id}_${key}]="$value"
-                else
-                    toml_fields[${id}_${key}]=toml_fields[${id}_${key}]
-                fi
+                # if [ $? -eq 0 ]; then
+                #     toml_fields[${id}_${key}]="$value"
+                # else
+                #     toml_fields[${id}_${key}]=toml_fields[${id}_${key}]
+                # fi
               done
               
               zipname="${toml_fields["${id}_id"]}_${toml_fields["${id}_version"]}-blender-${toml_fields["${id}_blender_version_min"]}.zip"
