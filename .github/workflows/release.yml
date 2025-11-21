@@ -89,7 +89,6 @@ jobs:
               toml_fields["${id}_copyright"]='["2002-%Y Extreme Developers"]'
               toml_fields["${id}_python_versions"]='[3.11]'
               toml_fields["${id}_paths_exclude_pattern"]='["__pycache__/", "/.git/", "/*.zip"]'
-              echo "XXXXXXXXXXXXXXXXXXXXXXXXXX"
 
               for key in "${!toml_fields[@]}"; do
                 # python_key="${key#${id}_}"
@@ -97,10 +96,10 @@ jobs:
 
                 value=$(python3 -c "import toml; print(toml.load('$file').get('$key', ''))" 2>/dev/null)
 
-                if [ "$value" != "" ]; then # если поле в файле есть
+                if [ "$value" != "" ]; then # если поле в файле toml есть, то берем значение из файла
                   toml_fields["${id}_${key}"]="$value"
-                else # если текущая реализация работает, то ветвление можно удалить
-                  toml_fields["${id}_${key}"]="$value"
+                else # иначе берем дефолтное значение
+                  toml_fields[${id}_${key}]=toml_fields[${id}_${key}]
                 fi
                 
                 # if [ $? -eq 0 ]; then
