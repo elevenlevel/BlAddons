@@ -92,7 +92,7 @@ jobs:
               echo "XXXXXXXXXXXXXXXXXXXXXXXXXX"
               for key in "${!toml_fields[@]}"; do
                 file_value=$(python3 -c "import toml; data=toml.load('$file'); # получяем значение просто для проверки его наличия
-                python_key="${key#${id}_}"
+                #python_key="${key#${id}_}"
                 echo "YYYYYYYYYYYYYYYYYYYYYY"
                 # echo "file_value=$file_value"
                 # echo "python_key=$python_key"
