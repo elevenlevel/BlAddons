@@ -92,27 +92,13 @@ jobs:
 
               for key in "${!toml_fields[@]}"; do
                 python_key="${key#${id}_}"
-                echo "python_key = ${python_key}"
-                # echo "python_key = ${python_key}"
-
                 value=$(python3 -c "import toml; print(toml.load('$file').get('$python_key', ''))" 2>/dev/null)
-                echo "value= ${value}"
 
                 if [ "$value" != "" ]; then # если поле в файле toml есть, то берем значение из файла
-                  # toml_fields["${id}_${key}"]="$value"
-                  echo "XXX = {$value}"
                   toml_fields[${key}]="$value"
                 else # иначе берем дефолтное значение
-                  # toml_fields[${id}_${key}]=toml_fields[${id}_${key}]
-                  echo "YYY = {$toml_fields[${key}}"
                   toml_fields[${key}]=${toml_fields[${key}]}
                 fi
-                
-                # if [ $? -eq 0 ]; then
-                #     toml_fields[${id}_${key}]="$value"
-                # else
-                #     toml_fields[${id}_${key}]=toml_fields[${id}_${key}]
-                # fi
               done
               
               zipname="${toml_fields["${id}_id"]}_${toml_fields["${id}_version"]}-blender-${toml_fields["${id}_blender_version_min"]}.zip"
@@ -134,10 +120,6 @@ jobs:
               echo "zipname variable is: $zipname"
               echo "Archiving directory: $dir"
             fi
-
-            for key in "${!toml_fields[@]}"; do
-              echo "key = ${key} | val = ${toml_fields[${key}]}"
-            done
           done
 
           zip_paths=${_zip_paths%,}
@@ -261,7 +243,7 @@ jobs:
         # python_versions_str = python_versions_str[3:-3]
 
         toml_fields = os.environ['toml_fields']
-        print(toml_fields)
+        print(toml_fields = ${toml_fields})
         toml_fields_json = json.dumps(toml_fields)
 
         for key in toml_fields_json:
