@@ -188,7 +188,6 @@ jobs:
               # python_key=${key#${id}_}
               # echo "toml_fields: $key = ${toml_fields[$key]}"
             # done
-          # toml_fields="${toml_fields}"
           fi
         fi
 
@@ -244,8 +243,8 @@ jobs:
         # python_versions_str = python_versions_str[3:-3]
 
         toml_fields = str(os.environ['toml_fields'])
-        print ("toml_fields = ", toml_fields[0])
         toml_fields_json = json.dumps(toml_fields)
+        print ("toml_fields_json = ", toml_fields_json[0])
 
         for key in toml_fields_json:
           # if "[" in key or "]" in key:
