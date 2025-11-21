@@ -165,8 +165,6 @@ jobs:
             echo "release_name=$release_name" >> $GITHUB_OUTPUT
             echo "toml_fields='${toml_fields}'" >> $GITHUB_OUTPUT
 
-            
-
             # echo "archive_url=$archive_url" >> $GITHUB_OUTPUT
             # echo "size_clean=$size_clean" >> $GITHUB_OUTPUT
             # echo "hash_clean=$hash_clean" >> $GITHUB_OUTPUT
@@ -186,17 +184,11 @@ jobs:
             # echo "copyright='$copyright'" >> $GITHUB_OUTPUT
             # echo "python_versions='$python_versions'" >> $GITHUB_OUTPUT
             
-            # for key in "${!toml_fields[@]}"; do
-              # python_key=${key#${id}_}
-              # echo "toml_fields: $key = ${toml_fields[$key]}"
-            # done
+            for key in "${!toml_fields[@]}"; do
+              python_key=${key#${id}_}
+              echo "toml_fields: $key = ${toml_fields[$key]}"
+            done
           fi
-
-          for key in $toml_fields; do
-            exho "TTTTTTTTTTTT"
-            echo "key = ${key}"
-            echo "val = ${toml_fields[${key}]}"
-          done
         fi
 
     - name: Edit index.json with Python
