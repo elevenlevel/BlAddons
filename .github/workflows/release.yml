@@ -92,7 +92,6 @@ jobs:
               echo "XXXXXXXXXXXXXXXXXXXXXXXXXX"
 
               for key in "${!toml_fields[@]}"; do
-                echo "key = ${key}"
                 # python_key="${key#${id}_}"
                 # echo "python_key = ${python_key}"
 
@@ -104,14 +103,13 @@ jobs:
                   toml_fields["${id}_${key}"]="$value"
                 fi
                 
-                echo "YYYYYYYYYYYYYYYYY"
                 # if [ $? -eq 0 ]; then
                 #     toml_fields[${id}_${key}]="$value"
                 # else
                 #     toml_fields[${id}_${key}]=toml_fields[${id}_${key}]
                 # fi
               done
-              
+              echo "${toml_fields}"
               zipname="${toml_fields["${id}_id"]}_${toml_fields["${id}_version"]}-blender-${toml_fields["${id}_blender_version_min"]}.zip"
               
               (cd "$dir" && zip -r "../$zipname" . -x "__pycache__/*" "*.pyc" ".vscode/*") || (echo "Failed to create zip: $zipname" && exit 1)
