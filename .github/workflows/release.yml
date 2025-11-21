@@ -170,7 +170,7 @@ jobs:
             for key in "${!toml_fields[@]}"; do
               value="${toml_fields[$key]}"
               # Экранируйте значения при необходимости
-              output+="'${key}':'${value}',"
+              output+="|${key}|:|${value}|,"
             done
             
             output=${output%,} # Убираем последнюю запятую
@@ -235,6 +235,9 @@ jobs:
             data = json.load(f)
         
         toml_fields = os.environ['toml_fields']
+        # toml_fields = '{' + toml_fields + '}'
+        # toml_fields = re.sub(r"(?<!\")'(?!\toml_fields*:)", '"', toml_fields)  # заменяет одиночные кавычки, не перед ':'
+        # toml_fields = re.sub(r"(?<=:)'(?!\")", '"', toml_fields)     # заменяет одиночные кавычки после :
         print ("toml_fields = ", toml_fields)
 
         # id = os.environ['id']
