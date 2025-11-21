@@ -236,9 +236,14 @@ jobs:
         
         toml_fields = os.environ['toml_fields']
         # toml_fields = '{' + toml_fields + '}'
-        # toml_fields = re.sub(r"(?<!\")'(?!\toml_fields*:)", '"', toml_fields)  # заменяет одиночные кавычки, не перед ':'
-        # toml_fields = re.sub(r"(?<=:)'(?!\")", '"', toml_fields)     # заменяет одиночные кавычки после :
-        print ("toml_fields = ", toml_fields)
+        toml_fields = '{' + s.replace('|', '"') + '}'  # заменяет |, на двойные кавычки
+        try:
+          toml_fields_json = json.loads(toml_fields)
+          print(json.dumps(data, indent=2, ensure_ascii=False))
+        except json.JSONDecodeError as e:
+          print("Ошибка при разборе JSON:", e)
+        
+        print ("toml_fields_json = ", toml_fields_json)
 
         # id = os.environ['id']
         # schema_version = os.environ['schema_version']
