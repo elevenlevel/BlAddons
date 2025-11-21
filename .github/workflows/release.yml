@@ -108,7 +108,7 @@ jobs:
                 #     toml_fields[${id}_${key}]=toml_fields[${id}_${key}]
                 # fi
               done
-              echo "toml_fields = ${toml_fields}"
+              
               zipname="${toml_fields["${id}_id"]}_${toml_fields["${id}_version"]}-blender-${toml_fields["${id}_blender_version_min"]}.zip"
               
               (cd "$dir" && zip -r "../$zipname" . -x "__pycache__/*" "*.pyc" ".vscode/*") || (echo "Failed to create zip: $zipname" && exit 1)
@@ -128,6 +128,7 @@ jobs:
               echo "zipname variable is: $zipname"
               echo "Archiving directory: $dir"
             fi
+            echo "toml_fields = ${toml_fields}"
           done
 
           zip_paths=${_zip_paths%,}
