@@ -236,7 +236,7 @@ jobs:
         
         toml_fields = os.environ['toml_fields']
         toml_fields_json = json.dumps(toml_fields)
-        print ("toml_fields_json id = ", toml_fields_json['XD_Baker_id'])
+        print ("toml_fields_json id = ", toml_fields_json[1])
 
         # id = os.environ['id']
         # schema_version = os.environ['schema_version']
