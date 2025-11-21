@@ -92,8 +92,8 @@ jobs:
               echo "XXXXXXXXXXXXXXXXXXXXXXXXXX"
 
               for key in "${!toml_fields[@]}"; do
-                python_key="${key#${id}_}"
                 echo "key = ${key}"
+                python_key="${key#${id}_}"
                 echo "python_key = ${python_key}"
                 if [ "$file_value" != "" ]; then # если поле в файле есть
                   value=$(python3 -c "import toml; print(toml.load('$file').get('$python_key', ''))" 2>/dev/null)
