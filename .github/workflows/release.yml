@@ -169,7 +169,6 @@ jobs:
             # выводим весь словарь в переменную toml_fields ===========
             for key in "${!toml_fields[@]}"; do
               value="${toml_fields[$key]}"
-              # Экранируйте значения при необходимости
               output+="|${key}|:|${value}|,"
             done
             
@@ -237,7 +236,7 @@ jobs:
         toml_fields = os.environ['toml_fields']
         # toml_fields = '{' + toml_fields + '}'
         toml_fields = '{' + toml_fields.replace('|', '') + '}'  # заменяет |, на двойные кавычки
-        toml_fields = '"' + toml_fields.replace("'", '"') + '"'
+        toml_fields = '"' + toml_fields.replace("'", '') + '"'
 
         print ("toml_fields = ", toml_fields)
         toml_fields_json = json.loads(toml_fields)
