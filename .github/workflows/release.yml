@@ -236,7 +236,7 @@ jobs:
         
         toml_fields = os.environ['toml_fields']
         # toml_fields = '{' + toml_fields + '}'
-        toml_fields = '{' + toml_fields.replace('|', '"') + '}'  # заменяет |, на двойные кавычки
+        toml_fields = '{' + toml_fields.replace('|', '') + '}'  # заменяет |, на двойные кавычки
         toml_fields = '"' + toml_fields.replace("'", '"') + '"'
 
         print ("toml_fields = ", toml_fields)
