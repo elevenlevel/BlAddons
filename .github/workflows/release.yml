@@ -234,17 +234,14 @@ jobs:
             data = json.load(f)
         
         toml_fields = os.environ['toml_fields']
-        # toml_fields = '{' + toml_fields + '}'
+
+        # приводим полученную строку к подходящему для json.loads виду
         toml_fields = toml_fields.replace("|[", '[')
         toml_fields = toml_fields.replace("]|", ']')
         toml_fields = '{' + toml_fields.replace('|', '"') + '}'  # заменяет |, на двойные кавычки
         toml_fields = toml_fields.replace("'", '"')
-        # toml_fields = '"' + toml_fields + '"'
         
-
-        print ("toml_fields = ", toml_fields)
         toml_fields_json = json.loads(toml_fields)
-        print("toml_fields_json = ", json.dumps(data, indent=2, ensure_ascii=False))
         
         # id = os.environ['id']
         # schema_version = os.environ['schema_version']
@@ -267,16 +264,14 @@ jobs:
         # license_str = license_str[3:-3]
         # copyright_str = copyright_str[3:-3]
         # python_versions_str = python_versions_str[3:-3]
-
         
-
         for key in toml_fields_json:
           # if "[" in key or "]" in key:
           #   key = key[3:-3]
           
           # print(f'field['id']={feild}')
           # print(key)
-          pass
+          print(f'key={key}, val={toml_fields_json[key]}')
           # print(f'tags_str={tags_str}')
           # print(f'license_str={license_str}')
           # print(f'copyright_str={copyright_str}')
