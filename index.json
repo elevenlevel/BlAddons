@@ -94,6 +94,73 @@
     },
     {
       "XD_Baker_size_clean": "358916"
+    },
+    {
+      "XD_Baker_schema_version": "1.0.0"
+    },
+    {
+      "XD_Baker_python_versions": [
+        "3.11"
+      ]
+    },
+    {
+      "XD_Baker_archive_url": "https://github.com/elevenlevel/BlAddons/releases/download/release-20251124115954/XD_Baker_1.1.0-blender-4.5.1.zip"
+    },
+    {
+      "XD_Baker_website": "https://extreme-developers.ru/"
+    },
+    {
+      "XD_Baker_hash_clean": "sha256:b7f65db50f5e62f2630692088588ff1a2d3b7de097f736e2f641079e6f5d9ed0"
+    },
+    {
+      "XD_Baker_blender_version_max": "5.1.0"
+    },
+    {
+      "XD_Baker_license": [
+        "SPDX:GPL-2.0-or-later"
+      ]
+    },
+    {
+      "XD_Baker_blender_version_min": "4.5.1"
+    },
+    {
+      "XD_Baker_maintainer": "Roman Askarov"
+    },
+    {
+      "XD_Baker_tags": [
+        "XDevs",
+        "BAKER"
+      ]
+    },
+    {
+      "XD_Baker_type": "add-on"
+    },
+    {
+      "XD_Baker_copyright": [
+        "2025 Extreme Developers"
+      ]
+    },
+    {
+      "XD_Baker_name": "XD_Baker"
+    },
+    {
+      "XD_Baker_id": "XD_Baker"
+    },
+    {
+      "XD_Baker_paths_exclude_pattern": [
+        "__pycache__/",
+        "/.git/",
+        "/*.zip"
+      ]
+    },
+    {
+      "XD_Baker_tagline": "Maps bake Addon for Blender"
+    },
+    {
+      "XD_Baker_version": "1.1.0"
+    },
+    {
+      "XD_Baker_size_clean": "358914"
     }
   ]
 }
