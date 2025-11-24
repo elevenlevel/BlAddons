@@ -241,10 +241,11 @@ jobs:
         toml_fields = toml_fields.replace("'", '"')
         
         toml_fields_json = json.loads(toml_fields)
-        
+
         with open('index.json', 'r', encoding='utf-8') as f:
           data = json.load(f)
-
+        
+        # находим блок аддона по id
         item = None
         for elem in data.get('data', []):
             if elem.get('id') == id:
@@ -262,7 +263,9 @@ jobs:
             item.update(new_entry)
           else:
             if 'data' not in data:
-                data['data'] = []
+              data['data'] = []
+            else:
+              data['data'] = [elem for elem in data['data'] if elem.get('id') != id]
             data['data'].append(new_entry)
 
           # if "[" in key or "]" in key:
