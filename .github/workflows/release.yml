@@ -242,29 +242,6 @@ jobs:
         
         toml_fields_json = json.loads(toml_fields)
         
-        # id = os.environ['id']
-        # schema_version = os.environ['schema_version']
-        # name = os.environ['name']
-        # tagline = os.environ['tagline']
-        # version = os.environ['version']
-        # type = os.environ['type']
-        # maintainer = os.environ['maintainer']
-        # blender_version_min = os.environ['blender_version_min']
-        # archive_url = os.environ['archive_url']
-        # size_clean = int(os.environ['size_clean'])
-        # hash_clean = os.environ['hash_clean']
-        
-        # tags_str = repr(os.environ['tags'])
-        # license_str = repr(os.environ['license'])
-        # copyright_str = repr(os.environ['copyright'])
-        # python_versions_str = repr(os.environ['python_versions'])
-
-        # tags_str = tags_str[3:-3]
-        # license_str = license_str[3:-3]
-        # copyright_str = copyright_str[3:-3]
-        # python_versions_str = python_versions_str[3:-3]
-        
-
         with open('index.json', 'r', encoding='utf-8') as f:
           data = json.load(f)
 
@@ -278,7 +255,7 @@ jobs:
           value = toml_fields_json[key]
 
           new_entry = {
-            '{key}': {value},
+            key: value,
           }
           
           if item:
