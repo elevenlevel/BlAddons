@@ -229,7 +229,6 @@ jobs:
         python3 - <<EOF
         import json
         import os
-        from collections import OrderedDict
         
         toml_fields = os.environ['toml_fields']
 
@@ -238,9 +237,9 @@ jobs:
         toml_fields = toml_fields.replace("]|", ']')
         toml_fields = '{' + toml_fields.replace('|', '"') + '}'  # заменяет |, на двойные кавычки
         toml_fields = toml_fields.replace("'", '"')
-        
+        print("toml_fields: ", toml_fields)
         toml_fields_json = json.loads(toml_fields)
-
+        print("toml_fields_json: ", toml_fields_json)
         # определяем id аддона из toml_fields_json
         addon_id = ""
         for key, value in toml_fields_json.items():
@@ -262,7 +261,7 @@ jobs:
               break
         print("item = ", item)
         
-        new_entry = OrderedDict()
+        new_entry = {}
         for key, value in toml_fields_json.items():
           simple_key = key.replace(addon_id + "_", "")
           new_entry[simple_key] = value
@@ -280,7 +279,7 @@ jobs:
         with open('index.json', 'w', encoding='utf-8') as f:
           json.dump(data, f, ensure_ascii=False, indent=2)
         EOF
-        # xxx
+        xxx
     
     - name: Commit and push changes
       if: steps.pack.outputs.created == 'true'
