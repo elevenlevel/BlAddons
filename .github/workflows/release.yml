@@ -231,7 +231,7 @@ jobs:
         import os
         
         toml_fields = os.environ['toml_fields']
-        зкште("toml_fields: ", toml_fields)
+        print("toml_fields: ", toml_fields)
 
         # приводим полученную строку к подходящему для json.loads виду
         toml_fields = toml_fields.replace("|[", '[')
