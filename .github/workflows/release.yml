@@ -247,7 +247,7 @@ jobs:
         # определяем текущий id
         id = ""
         for field in toml_fields_json:
-            if field == "*_id":
+            if "_id" in field:
                 id = field
                 break
 
