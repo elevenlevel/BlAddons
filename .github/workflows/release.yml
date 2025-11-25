@@ -231,7 +231,6 @@ jobs:
         import os
         
         toml_fields = os.environ['toml_fields']
-        print("toml_fields: ", toml_fields)
 
         # приводим полученную строку к подходящему для json.loads виду
         toml_fields = toml_fields.replace("|[", '[')
@@ -240,13 +239,8 @@ jobs:
         toml_fields = toml_fields.replace("'", '"')
         
         toml_fields_json = json.loads(toml_fields)
-        print("toml_fields_json: ", toml_fields_json)
-        
-        # читаем содержисое файла index.json
-        with open('index.json', 'r', encoding='utf-8') as f:
-          data = json.load(f)
-        
-        # определяем текущий toml_fields_json id
+
+        # определяем id аддона из toml_fields_json
         addon_id = ""
         for key, value in toml_fields_json.items():
           print(key + ": " + str(value)) # ГДЕ ВЕРСИЯ????????????????
@@ -254,7 +248,11 @@ jobs:
               addon_id = value
               break
         print("addon_id = ", addon_id)
-
+        
+        # читаем содержисое файла index.json
+        with open('index.json', 'r', encoding='utf-8') as f:
+          data = json.load(f)
+        
         # находим блок аддона по id
         item = None
         for elem in data.get('data', []):
@@ -270,7 +268,7 @@ jobs:
           new_entry = {
             key: value,
           }
-        
+        print("new_entry: ", new_entry)
         if item:
           # Очистить все поля блока аддона
           keys_to_remove = list(item.keys())
