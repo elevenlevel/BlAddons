@@ -92,7 +92,6 @@ jobs:
 
               for key in "${!toml_fields[@]}"; do
                 python_key="${key#${id}_}"
-                echo "key: ${key}"
                 value=$(python3 -c "import toml; print(toml.load('$file').get('$python_key', ''))" 2>/dev/null)
 
                 if [ "$value" != "" ]; then # если поле в файле toml есть, то берем значение из файла
