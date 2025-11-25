@@ -256,7 +256,6 @@ jobs:
         # находим блок аддона по id
         item = None
         for elem in data.get('data', []):
-          print("elem = ", elem)
           if elem.get('id') == addon_id:
               item = elem
               break
@@ -284,7 +283,7 @@ jobs:
                 data['data'] = [elem for elem in data['data'] if elem.get('id') != id]
               data['data'].append(new_entry)
               print("item appended")
-
+          print("new data = ", data)
           with open('index.json', 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
           # print(data)
