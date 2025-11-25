@@ -243,7 +243,7 @@ jobs:
         # определяем id аддона из toml_fields_json
         addon_id = ""
         for key, value in toml_fields_json.items():
-          print(key + ": " + str(value)) # ГДЕ ВЕРСИЯ????????????????
+          print(key + ": " + str(value))
           if "_id" in key:
               addon_id = value
               break
@@ -268,7 +268,7 @@ jobs:
           new_entry = {
             key: value,
           }
-        print("new_entry: ", new_entry)
+        print("new_entry: ", str(new_entry))
         if item:
           # Очистить все поля блока аддона
           keys_to_remove = list(item.keys())
