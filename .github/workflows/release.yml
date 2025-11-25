@@ -269,6 +269,7 @@ jobs:
           print("item after clean = ", item)
         
           for key, value in toml_fields_json.items():
+            simple_key = key.replace(addon_id + "_", "")
             new_entry = {
               key: value,
             }
