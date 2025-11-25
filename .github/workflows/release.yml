@@ -229,8 +229,6 @@ jobs:
         python3 - <<EOF
         import json
         import os
-
-        
         
         toml_fields = os.environ['toml_fields']
 
@@ -253,6 +251,7 @@ jobs:
                 item = elem
                 break
         
+        print("toml_fields_json id: ", toml_fields_json['id'])
         print("id: ", id)
         print("item: ", item)
         
