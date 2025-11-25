@@ -247,24 +247,26 @@ jobs:
         # определяем текущий toml_fields_json id
         id = ""
         for field in toml_fields_json:
-            if "_id" in field:
-                id = field
-                break
+          if "_id" in field:
+              toml_id = field
+              id = field[-3:]
+              print("id = ", id)
+              break
 
         # находим блок аддона по id
         item = None
         for elem in data.get('data', []):
-            if elem.get('id') == id:
-                item = elem
-                break
+          if elem.get('id') == id:
+              item = elem
+              break
         
-        print("toml_fields_json id: ", toml_fields_json[id])
-        print("id: ", id)
-        print("item: ", item)
+        if item:
+          # Очистить все поля блока аддона
+          keys_to_remove = list(item.keys())
+          for k in keys_to_remove:
+            del item[k]
         
-        for key in toml_fields_json:
-          value = toml_fields_json[key]
-
+        for key, value in toml_fields_json.items():
           new_entry = {
             key: value,
           }
@@ -279,7 +281,7 @@ jobs:
             data['data'].append(new_entry)
 
         with open('index.json', 'w', encoding='utf-8') as f:
-            json.dump(data, f, ensure_ascii=False, indent=2)
+          json.dump(data, f, ensure_ascii=False, indent=2)
         print(data)
         EOF
         xxx
