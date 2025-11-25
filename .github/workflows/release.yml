@@ -253,6 +253,7 @@ jobs:
               id = field
               break
         print("id = ", id)
+        print("id cut = ", id[:-3])
 
         # находим блок аддона по id
         item = None
