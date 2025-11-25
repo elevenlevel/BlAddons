@@ -261,7 +261,7 @@ jobs:
               break
         print("item = ", item)
         
-        new_entry = {}
+        new_entry = OrderedDict()
         for key, value in toml_fields_json.items():
           simple_key = key.replace(addon_id + "_", "")
           new_entry[simple_key] = value
@@ -275,16 +275,6 @@ jobs:
             del item[k]
           
         item.update(new_entry)
-        print("item updated")
-
-        # else:
-        #   if 'data' not in data:
-        #     data['data'] = []
-        #   else:
-        #     data['data'] = [elem for elem in data['data'] if elem.get('id') != id]
-        #   data['data'].append(new_entry)
-        #   print("item appended")
-        #   print("new data = ", data)
 
         with open('index.json', 'w', encoding='utf-8') as f:
           json.dump(data, f, ensure_ascii=False, indent=2)
