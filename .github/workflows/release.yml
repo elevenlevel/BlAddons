@@ -241,7 +241,8 @@ jobs:
         toml_fields = toml_fields.replace("'", '"')
         
         toml_fields_json = json.loads(toml_fields)
-
+        
+        # читаем содержисое файла index.json
         with open('index.json', 'r', encoding='utf-8') as f:
           data = json.load(f)
         
@@ -251,6 +252,8 @@ jobs:
             if elem.get('id') == id:
                 item = elem
                 break
+        
+        print("item: ", item)
         
         for key in toml_fields_json:
           value = toml_fields_json[key]
@@ -268,55 +271,10 @@ jobs:
               data['data'] = [elem for elem in data['data'] if elem.get('id') != id]
             data['data'].append(new_entry)
 
-          # if "[" in key or "]" in key:
-          #   key = key[3:-3]
-          
-          # print(f'field['id']={feild}')
-          # print(key)
-          # print(f'key={key}, val={toml_fields_json[key]}')
-          # print(f'tags_str={tags_str}')
-          # print(f'license_str={license_str}')
-          # print(f'copyright_str={copyright_str}')
-          # print(f'python_versions_str={python_versions_str}')
-
-        # tags_list = json.loads(tags_str)
-        # license_list = json.loads(license_str)
-        # copyright_list = json.loads(copyright_str)
-        # python_versions_list = json.loads(python_versions_str)
-
-        # tags_json = json.dumps(tags_list, ensure_ascii=False)
-        # license_json = json.dumps(license_list, ensure_ascii=False)
-        # copyright_json = json.dumps(copyright_list, ensure_ascii=False)
-        # python_versions_json = json.dumps(python_versions_list, ensure_ascii=False)
-
-        # new_entry = {
-        #     'schema_version': schema_version,
-        #     'id': id,
-        #     'name': name,
-        #     'tagline': tagline,
-        #     'version': version,
-        #     'type': type,
-        #     'maintainer': maintainer,
-        #     'blender_version_min': blender_version_min,
-        #     'tags': tags_list,
-        #     'license': license_list,
-        #     'copyright': copyright_list,
-        #     'python_versions': python_versions_list,
-        #     'archive_url': archive_url,
-        #     'archive_size': size_clean,
-        #     'archive_hash': hash_clean
-        # }
-
-        # if item:
-        #     item.update(new_entry)
-        # else:
-        #     if 'data' not in data:
-        #         data['data'] = []
-        #     data['data'].append(new_entry)
-
         with open('index.json', 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
         EOF
+        xxx
     
     - name: Commit and push changes
       if: steps.pack.outputs.created == 'true'
