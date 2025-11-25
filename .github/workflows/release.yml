@@ -250,7 +250,7 @@ jobs:
           print("field = ", field)
           if "_id" in field:
               toml_id = field
-              id = field[-3:]
+              id = field[field]
               print("id = ", id)
               break
 
