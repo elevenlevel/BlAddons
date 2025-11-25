@@ -244,7 +244,7 @@ jobs:
         with open('index.json', 'r', encoding='utf-8') as f:
           data = json.load(f)
         
-        # определяем текущий id
+        # определяем текущий toml_fields_json id
         id = ""
         for field in toml_fields_json:
             if "_id" in field:
@@ -281,7 +281,7 @@ jobs:
         with open('index.json', 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
         EOF
-        # xxx
+        xxx
     
     - name: Commit and push changes
       if: steps.pack.outputs.created == 'true'
