@@ -253,6 +253,7 @@ jobs:
                 item = elem
                 break
         
+        print("id: ", id)
         print("item: ", item)
         
         for key in toml_fields_json:
