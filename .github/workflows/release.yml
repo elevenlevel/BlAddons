@@ -247,7 +247,7 @@ jobs:
         # определяем текущий toml_fields_json id
         addon_id = ""
         for key, value in toml_fields_json.items():
-          print(key + ": " + value)
+          print(key + ": " + str(value))
           if "_id" in key:
               addon_id = value
               break
