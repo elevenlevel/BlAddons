@@ -173,28 +173,9 @@ jobs:
             done
             
             output=${output%,} # Убираем последнюю запятую
-
+            echo "toml_fields=$output"
             echo "toml_fields=$output" >> $GITHUB_OUTPUT
             # ============================
-
-            # echo "archive_url=$archive_url" >> $GITHUB_OUTPUT
-            # echo "size_clean=$size_clean" >> $GITHUB_OUTPUT
-            # echo "hash_clean=$hash_clean" >> $GITHUB_OUTPUT
-
-            # echo "addon_name=${id}" >> $GITHUB_OUTPUT
-            # echo "schema_version=$schema_version" >> $GITHUB_OUTPUT
-            # echo "id=$id" >> $GITHUB_OUTPUT
-            # echo "name=$name" >> $GITHUB_OUTPUT
-            # echo "version=$version" >> $GITHUB_OUTPUT
-            # echo "tagline=$tagline" >> $GITHUB_OUTPUT
-            # echo "maintainer=$maintainer" >> $GITHUB_OUTPUT
-            # echo "type=$type" >> $GITHUB_OUTPUT
-            # echo "blender_version_min=$blender_version_min" >> $GITHUB_OUTPUT
-
-            # echo "tags='$tags'" >> $GITHUB_OUTPUT
-            # echo "license='$license'" >> $GITHUB_OUTPUT
-            # echo "copyright='$copyright'" >> $GITHUB_OUTPUT
-            # echo "python_versions='$python_versions'" >> $GITHUB_OUTPUT
             
             # выводим все поля словаря toml_fields для дебага
             for key in "${!toml_fields[@]}"; do
@@ -207,24 +188,7 @@ jobs:
     - name: Edit index.json with Python
       if: steps.pack.outputs.created == 'true'
       env:
-        # id: ${{ steps.pack.outputs.addon_name }}
-        # schema_version: ${{ steps.pack.outputs.schema_version }}
-        # name: ${{ steps.pack.outputs.name }}
-        # tagline: ${{ steps.pack.outputs.tagline }}
-        # version: ${{ steps.pack.outputs.version }}
-        # type: ${{ steps.pack.outputs.type }}
-        # maintainer: ${{ steps.pack.outputs.maintainer }}
-        # blender_version_min: ${{ steps.pack.outputs.blender_version_min }}
-        # archive_url: ${{ steps.pack.outputs.archive_url }}
-        # size_clean: ${{ steps.pack.outputs.size_clean }}
-        # hash_clean: ${{ steps.pack.outputs.hash_clean }}
-        # tags: ${{ steps.pack.outputs.tags }}
-        # license: ${{ steps.pack.outputs.license }}
-        # copyright: ${{ steps.pack.outputs.copyright }}
-        # python_versions: ${{ steps.pack.outputs.python_versions }}
-
         toml_fields: ${{ steps.pack.outputs.toml_fields }}
-
       run: |
         python3 - <<EOF
         import json
@@ -237,7 +201,7 @@ jobs:
         toml_fields = toml_fields.replace("]|", ']')
         toml_fields = '{' + toml_fields.replace('|', '"') + '}'  # заменяет |, на двойные кавычки
         toml_fields = toml_fields.replace("'", '"')
-        print("toml_fields: ", toml_fields)
+        
         toml_fields_json = json.loads(toml_fields)
         print("toml_fields_json: ", toml_fields_json)
         # определяем id аддона из toml_fields_json
