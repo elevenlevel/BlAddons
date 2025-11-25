@@ -253,10 +253,10 @@ jobs:
 
         # находим блок аддона по id
         item = None
-        for elem in data.get('data', []):
-            if elem.get('id') == id:
-                item = elem
-                break
+        # for elem in data.get('data', []):
+        #     if elem.get('id') == id:
+        #         item = elem
+        #         break
         
         print("toml_fields_json id: ", toml_fields_json['id'])
         print("id: ", id)
