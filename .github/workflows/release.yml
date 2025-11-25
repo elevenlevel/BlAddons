@@ -245,23 +245,24 @@ jobs:
           data = json.load(f)
         
         # определяем текущий toml_fields_json id
-        id = ""
-        for field in toml_fields_json:
-          print("field = ", field)
-          if "_id" in field:
-              toml_id = field
-              id = field[:-3]
-              print("id = ", id)
+        toml_id = ""
+        for key, value in toml_fields_json.items():
+          print("key = ", key)
+          print("value = ", value)
+          if "_id" in key:
+              toml_id = value
               break
 
         # находим блок аддона по id
         item = None
-        for elem in data.get('data', []):
-          print("elem = ", elem)
-          if elem.get('id') == id:
-              item = elem
+        for key, value in data.items():
+          print("key = ", key)
+          print("value = ", value)
+          if key == "id":
+              item = value
               break
         print("item = ", item)
+
         if item:
           # Очистить все поля блока аддона
           keys_to_remove = list(item.keys())
