@@ -231,6 +231,7 @@ jobs:
         import os
         
         toml_fields = os.environ['toml_fields']
+        зкште("toml_fields: ", toml_fields)
 
         # приводим полученную строку к подходящему для json.loads виду
         toml_fields = toml_fields.replace("|[", '[')
@@ -247,7 +248,7 @@ jobs:
         # определяем текущий toml_fields_json id
         addon_id = ""
         for key, value in toml_fields_json.items():
-          print(key + ": " + str(value))
+          print(key + ": " + str(value)) # ГДЕ ВЕРСИЯ????????????????
           if "_id" in key:
               addon_id = value
               break
