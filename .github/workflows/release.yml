@@ -270,24 +270,25 @@ jobs:
         
           for key, value in toml_fields_json.items():
             simple_key = key.replace(addon_id + "_", "")
+            print("simple_key = ", simple_key)
             new_entry = {
               key: value,
             }
             
-            if item:
-              item.update(new_entry)
-              print("item updated")
-            else:
-              if 'data' not in data:
-                data['data'] = []
-              else:
-                data['data'] = [elem for elem in data['data'] if elem.get('id') != id]
-              data['data'].append(new_entry)
-              print("item appended")
+        if item:
+          item.update(new_entry)
+          print("item updated")
+        else:
+          if 'data' not in data:
+            data['data'] = []
+          else:
+            data['data'] = [elem for elem in data['data'] if elem.get('id') != id]
+          data['data'].append(new_entry)
+          print("item appended")
           print("new data = ", data)
+
           with open('index.json', 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
-          # print(data)
         EOF
         xxx
     
