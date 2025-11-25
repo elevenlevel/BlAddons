@@ -264,11 +264,10 @@ jobs:
         new_entry = {}
         for key, value in toml_fields_json.items():
           simple_key = key.replace(addon_id + "_", "")
-          
-          new_entry = {
-            key: value,
-          }
+          new_entry[simple_key] = value
+        
         print("new_entry: ", str(new_entry))
+
         if item:
           # Очистить все поля блока аддона
           keys_to_remove = list(item.keys())
