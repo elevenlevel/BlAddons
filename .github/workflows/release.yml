@@ -242,7 +242,7 @@ jobs:
         with open('index.json', 'w', encoding='utf-8') as f:
           json.dump(data, f, ensure_ascii=False, indent=2)
         EOF
-        xxx
+        # my error
     
     - name: Commit and push changes
       if: steps.pack.outputs.created == 'true'
