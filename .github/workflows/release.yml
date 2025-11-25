@@ -244,6 +244,13 @@ jobs:
         with open('index.json', 'r', encoding='utf-8') as f:
           data = json.load(f)
         
+        # определяем текущий id
+        id = ""
+        for field in toml_fields_json:
+            if field == "*_id":
+                id = field
+                break
+
         # находим блок аддона по id
         item = None
         for elem in data.get('data', []):
