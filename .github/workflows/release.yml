@@ -289,7 +289,7 @@ jobs:
           json.dump(data, f, ensure_ascii=False, indent=2)
         # print(data)
         EOF
-        # xxx
+        xxx
     
     - name: Commit and push changes
       if: steps.pack.outputs.created == 'true'
