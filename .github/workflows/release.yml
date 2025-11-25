@@ -257,6 +257,7 @@ jobs:
         # находим блок аддона по id
         item = None
         for elem in data.get('data', []):
+          print("elem = ", elem)
           if elem.get('id') == id:
               item = elem
               break
