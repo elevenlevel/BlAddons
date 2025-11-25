@@ -262,8 +262,9 @@ jobs:
               item = elem
               break
         print("item = ", item)
-        
-        if item:
+        if not item:
+          return
+        else:
           # Очистить все поля блока аддона
           keys_to_remove = list(item.keys())
           for k in keys_to_remove:
