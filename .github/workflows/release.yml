@@ -248,15 +248,17 @@ jobs:
         print("new_entry: ", str(new_entry))
 
         if item: # если аддон в index.json уже указан
+          print("Addon elready exist in index.json")
           # Чистим все поля блока аддона
           keys_to_remove = list(item.keys())
           for k in keys_to_remove:
             del item[k]
         else:
+          print("Create new part inside index.json")
           item = new_entry
         
         item.update(new_entry)
-
+        print("item updated")
         with open('index.json', 'w', encoding='utf-8') as f:
           json.dump(data, f, ensure_ascii=False, indent=2)
         EOF
