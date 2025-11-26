@@ -4,36 +4,41 @@
   "data": [
     {
       "schema_version": "1.0.0",
+      "id": "XD_Baker",
+      "name": "XD_Baker",
+      "tagline": "Maps bake Addon for Blender",
+      "version": "1.1.5",
+      "type": "add-on",
+      "maintainer": "Roman Askarov",
+      "license": [
+        "SPDX:GPL-2.0-or-later"
+      ],
+      "blender_version_min": "4.5.1",
+      "blender_version_max": "5.1.0",
+      "permissions": {
+        "files": "Importing data files from disk, writing to cache folder",
+        "network": "Loading OME-zarr files from the internet from a given URL"
+      },
+      "tags": [
+        "XDevs",
+        "BAKER"
+      ],
       "python_versions": [
         "3.11"
       ],
       "archive_url": "https://github.com/elevenlevel/BlAddons/releases/download/release-20251126051210/XD_Baker_1.1.5-blender-4.5.1.zip",
       "website": "https://extreme-developers.ru/",
-      "hash_clean": "sha256:b8e5e215f19c35769173e9e2987a262dba83526b5149c5e0f25a21e6bc2832ff",
-      "blender_version_max": "5.1.0",
-      "license": [
-        "SPDX:GPL-2.0-or-later"
-      ],
-      "blender_version_min": "4.5.1",
-      "maintainer": "Roman Askarov",
-      "tags": [
-        "XDevs",
-        "BAKER"
-      ],
-      "type": "add-on",
+      "archive_hash": "sha256:b8e5e215f19c35769173e9e2987a262dba83526b5149c5e0f25a21e6bc2832ff",
+      
       "copyright": [
         "2025 Extreme Developers"
       ],
-      "name": "XD_Baker",
-      "id": "XD_Baker",
       "paths_exclude_pattern": [
         "__pycache__/",
         "/.git/",
         "/*.zip"
       ],
-      "tagline": "Maps bake Addon for Blender",
-      "version": "1.1.5",
-      "size_clean": "358915"
+      "archive_size": "358915"
     }
   ]
 }

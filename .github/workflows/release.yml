@@ -82,7 +82,7 @@ jobs:
               toml_fields["${id}_maintainer"]="Extreme Developers"
               toml_fields["${id}_type"]="add-on" # Supported types: "add-on", "theme"
               toml_fields["${id}_blender_version_min"]="0.0.0"
-              toml_fields["${id}_blender_version_max"]="5.1.0"
+              toml_fields["${id}_blender_version_max"]="20.1.0"
               toml_fields["${id}_website"]="https://extreme-developers.ru/"
               toml_fields["${id}_tags"]='["default"]'
               toml_fields["${id}_license"]='["SPDX:GPL-3.0-or-later"]'
@@ -157,8 +157,8 @@ jobs:
             exit 0
           else
             toml_fields[${id}_archive_url]="$archive_url"
-            toml_fields[${id}_size_clean]="$size_clean"
-            toml_fields[${id}_hash_clean]="$hash_clean"
+            toml_fields[${id}_archive_size]="$size_clean"
+            toml_fields[${id}_archive_hash]="$hash_clean"
             
             echo "created=true" >> $GITHUB_OUTPUT
             release_name="${toml_fields["${id}_id"]}_${toml_fields["${id}_version"]}-blender-${toml_fields["${id}_blender_version_min"]}"
