@@ -229,9 +229,11 @@ jobs:
         
         # находим блок аддона по id
         item = None # это словарь полей аддона
-        for elem in data.get('data', []):
+        index = None # это номер блока аддона в файле index.json
+        for i, elem in enumerate(data.get('data', [])):
           if elem.get('id') == addon_id:
               item = elem
+              index = i
               break
         print("item = ", item)
 
@@ -247,15 +249,17 @@ jobs:
         
         print("new_entry: ", str(new_entry))
 
-        if item: # если аддон в index.json уже указан
+        if item is not None: # если аддон в index.json уже указан
           print("Addon elready exist in index.json")
           # Чистим все поля блока аддона
           keys_to_remove = list(item.keys())
           for k in keys_to_remove:
             del item[k]
+          item.update(new_entry)
+          # data['data'][index] = new_entry # заменяем весь элемент новым
         else:
           print("Create new part inside index.json")
-          item = new_entry
+          data.setdefault('data', []).append(new_entry)  # добавляем новый
         
         item.update(new_entry)
         print("item updated")
