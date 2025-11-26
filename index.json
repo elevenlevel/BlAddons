@@ -121,14 +121,14 @@
         3.11
       ],
       "name": "Test Addon",
-      "version": "0.0.1",
+      "version": "0.0.2",
       "tags": [
         "test"
       ],
       "archive_size": 1162,
       "type": "add-on",
-      "archive_url": "https://github.com/elevenlevel/BlAddons/releases/download/release-20251126111142/TestAddon_0.0.1-blender-4.3.0.zip",
-      "archive_hash": "sha256:3de99a9a07ea0d231c71d91645627787878a663455d0fe8a026b52cf815bedc3",
+      "archive_url": "https://github.com/elevenlevel/BlAddons/releases/download/release-20251126111310/TestAddon_0.0.2-blender-4.3.0.zip",
+      "archive_hash": "sha256:98fa963452f410d2f03f5494e12b7c749076758b0b51240f4355695c366663c9",
       "blender_version_max": "20.1.0"
     }
   ]
