@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-
+    
     - name: Install Python toml parser
       run: pip install toml
 
@@ -22,6 +22,14 @@ jobs:
       run: |
         git fetch --depth=2
         echo "files=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }})" >> $GITHUB_OUTPUT
+
+        if [ -z "$changed" ] || ! echo "$changed" | grep -q 'blender_manifest.toml'; then
+          echo "No changed blender_manifest.toml found, skipping packaging."
+          echo "changed_toml=false" >> $GITHUB_OUTPUT
+          exit 0
+        else
+          echo "changed_toml=true" >> $GITHUB_OUTPUT
+        fi
 
     - name: Create TAG
       id: tag
@@ -41,13 +49,14 @@ jobs:
     - name: Process changed blender manifests and create zips
       id: pack
       run: |
+        changed_toml="${{ steps.changed_files.outputs.changed_toml }}"
         changed="${{ steps.changed_files.outputs.files }}"
 
-        if [ -z "$changed" ] || ! echo "$changed" | grep -q 'blender_manifest.toml'; then
-          echo "No changed blender_manifest.toml found, skipping packaging."
-          echo "created=false" >> $GITHUB_OUTPUT
-          exit 0
-        fi
+        # if [ -z "$changed" ] || ! echo "$changed" | grep -q 'blender_manifest.toml'; then
+        #   echo "No changed blender_manifest.toml found, skipping packaging."
+        #   echo "created=false" >> $GITHUB_OUTPUT
+        #   exit 0
+        # fi
 
         # проверяем есть ли файл blender_manifest.toml в текущем коммите
         touched_manifests=0
