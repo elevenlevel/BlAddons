@@ -1,7 +1,7 @@
 schema_version = "1.0.0"
 id = "TestAddon" # должен совпадать с именем папки аддона
 name = "Test Addon"
-version = "0.0.0"
+version = "0.0.1"
 tagline = "Test Addon"
 maintainer = "Roman Askarov"
 license = ["SPDX:GPL-2.0-or-later"]
