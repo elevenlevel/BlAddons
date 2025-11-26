@@ -66,6 +66,38 @@
       ],
       "maintainer": "Roman Askarov",
       "archive_url": "https://github.com/elevenlevel/BlAddons/releases/download/release-20251126103817/XD_ModelValidator_0.1.3-blender-4.5.1.zip"
+    },
+    {
+      "tagline": "Info",
+      "copyright": [
+        "2002-%Y Extreme Developers"
+      ],
+      "archive_hash": "sha256:6bda31a3e89f21f318d584da6ad9e065eff0e81a403b8216ddd64db5ea1c40e1",
+      "website": "https://extreme-developers.ru/",
+      "version": "0.0.0",
+      "schema_version": "1.0.0",
+      "tags": [
+        "info, comment"
+      ],
+      "archive_size": 1895,
+      "paths_exclude_pattern": [
+        "__pycache__/",
+        "/.git/",
+        "/*.zip"
+      ],
+      "license": [
+        "XDevs Internal License"
+      ],
+      "name": "XD Info",
+      "maintainer": "Roman Askarov",
+      "blender_version_min": "4.2.0",
+      "archive_url": "https://github.com/elevenlevel/BlAddons/releases/download/release-20251126104211/XD_Info_0.0.0-blender-4.2.0.zip",
+      "blender_version_max": "20.1.0",
+      "type": "add-on",
+      "id": "XD_Info",
+      "python_versions": [
+        3.11
+      ]
     }
   ]
 }
