@@ -261,8 +261,8 @@ jobs:
           print("Create new part inside index.json")
           data.setdefault('data', []).append(new_entry)  # добавляем новый
         
-        item.update(new_entry)
-        print("item updated")
+        # item.update(new_entry)
+        # print("item updated")
         with open('index.json', 'w', encoding='utf-8') as f:
           json.dump(data, f, ensure_ascii=False, indent=2)
         EOF
