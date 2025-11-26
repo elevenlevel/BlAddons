@@ -72,14 +72,14 @@
       "copyright": [
         "2002-%Y Extreme Developers"
       ],
-      "archive_hash": "sha256:6bda31a3e89f21f318d584da6ad9e065eff0e81a403b8216ddd64db5ea1c40e1",
+      "archive_hash": "sha256:4a4d5d144bb3014833aa25b4cee690a5e56f43aae63b349f95ee5b91299232a6",
       "website": "https://extreme-developers.ru/",
-      "version": "0.0.0",
+      "version": "0.0.2",
       "schema_version": "1.0.0",
       "tags": [
         "info, comment"
       ],
-      "archive_size": 1895,
+      "archive_size": 1897,
       "paths_exclude_pattern": [
         "__pycache__/",
         "/.git/",
@@ -91,7 +91,7 @@
       "name": "XD Info",
       "maintainer": "Roman Askarov",
       "blender_version_min": "4.2.0",
-      "archive_url": "https://github.com/elevenlevel/BlAddons/releases/download/release-20251126104211/XD_Info_0.0.0-blender-4.2.0.zip",
+      "archive_url": "https://github.com/elevenlevel/BlAddons/releases/download/release-20251126110932/XD_Info_0.0.2-blender-4.2.0.zip",
       "blender_version_max": "20.1.0",
       "type": "add-on",
       "id": "XD_Info",
