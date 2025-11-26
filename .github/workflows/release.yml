@@ -163,6 +163,8 @@ jobs:
             echo "created=true" >> $GITHUB_OUTPUT
             release_name="${toml_fields["${id}_id"]}_${toml_fields["${id}_version"]}-blender-${toml_fields["${id}_blender_version_min"]}"
             echo "release_name=$release_name" >> $GITHUB_OUTPUT
+            addon_name="${toml_fields["${id}_name"]}"
+            echo "addon_name=$addon_name" >> $GITHUB_OUTPUT
             # echo "toml_fields='${!toml_fields[@]}'" >> $GITHUB_OUTPUT
             output=""
 
