@@ -229,7 +229,10 @@ jobs:
         new_entry = {}
         for key, value in toml_fields_json.items():
           simple_key = key.replace(addon_id + "_", "")
-          new_entry[simple_key] = value
+          if simple_key=="archive_size":
+            new_entry[simple_key] = int(value)
+          else:
+            new_entry[simple_key] = value
         
         print("new_entry: ", str(new_entry))
 
