@@ -326,7 +326,7 @@ jobs:
         for path in "${dirs_array[@]}"; do
           echo "path: ${path}"
           addon_name_latest=${{ steps.pack.outputs.addon_name }}
-          echo "Uploading ${zipfile}"
-          echo "Uploading ${path}"
-          gh release upload ${{ steps.tag.outputs.tag }} "${path}" --clobber
+          # echo "Uploading ${zipfile}"
+          # echo "Uploading ${path}"
+          gh release upload ${{ steps.tag.outputs.tag }} "$path" --clobber
         done
