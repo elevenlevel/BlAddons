@@ -1,3 +1,4 @@
+# TODO: почему скрипт выполняется даже когда пушим не *.toml файл?      
 name: Build and Release ZIP for Changed Blender Addons
 
 on:
@@ -64,14 +65,9 @@ jobs:
         zip_sizes=""
         zip_hashes=""
 
-        # for file in $changed; do
-        #   if [[ "$file" == */blender_manifest.toml ]]; then
-        #     touched_manifests=1
-        #   fi
-        # done
-        git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | while IFS= read -r file; do
+        for file in $changed; do
           if [[ "$file" == */blender_manifest.toml ]]; then
-            # обработка файла
+            touched_manifests=1
           fi
         done
 
@@ -81,41 +77,48 @@ jobs:
           echo "created=false" >> $GITHUB_OUTPUT
           exit 0
         else
-          declare -A toml_fields
+          declare -A all_toml_fields # переменная для всех аддонов
 
           for file in $changed; do
             if [[ "$file" == */blender_manifest.toml ]]; then
+              
               dir=$(dirname "$file")
               id=$(python -c "import toml; print(toml.load('$file')['id'])")
 
-              toml_fields["${id}_schema_version"]="1.0.0"
-              toml_fields["${id}_id"]="$id"
-              toml_fields["${id}_name"]="$id"
-              toml_fields["${id}_version"]="0.0.0"
-              toml_fields["${id}_tagline"]="This is Extreme Developers extension"
-              toml_fields["${id}_maintainer"]="Extreme Developers"
-              toml_fields["${id}_type"]="add-on" # Supported types: "add-on", "theme"
-              toml_fields["${id}_blender_version_min"]="0.0.0"
-              toml_fields["${id}_blender_version_max"]="20.1.0"
-              toml_fields["${id}_website"]="https://extreme-developers.ru/"
-              toml_fields["${id}_tags"]='["default"]'
-              toml_fields["${id}_license"]='["SPDX:GPL-3.0-or-later"]'
-              toml_fields["${id}_copyright"]='["2002-%Y Extreme Developers"]'
-              toml_fields["${id}_python_versions"]='[3.11]'
-              toml_fields["${id}_paths_exclude_pattern"]='["__pycache__/", "/.git/", "/*.zip"]'
+              declare -A addon_fields # переменная для каждого аддона отдельно
 
-              for key in "${!toml_fields[@]}"; do
+              # определяем дефолтные значения
+              addon_fields["${id}_schema_version"]="1.0.0"
+              addon_fields["${id}_id"]="$id"
+              addon_fields["${id}_name"]="$id"
+              addon_fields["${id}_version"]="0.0.0"
+              addon_fields["${id}_tagline"]="This is Extreme Developers extension"
+              addon_fields["${id}_maintainer"]="Extreme Developers"
+              addon_fields["${id}_type"]="add-on" # Supported types: "add-on", "theme"
+              addon_fields["${id}_blender_version_min"]="0.0.0"
+              addon_fields["${id}_blender_version_max"]="20.1.0"
+              addon_fields["${id}_website"]="https://extreme-developers.ru/"
+              addon_fields["${id}_tags"]='["default"]'
+              addon_fields["${id}_license"]='["SPDX:GPL-3.0-or-later"]'
+              addon_fields["${id}_copyright"]='["2002-%Y Extreme Developers"]'
+              addon_fields["${id}_python_versions"]='[3.11]'
+              addon_fields["${id}_paths_exclude_pattern"]='["__pycache__/", "/.git/", "/*.zip"]'
+
+              # пересобираем переменную addon_fields с учетом содержимого файла blender_manifest.toml
+              for key in "${!addon_fields[@]}"; do
                 python_key="${key#${id}_}"
                 value=$(python3 -c "import toml; print(toml.load('$file').get('$python_key', ''))" 2>/dev/null)
 
                 if [ "$value" != "" ]; then # если поле в файле toml есть, то берем значение из файла
-                  toml_fields[${key}]="$value"
+                  addon_fields[${key}]="$value"
+                  all_toml_fields["$key"]="$value"
                 else # иначе берем дефолтное значение
-                  toml_fields[${key}]=${toml_fields[${key}]}
+                  addon_fields[${key}]=${addon_fields[${key}]}
+                  all_toml_fields["$key"]="${addon_fields[$key]}"
                 fi
               done
               
-              zipname="${toml_fields["${id}_id"]}_${toml_fields["${id}_version"]}-blender-${toml_fields["${id}_blender_version_min"]}.zip"
+              zipname="${addon_fields["${id}_id"]}_${addon_fields["${id}_version"]}-blender-${addon_fields["${id}_blender_version_min"]}.zip"
               
               (cd "$dir" && zip -r "../$zipname" . -x "__pycache__/*" "*.pyc" ".vscode/*") || (echo "Failed to create zip: $zipname" && exit 1)
               touched_manifests=1
@@ -123,155 +126,184 @@ jobs:
               zip_path="$dir/../$zipname"
               size=$(stat -c%s "$zip_path")
               hash=sha256:$(sha256sum "$zip_path" | cut -d' ' -f1)
-              _zip_paths+="$zip_path,"
-              _zip_sizes+="${size},"
-              _zip_hashes+="${hash},"
+              # _zip_paths+="$zip_path,"
+              # _zip_sizes+="${size},"
+              # _zip_hashes+="${hash},"
               
               REP=${{ steps.rep.outputs.rep }}
               TAG=${{ steps.tag.outputs.tag }}
               archive_url="https://github.com/$REP/releases/download/$TAG/$zipname"
 
+              toml_fields[${id}_archive_url]="$archive_url"
+              toml_fields[${id}_archive_size]="$size"
+              toml_fields[${id}_archive_hash]="$hash"
+
               echo "zipname variable is: $zipname"
               echo "Archiving directory: $dir"
+
+
+            
+              release_name="${addon_fields["${id}_id"]}_${addon_fields["${id}_version"]}-blender-${addon_fields["${id}_blender_version_min"]}"
+              echo "release_name=$release_name" >> $GITHUB_OUTPUT
+              addon_name="${addon_fields["${id}_name"]}"
+              echo "addon_name=$addon_name" >> $GITHUB_OUTPUT
             fi
           done
 
-          zip_paths=${_zip_paths%,}
-          zip_sizes=${_zip_sizes%,}
-          zip_hashes=${_zip_hashes%,}
-          echo "zip_paths=$zip_paths" >> $GITHUB_OUTPUT
-          echo "zip_sizes=$zip_sizes" >> $GITHUB_OUTPUT
-          echo "zip_hashes=$zip_hashes" >> $GITHUB_OUTPUT
+          echo "all_toml_fields=$all_toml_fields" >> $GITHUB_OUTPUT
+          
+          # выводим все поля словаря toml_fields для дебага
+          for key in "${!all_toml_fields[@]}"; do
+            python_key=${key#${id}_}
+            echo "all_toml_fields: $key = ${all_toml_fields[$key]}"
+          done
+          echo "created=true" >> $GITHUB_OUTPUT
+
+          # zip_paths=${_zip_paths%,}
+          # zip_sizes=${_zip_sizes%,}
+          # zip_hashes=${_zip_hashes%,}
+          # echo "zip_paths=$zip_paths" >> $GITHUB_OUTPUT
+          # echo "zip_sizes=$zip_sizes" >> $GITHUB_OUTPUT
+          # echo "zip_hashes=$zip_hashes" >> $GITHUB_OUTPUT
 
           description=""
 
-          IFS=',' read -r -a paths_array <<< "$zip_paths"
-          IFS=',' read -r -a sizes_array <<< "$zip_sizes"
-          IFS=',' read -r -a hashes_array <<< "$zip_hashes"
+          # IFS=',' read -r -a paths_array <<< "$zip_paths"
+          # IFS=',' read -r -a sizes_array <<< "$zip_sizes"
+          # IFS=',' read -r -a hashes_array <<< "$zip_hashes"
 
-          for i in "${!paths_array[@]}"; do
-            size_clean=$(echo "${sizes_array[i]}" | xargs)
-            hash_clean=$(echo "${hashes_array[i]}" | xargs)
-            path_clean=$(echo "${paths_array[i]}" | xargs)
+          # for i in "${!paths_array[@]}"; do
+          #   size_clean=$(echo "${sizes_array[i]}" | xargs)
+          #   hash_clean=$(echo "${hashes_array[i]}" | xargs)
+          #   path_clean=$(echo "${paths_array[i]}" | xargs)
 
-            description+="Архив: $path_clean
-            Size: $size_clean байт
-            Hash: sha256:$hash_clean
+          #   description+="Архив: $path_clean
+          #   Size: $size_clean байт
+          #   Hash: sha256:$hash_clean
             
-            "
-          done
+            # "
+          # done
 
-          echo "release_description<<EOF" >> $GITHUB_OUTPUT
-          echo "$description" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          # echo "release_description<<EOF" >> $GITHUB_OUTPUT
+          # echo "$description" >> $GITHUB_OUTPUT
+          # echo "EOF" >> $GITHUB_OUTPUT
 
-          if [ $touched_manifests -eq 0 ]; then
-            echo "No blender_manifest.toml files were processed."
-            echo "created=false" >> $GITHUB_OUTPUT
-            exit 0
-          else
-            toml_fields[${id}_archive_url]="$archive_url"
-            toml_fields[${id}_archive_size]="$size_clean"
-            toml_fields[${id}_archive_hash]="$hash_clean"
+          # if [ $touched_manifests -eq 0 ]; then
+          #   echo "No blender_manifest.toml files were processed."
+          #   echo "created=false" >> $GITHUB_OUTPUT
+          #   exit 0
+          # else
+            # toml_fields[${id}_archive_url]="$archive_url"
+            # toml_fields[${id}_archive_size]="$size_clean"
+            # toml_fields[${id}_archive_hash]="$hash_clean"
             
-            echo "created=true" >> $GITHUB_OUTPUT
-            release_name="${toml_fields["${id}_id"]}_${toml_fields["${id}_version"]}-blender-${toml_fields["${id}_blender_version_min"]}"
-            echo "release_name=$release_name" >> $GITHUB_OUTPUT
-            addon_name="${toml_fields["${id}_name"]}"
-            echo "addon_name=$addon_name" >> $GITHUB_OUTPUT
-            # echo "toml_fields='${!toml_fields[@]}'" >> $GITHUB_OUTPUT
-            output=""
+            # echo "created=true" >> $GITHUB_OUTPUT
+            # release_name="${toml_fields["${id}_id"]}_${toml_fields["${id}_version"]}-blender-${toml_fields["${id}_blender_version_min"]}"
+            # echo "release_name=$release_name" >> $GITHUB_OUTPUT
+            # addon_name="${toml_fields["${id}_name"]}"
+            # echo "addon_name=$addon_name" >> $GITHUB_OUTPUT
+            # # echo "toml_fields='${!toml_fields[@]}'" >> $GITHUB_OUTPUT
+            # output=""
 
-            # выводим весь словарь в переменную toml_fields ===========
-            for key in "${!toml_fields[@]}"; do
-              value="${toml_fields[$key]}"
-              output+="|${key}|:|${value}|,"
-            done
+            # # выводим весь словарь в переменную toml_fields ===========
+            # for key in "${!toml_fields[@]}"; do
+            #   value="${toml_fields[$key]}"
+            #   output+="|${key}|:|${value}|,"
+            # done
             
-            output=${output%,} # Убираем последнюю запятую
-            echo "toml_fields=$output" >> $GITHUB_OUTPUT
-            # ============================
+            # output=${output%,} # Убираем последнюю запятую
+            # echo "toml_fields=$output" >> $GITHUB_OUTPUT
+            # # ============================
             
-            # выводим все поля словаря toml_fields для дебага
-            for key in "${!toml_fields[@]}"; do
-              python_key=${key#${id}_}
-              echo "toml_fields: $key = ${toml_fields[$key]}"
-            done
-          fi
+            # # выводим все поля словаря toml_fields для дебага
+            # for key in "${!toml_fields[@]}"; do
+            #   python_key=${key#${id}_}
+            #   echo "toml_fields: $key = ${toml_fields[$key]}"
+            # done
+          # fi
         fi
 
     - name: Edit index.json with Python
       if: steps.pack.outputs.created == 'true'
       env:
-        toml_fields: ${{ steps.pack.outputs.toml_fields }}
+        all_toml_fields: ${{ steps.pack.outputs.all_toml_fields }}
       run: |
         python3 - <<EOF
         import json
         import os
         
-        toml_fields = os.environ['toml_fields']
+        all_toml_fields = os.environ['all_toml_fields']
 
         # приводим полученную строку к подходящему для json.loads виду
-        toml_fields = toml_fields.replace("|[", '[')
-        toml_fields = toml_fields.replace("]|", ']')
-        toml_fields = '{' + toml_fields.replace('|', '"') + '}'  # заменяет |, на двойные кавычки
-        toml_fields = toml_fields.replace("'", '"')
-        
-        toml_fields_json = json.loads(toml_fields)
-        print("toml_fields_json: ", toml_fields_json)
-        # определяем id аддона из toml_fields_json
-        addon_id = ""
-        for key, value in toml_fields_json.items():
+        all_toml_fields = all_toml_fields.replace("|[", '[')
+        all_toml_fields = all_toml_fields.replace("]|", ']')
+        all_toml_fields = '{' + all_toml_fields.replace('|', '"') + '}'  # заменяет |, на двойные кавычки
+        all_toml_fields = all_toml_fields.replace("'", '"')
+        all_toml_fields_json = json.loads(all_toml_fields_json)
+        print("all_toml_fields_json: ", all_toml_fields_json)
+
+        # определяем все id аддонов содержащиеся в all_toml_fields_json и формируем список
+        addon_ids = []
+        for key, value in all_toml_fields_json.items():
           print(key + ": " + str(value))
           if "_id" in key:
-              addon_id = value
-              break
-        print("addon_id = ", addon_id)
+              addon_ids += value
+              # break
+        addon_ids = list(set(addon_ids)) # убмраем дублирующиеся элементы списка
+        print("addon_ids = ", str(addon_ids))
         
         # читаем содержисое файла index.json
         with open('index.json', 'r', encoding='utf-8') as f:
           data = json.load(f)
         
-        # находим блок аддона по id
-        item = None # это словарь полей аддона
-        index = None # это номер блока аддона в файле index.json
-        for i, elem in enumerate(data.get('data', [])):
-          if elem.get('id') == addon_id:
-              item = elem
-              index = i
-              break
-        print("item = ", item)
+        # работаем с каждым аддоном отдельно
+        for single_addon_id in addon_ids:
+          id_len = len(single_addon_id)
+          # выделяем из all_toml_fields_json поля текущего аддона
+          single_toml_fields = {}
+          for field_key, field_val in all_toml_fields_json:
+            if field_key startswidth(single_addon_id):
+              id = single_addon_id[id_len:]
+              single_toml_fields[id] = field_val
+              print("id = ", id)
+          
+          # находим блок аддона в data
+          addon_item = None # это словарь полей аддона
+          index = None # это номер блока аддона в файле index.json
+          for i, elem in enumerate(data.get('data', [])):
+            if elem.get('id') == single_addon_id:
+                addon_item = elem
+                index = i
+                break
+          print("addon_item = ", addon_item)
 
-        # если item == None, занчит аддона в index.json еще нет
+          # если addon_item == None, занчит аддона в index.json еще нет
 
-        new_entry = {}
-        for key, value in toml_fields_json.items():
-          simple_key = key.replace(addon_id + "_", "")
-          if simple_key=="archive_size":
-            new_entry[simple_key] = int(value)
+          new_entry = {}
+          for key, value in single_toml_fields.items():
+            # simple_key = key.replace(single_addon + "_", "")
+            if key=="archive_size":
+              new_entry[key] = int(value)
+            else:
+              new_entry[key] = value
+          
+          print("new_entry: ", str(new_entry))
+
+          if addon_item is not None: # если аддон в index.json уже указан
+            print("Addon elready exist in index.json")
+            # Чистим все поля блока аддона
+            keys_to_remove = list(addon_item.keys())
+            for k in keys_to_remove:
+              del addon_item[k]
+            addon_item.update(new_entry)
           else:
-            new_entry[simple_key] = value
-        
-        print("new_entry: ", str(new_entry))
-
-        if item is not None: # если аддон в index.json уже указан
-          print("Addon elready exist in index.json")
-          # Чистим все поля блока аддона
-          keys_to_remove = list(item.keys())
-          for k in keys_to_remove:
-            del item[k]
-          item.update(new_entry)
-          # data['data'][index] = new_entry # заменяем весь элемент новым
-        else:
-          print("Create new part inside index.json")
-          data.setdefault('data', []).append(new_entry)  # добавляем новый
-        
-        # item.update(new_entry)
-        # print("item updated")
-        with open('index.json', 'w', encoding='utf-8') as f:
-          json.dump(data, f, ensure_ascii=False, indent=2)
-        EOF
-        # my error
+            print("Create new part inside index.json")
+            data.setdefault('data', []).append(new_entry)  # добавляем новый
+          
+          with open('index.json', 'w', encoding='utf-8') as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+          EOF
+        my error
     
     - name: Commit and push changes
       if: steps.pack.outputs.created == 'true'
@@ -319,7 +351,7 @@ jobs:
           
           Таким образом у вас всегда будут самые свежие версии аддонов.
 
-          ${{ steps.pack.outputs.release_description }}
+          # ${{ steps.pack.outputs.release_description }}
         
         draft: false
         prerelease: false
