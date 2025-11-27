@@ -64,9 +64,14 @@ jobs:
         zip_sizes=""
         zip_hashes=""
 
-        for file in $changed; do
+        # for file in $changed; do
+        #   if [[ "$file" == */blender_manifest.toml ]]; then
+        #     touched_manifests=1
+        #   fi
+        # done
+        git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | while IFS= read -r file; do
           if [[ "$file" == */blender_manifest.toml ]]; then
-            touched_manifests=1
+            # обработка файла
           fi
         done
 
