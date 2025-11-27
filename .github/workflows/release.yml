@@ -253,10 +253,10 @@ jobs:
         addon_ids = []
         for key, value in all_toml_fields_json.items():
           print(key + ": " + str(value))
-          if "_id" in key:
-              addon_ids += value
-              # break
-        addon_ids = list(set(addon_ids)) # убмраем дублирующиеся элементы списка
+          if key.endswith("_id"):
+              addon_ids.append(value)
+              
+        addon_ids = list(set(addon_ids)) # убираем дублирующиеся элементы списка
         print("addon_ids = ", str(addon_ids))
         
         # читаем содержисое файла index.json
