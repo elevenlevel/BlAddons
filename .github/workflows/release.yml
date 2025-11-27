@@ -233,7 +233,7 @@ jobs:
         import os
         
         all_toml_fields = os.environ['all_toml_fields']
-
+        print("all_toml_fields: ", all_toml_fields)
         # приводим полученную строку к подходящему для json.loads виду
         all_toml_fields = all_toml_fields.replace("|[", '[')
         all_toml_fields = all_toml_fields.replace("]|", ']')
