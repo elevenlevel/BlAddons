@@ -269,7 +269,7 @@ jobs:
           
           # выделяем из all_toml_fields_json поля текущего аддона
           single_toml_fields = {}
-          for field_key, field_val in all_toml_fields_json:
+          for field_key, field_val in all_toml_fields_json.items(): # ОШИБКА ЗДЕСЬ. ГОВОРИТ, ЧТО В all_toml_fields_json НЕТ ПАРЫ ДЛЯ РАСПАКОВКИ
             print("field_key: ", field_key)
             if field_key.startswith(single_addon_id):
               # id = single_addon_id[id_len:]
