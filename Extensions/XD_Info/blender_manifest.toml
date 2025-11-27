@@ -5,6 +5,6 @@ version = "0.0.3"
 tagline = "Info"
 maintainer = "Roman Askarov"
 type = "add-on"
-tags = ["info, comment"]
+tags = ["info", "comment"]
 blender_version_min = "4.2.0"
 license = ["XDevs Internal License"]
