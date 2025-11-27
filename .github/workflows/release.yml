@@ -150,8 +150,13 @@ jobs:
             fi
           done
 
-          echo "all_toml_fields=$all_toml_fields" >> $GITHUB_OUTPUT
-          echo "XXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+          output=""
+          for key in "${!all_toml_fields[@]}"; do
+            value="${all_toml_fields[$key]}"
+            output+="|${key}|:|${value}|,"
+          done
+          output=${output%,}  # Убираем последнюю запятую
+          echo "all_toml_fields=$output" >> $GITHUB_OUTPUT
           
           # выводим все поля словаря toml_fields для дебага
           for key in "${!all_toml_fields[@]}"; do
@@ -235,7 +240,7 @@ jobs:
         
         all_toml_fields = os.environ['all_toml_fields']
         print("all_toml_fields: ", str(all_toml_fields))
-        
+
         # приводим полученную строку к подходящему для json.loads виду
         all_toml_fields = all_toml_fields.replace("|[", '[')
         all_toml_fields = all_toml_fields.replace("]|", ']')
