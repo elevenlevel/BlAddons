@@ -239,7 +239,7 @@ jobs:
         all_toml_fields = all_toml_fields.replace("]|", ']')
         all_toml_fields = '{' + all_toml_fields.replace('|', '"') + '}'  # заменяет |, на двойные кавычки
         all_toml_fields = all_toml_fields.replace("'", '"')
-        all_toml_fields_json = json.loads(all_toml_fields_json)
+        all_toml_fields_json = json.loads(all_toml_fields)
         print("all_toml_fields_json: ", all_toml_fields_json)
 
         # определяем все id аддонов содержащиеся в all_toml_fields_json и формируем список
