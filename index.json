@@ -34,6 +34,38 @@
       ],
       "tagline": "Maps bake Addon for Blender",
       "version": "1.1.8"
+    },
+    {
+      "website": "https://extreme-developers.ru/",
+      "maintainer": "Roman Askarov",
+      "blender_version_min": "4.3.0",
+      "tagline": "Test Addon",
+      "copyright": [
+        "2002-%Y Extreme Developers"
+      ],
+      "license": [
+        "SPDX:GPL-2.0-or-later"
+      ],
+      "id": "TestAddon",
+      "paths_exclude_pattern": [
+        "__pycache__/",
+        "/.git/",
+        "/*.zip"
+      ],
+      "schema_version": "1.0.0",
+      "python_versions": [
+        3.11
+      ],
+      "name": "Test Addon",
+      "version": "0.0.5",
+      "tags": [
+        "test"
+      ],
+      "archive_size": 1163,
+      "type": "add-on",
+      "archive_url": "https://github.com/elevenlevel/BlAddons/releases/download/release-20251127054156/TestAddon_0.0.5-blender-4.3.0.zip",
+      "archive_hash": "sha256:3aa7843149f6a6404e609e7d1dd7e1bee075beb180c04937f08f7059bae699fc",
+      "blender_version_max": "20.1.0"
     }
   ]
 }
