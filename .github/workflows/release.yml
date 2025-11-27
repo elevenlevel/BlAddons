@@ -266,13 +266,14 @@ jobs:
         # работаем с каждым аддоном отдельно
         for single_addon_id in addon_ids:
           id_len = len(single_addon_id)
-          print("id_len = ", id_len)
+          
           # выделяем из all_toml_fields_json поля текущего аддона
           single_toml_fields = {}
           for field_key, field_val in all_toml_fields_json:
             if field_key.startswith(single_addon_id):
               print("field_key: ", field_key)
               id = single_addon_id[id_len:]
+              print("id: ", id)
               single_toml_fields[id] = field_val
               print("id = ", id)
           
