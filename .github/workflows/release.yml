@@ -318,14 +318,13 @@ jobs:
         shopt -s nullglob
         
         zip_paths_str="${{ steps.pack.outputs.zip_paths }}"
+        echo "zip_paths_str: ${zip_paths_str}"
         IFS=',' read -r -a dirs_array <<< "$zip_paths_str"
         
         set -x
         
         for path in "${dirs_array[@]}"; do
           echo "path: ${path}"
-          # addon_name_latest=${{ steps.pack.outputs.addon_name }}
-          # addon_name_latest="${addon_name_latest// /_}"  # заменяем пробелы на _
           addon_tag=${{ steps.tag.outputs.tag }}
           addon_tag="${addon_tag// /_}"  # заменяем пробелы на _
           gh release upload "$addon_tag" "$path" --clobber
