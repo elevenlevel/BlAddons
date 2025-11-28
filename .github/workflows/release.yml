@@ -136,7 +136,8 @@ jobs:
               all_toml_fields[${id}_archive_size]="$size"
               all_toml_fields[${id}_archive_hash]="$hash"
 
-              zip_paths+=$zip_path
+              zip_path_comma="${zip_path},"
+              zip_paths+=$zip_path_comma
 
               echo "zipname variable is: $zipname"
               echo "Archiving directory: $dir"
@@ -157,6 +158,7 @@ jobs:
           output=${output%,}  # Убираем последнюю запятую
           echo "all_toml_fields=$output" >> $GITHUB_OUTPUT
 
+          zip_paths=${zip_paths%,} # убираем последнюю запятую
           zip_path_list=$(IFS=,; echo "${zip_paths[*]}")
           echo "zip_paths=$zip_path_list" >> $GITHUB_OUTPUT
           
