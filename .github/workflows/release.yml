@@ -1,4 +1,4 @@
-# TODO: почему скрипт выполняется даже когда пушим не *.toml файл?      
+# TODO: в релизе отсутствует ссылка на архив    
 name: Build and Release ZIP for Changed Blender Addons
 
 on:
@@ -80,6 +80,7 @@ jobs:
           done
 
           declare -A all_toml_fields # переменная для всех аддонов
+          declare -A zip_paths # пути до архивов для релиза
 
           for file in "${changed_list[@]}"; do
             if [[ "$file" == */blender_manifest.toml ]]; then
@@ -135,6 +136,8 @@ jobs:
               all_toml_fields[${id}_archive_size]="$size"
               all_toml_fields[${id}_archive_hash]="$hash"
 
+              zip_paths+=archive_url
+
               echo "zipname variable is: $zipname"
               echo "Archiving directory: $dir"
             
@@ -153,6 +156,9 @@ jobs:
           done
           output=${output%,}  # Убираем последнюю запятую
           echo "all_toml_fields=$output" >> $GITHUB_OUTPUT
+
+          zip_path_list=$(echo "$zip_paths" | tr '\n' ',' | sed 's/,$//')
+          echo "zip_paths=$zip_path_list" >> $GITHUB_OUTPUT
           
           # выводим все поля словаря toml_fields для дебага
           for key in "${!all_toml_fields[@]}"; do
@@ -179,8 +185,8 @@ jobs:
         # приводим полученную строку к подходящему для json.loads виду
         all_toml_fields = all_toml_fields.replace("|[", '[')
         all_toml_fields = all_toml_fields.replace("]|", ']')
-        all_toml_fields = '{' + all_toml_fields.replace('|', '"') + '}'  # заменяет |, на двойные кавычки
-        all_toml_fields = all_toml_fields.replace("'", '"')
+        all_toml_fields = '{' + all_toml_fields.replace('|', '"') + '}'  # заменяем |, на двойные кавычки
+        all_toml_fields = all_toml_fields.replace("'", '"') # заменяем одинарную кавычку на двойную
         all_toml_fields_json = json.loads(all_toml_fields)
         print("all_toml_fields_json: ", all_toml_fields_json)
 
@@ -190,26 +196,27 @@ jobs:
           print(key + ": " + str(value))
           if key.endswith("_id"):
               addon_ids.append(value)
-              
-        addon_ids = list(set(addon_ids)) # убираем дублирующиеся элементы списка
+        
+        # убираем дублирующиеся элементы списка через множество
+        addon_ids = list(set(addon_ids))
         print("addon_ids = ", str(addon_ids))
         
-        # читаем содержисое файла index.json
+        # читаем содержиме файла index.json
         with open('index.json', 'r', encoding='utf-8') as f:
           data = json.load(f)
         
         # работаем с каждым аддоном отдельно
         for single_addon_id in addon_ids:
-          id_len = len(single_addon_id) + 1
+          # считаем длину id для очистки полей после определения их пренадлежности
+          id_len = len(single_addon_id)+1
           
           # выделяем из all_toml_fields_json поля текущего аддона
           single_toml_fields = {}
           for field_key, field_val in all_toml_fields_json.items():
             print("field_key: ", field_key)
-            if field_key.startswith(single_addon_id):
+            if field_key.startswith(single_addon_id): # проверка на всякий случай
               id = field_key[id_len:]
               single_toml_fields[id] = field_val
-              print("id: ", id)
           
           # находим блок аддона в data
           addon_item = None # это словарь полей аддона
