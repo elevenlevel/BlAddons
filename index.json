@@ -33,57 +33,6 @@
       "archive_url": "https://github.com/elevenlevel/BlAddons/releases/download/release-20251127054156/TestAddon_0.0.5-blender-4.3.0.zip",
       "archive_hash": "sha256:3aa7843149f6a6404e609e7d1dd7e1bee075beb180c04937f08f7059bae699fc",
       "blender_version_max": "20.1.0"
-    },
-    {
-      "ize": "358915",
-      "rsion": "1.0.0",
-      "rsions": [
-        "3.11"
-      ],
-      "rl": "https://github.com/elevenlevel/BlAddons/releases/download/release-20251128105844/XD_Baker_1.1.5-blender-4.5.1.zip",
-      "": "1.1.5",
-      "ersion_max": "20.1.0",
-      "ersion_min": "4.5.1",
-      "r": "Roman Askarov",
-      "ash": "sha256:a94bb7160f443989dbe6235b1a29a529ec3b10000ef2668a3a473b008831a11b",
-      "lude_pattern": [
-        "__pycache__/",
-        "/.git/",
-        "/*.zip"
-      ]
-    },
-    {
-      "archive_size": 358914,
-      "schema_version": "1.0.0",
-      "python_versions": [
-        "3.11"
-      ],
-      "archive_url": "https://github.com/elevenlevel/BlAddons/releases/download/release-20251128110810/XD_Baker_1.1.0-blender-4.5.1.zip",
-      "website": "https://extreme-developers.ru/",
-      "blender_version_max": "20.1.0",
-      "license": [
-        "SPDX:GPL-2.0-or-later"
-      ],
-      "blender_version_min": "4.5.1",
-      "maintainer": "Roman Askarov",
-      "tags": [
-        "XDevs",
-        "BAKER"
-      ],
-      "archive_hash": "sha256:9a861db8e5efe63c0ee3fb95caf89eda9f19626cd29ef4a3df81de498b4c708b",
-      "type": "add-on",
-      "copyright": [
-        "2025 Extreme Developers"
-      ],
-      "name": "XD_Baker",
-      "id": "XD_Baker",
-      "paths_exclude_pattern": [
-        "__pycache__/",
-        "/.git/",
-        "/*.zip"
-      ],
-      "tagline": "Maps bake Addon for Blender",
-      "version": "1.1.0"
     }
   ]
 }
