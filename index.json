@@ -40,7 +40,7 @@
       "python_versions": [
         "3.11"
       ],
-      "archive_url": "https://github.com/elevenlevel/BlAddons/releases/download/release-20251128194835/XD_Baker_1.1.2-blender-4.5.1.zip",
+      "archive_url": "https://github.com/elevenlevel/BlAddons/releases/download/release-20251128195327/XD_Baker_1.1.3-blender-4.5.1.zip",
       "website": "https://extreme-developers.ru/",
       "blender_version_max": "20.1.0",
       "license": [
@@ -52,7 +52,7 @@
         "XDevs",
         "BAKER"
       ],
-      "archive_hash": "sha256:32f9025cb28c516ba9c5c687d57bced1578ac78d31e16ec4698b19851af08428",
+      "archive_hash": "sha256:967e945ee9cf8b892846e52d5c0333abd30691910d4092e61df53503eb3441a1",
       "type": "add-on",
       "copyright": [
         "2025 Extreme Developers"
@@ -65,16 +65,16 @@
         "/*.zip"
       ],
       "tagline": "Maps bake Addon for Blender",
-      "version": "1.1.2"
+      "version": "1.1.3"
     },
     {
       "tagline": "Info",
       "copyright": [
         "2002-%Y Extreme Developers"
       ],
-      "archive_hash": "sha256:aebadf1748990a937578ffd941c142626946cb26b3aa376af38b6597bf0d4960",
+      "archive_hash": "sha256:e24bc98ee0bbd3812e6eae5c067bfa0afca3fc039614cef22146459f8f79c0a1",
       "website": "https://extreme-developers.ru/",
-      "version": "0.0.2",
+      "version": "0.0.3",
       "schema_version": "1.0.0",
       "tags": [
         "info",
@@ -92,7 +92,7 @@
       "name": "XD Info",
       "maintainer": "Roman Askarov",
       "blender_version_min": "4.2.0",
-      "archive_url": "https://github.com/elevenlevel/BlAddons/releases/download/release-20251128194835/XD_Info_0.0.2-blender-4.2.0.zip",
+      "archive_url": "https://github.com/elevenlevel/BlAddons/releases/download/release-20251128195327/XD_Info_0.0.3-blender-4.2.0.zip",
       "blender_version_max": "20.1.0",
       "type": "add-on",
       "id": "XD_Info",
@@ -101,12 +101,12 @@
       ]
     },
     {
-      "archive_size": 38042,
+      "archive_size": 38041,
       "schema_version": "1.0.0",
       "type": "add-on",
-      "archive_hash": "sha256:6c74b70631955db19ce1f07369a0af69d3aa6bc1e3ce7b5016068c9f32c641f8",
+      "archive_hash": "sha256:6df3227842c379436d56032211f04fcb2c7a940ae71c97cc756aec422e533b95",
       "tagline": "Testing possible problems with scene objects.",
-      "version": "0.1.3",
+      "version": "0.1.4",
       "blender_version_min": "4.5.1",
       "paths_exclude_pattern": [
         "__pycache__/",
@@ -130,7 +130,7 @@
         "XDevs"
       ],
       "maintainer": "Roman Askarov",
-      "archive_url": "https://github.com/elevenlevel/BlAddons/releases/download/release-20251128194835/XD_ModelValidator_0.1.3-blender-4.5.1.zip"
+      "archive_url": "https://github.com/elevenlevel/BlAddons/releases/download/release-20251128195327/XD_ModelValidator_0.1.4-blender-4.5.1.zip"
     }
   ]
 }
