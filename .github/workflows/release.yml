@@ -292,11 +292,7 @@ jobs:
 
           new_entry = {}
           for key, value in single_toml_fields.items():
-            simple_key = key[id_len:]
-            if key=="archive_size":
-              new_entry[simple_key] = int(value)
-            else:
-              new_entry[simple_key] = value
+            new_entry[key[id_len:]] = value
           
           print("new_entry: ", str(new_entry))
 
@@ -310,6 +306,8 @@ jobs:
           else:
             print("Create new part inside index.json")
             data.setdefault('data', []).append(new_entry)  # добавляем новый
+          
+          data["archive_size"] = int(data["archive_size"])
           
           with open('index.json', 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
