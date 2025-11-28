@@ -19,19 +19,14 @@ jobs:
       run: pip install toml
 
     - name: Get changed files
+      uses: tj-actions/changed-files@v45
       id: changed_files
+      
+    - name: Check for blender manifests
+      id: check_manifests
+      if: contains(fromJSON(needs.changed_files.outputs.all_changed_files), 'blender_manifest.toml')
       run: |
-        git fetch --depth=2 origin ${{ github.ref }}  # ← КРИТИЧНО!
-        changed_files=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }})
-        echo "files=$changed_files" >> $GITHUB_OUTPUT
-
-        if echo "$changed_files" | grep -q 'blender_manifest.toml'; then
-          echo "changed_toml=true" >> $GITHUB_OUTPUT
-        else
-          echo "No changed blender_manifest.toml found, skipping packaging."
-          echo "changed_toml=false" >> $GITHUB_OUTPUT
-          exit 0
-        fi
+        echo "changed_toml=true" >> $GITHUB_OUTPUT
 
     - name: Create TAG
       id: tag
