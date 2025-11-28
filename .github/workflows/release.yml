@@ -270,13 +270,8 @@ jobs:
           for field_key, field_val in all_toml_fields_json.items():
             print("field_key: ", field_key)
             if field_key.startswith(single_addon_id):
-              print("id before: ", field_key)
               id = field_key[id_len:]
-              print("id after: ", id)
-              id = field_key
-              print("id: ", id)
               single_toml_fields[id] = field_val
-              print("id = ", id)
           
           # находим блок аддона в data
           addon_item = None # это словарь полей аддона
@@ -307,7 +302,7 @@ jobs:
             print("Create new part inside index.json")
             data.setdefault('data', []).append(new_entry)  # добавляем новый
           
-          data["archive_size"] = int(data["archive_size"])
+          # data["archive_size"] = int(data["archive_size"])
           
           with open('index.json', 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
