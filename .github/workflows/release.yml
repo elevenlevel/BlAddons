@@ -157,7 +157,7 @@ jobs:
           output=${output%,}  # Убираем последнюю запятую
           echo "all_toml_fields=$output" >> $GITHUB_OUTPUT
 
-          zip_path_list=$(echo "$zip_paths" | tr '\n' ',' | sed 's/,$//')
+          zip_path_list=$(IFS=,; echo "${zip_paths[*]}")
           echo "zip_paths=$zip_path_list" >> $GITHUB_OUTPUT
           
           # выводим все поля словаря toml_fields для дебага
