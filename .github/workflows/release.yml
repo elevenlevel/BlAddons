@@ -291,24 +291,22 @@ jobs:
       if: steps.pack.outputs.created == 'true'
       id: create_release
       uses: ncipollo/release-action@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ steps.tag.outputs.tag }}
-        release_name: ${{ steps.pack.outputs.addon_name }}_latest
-
+        tag: ${{ steps.tag.outputs.tag }}  # обязательный параметр!
+        name: ${{ steps.pack.outputs.addon_name }}_latest
         body: |
           Версия релиза: ${{ steps.pack.outputs.release_name }}
 
           Вставьте этот путь в качестве репозитория в разделе Git Extensions параметров blender:
             https://raw.githubusercontent.com/${{ steps.rep.outputs.rep }}/refs/heads/main/index.json
-          
+
           Таким образом у вас всегда будут самые свежие версии аддонов.
 
           # ${{ steps.pack.outputs.release_description }}
-        
         draft: false
         prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Upload each release zip file to GitHub Release
       if: steps.pack.outputs.created == 'true'
