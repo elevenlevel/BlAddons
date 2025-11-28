@@ -23,10 +23,10 @@ jobs:
       run: |
         changed_files=$(git ls-tree -r --name-only HEAD | grep 'blender_manifest.toml' || true)
         
-        # Получаем только имя файла (без пути)
-        filename=$(basename "$changed_files")
+        # Заменяем слеши на подчёркивания или удаляем их
+        safe_files=$(echo "$changed_files" | tr '/' '\')
         
-        echo "files=$filename" >> $GITHUB_OUTPUT
+        echo "files=$safe_files" >> $GITHUB_OUTPUT
         
         if [ -n "$changed_files" ]; then
           echo "changed_toml=true" >> $GITHUB_OUTPUT
