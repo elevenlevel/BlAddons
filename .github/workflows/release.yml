@@ -39,10 +39,11 @@ jobs:
 
         # Если несколько файлов — объединяем через запятую
         files_list=$(echo "$files_escaped" | tr '\n' ',' | sed 's/,$//')
+        echo "files_list: ${filefiles_lists}"
 
         echo "files=$files_list" >> $GITHUB_OUTPUT
         echo "changed_toml=true" >> $GITHUB_OUTPUT
-        echo "files: ${files}"
+        
         
     - name: Create TAG
       id: tag
@@ -73,11 +74,14 @@ jobs:
         else
           # Разбиваем строку по запятым в массив
           IFS=',' read -r -a changed_list <<< "$changed"
-
+          
+          for file in $changed_list; do
+            echo "process file: ${file}"
+          done
+          
           declare -A all_toml_fields # переменная для всех аддонов
 
           for file in $changed_list; do
-            echo "process file: ${file}"
             if [[ "$file" == */blender_manifest.toml ]]; then
               dir=$(dirname "$file")
               id=$(python -c "import toml; print(toml.load('$file')['id'])")
