@@ -34,7 +34,8 @@ jobs:
         fi
 
         # Заменяем прямые слеши / на обратные \
-        files_escaped=$(echo "$changed_tomls" | sed 's/\//\\/g')
+        # files_escaped=$(echo "$changed_tomls" | sed 's/\//\\/g')
+        files_escaped=$changed_tomls
 
         # Если несколько файлов — объединяем через запятую
         files_list=$(echo "$files_escaped" | tr '\n' ',' | sed 's/,$//')
