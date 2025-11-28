@@ -75,13 +75,13 @@ jobs:
           # Разбиваем строку по запятым в массив
           IFS=',' read -r -a changed_list <<< "$changed"
           
-          for file in $changed_list; do
-            echo "process file: ${file}"
+          for file in "${changed_list[@]}"; do
+            echo "  Processing: $file"
           done
-          
+
           declare -A all_toml_fields # переменная для всех аддонов
 
-          for file in $changed_list; do
+          for file in "${changed_list[@]}"; do
             if [[ "$file" == */blender_manifest.toml ]]; then
               dir=$(dirname "$file")
               id=$(python -c "import toml; print(toml.load('$file')['id'])")
