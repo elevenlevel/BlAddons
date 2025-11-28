@@ -22,14 +22,15 @@ jobs:
       id: changed_files
       run: |
         git fetch --depth=2
-        echo "files=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }})" >> $GITHUB_OUTPUT
+        changed_files=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }})
+        echo "files=$changed_files" >> $GITHUB_OUTPUT
 
-        if [ -z "$changed" ] || ! echo "$changed" | grep -q 'blender_manifest.toml'; then
+        if echo "$changed_files" | grep -q 'blender_manifest.toml'; then
+          echo "changed_toml=true" >> $GITHUB_OUTPUT
+        else
           echo "No changed blender_manifest.toml found, skipping packaging."
           echo "changed_toml=false" >> $GITHUB_OUTPUT
           exit 0
-        else
-          echo "changed_toml=true" >> $GITHUB_OUTPUT
         fi
 
     - name: Create TAG
