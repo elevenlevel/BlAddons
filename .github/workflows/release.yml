@@ -64,6 +64,7 @@ jobs:
       run: |
         changed_toml="${{ steps.changed_files.outputs.changed_toml }}"
         changed="${{ steps.changed_files.outputs.files }}"
+        echo "changed: ${changed}"
 
         # Если файлов нет — выходим
         if [ "$changed_toml" = "false" ] || [ -z "$changed" ]; then
