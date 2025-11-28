@@ -22,7 +22,11 @@ jobs:
       id: changed_files
       run: |
         changed_files=$(git ls-tree -r --name-only HEAD | grep 'blender_manifest.toml' || true)
-        echo "files=$changed_files" >> $GITHUB_OUTPUT
+        
+        # Получаем только имя файла (без пути)
+        filename=$(basename "$changed_files")
+        
+        echo "files=$filename" >> $GITHUB_OUTPUT
         
         if [ -n "$changed_files" ]; then
           echo "changed_toml=true" >> $GITHUB_OUTPUT
@@ -31,6 +35,7 @@ jobs:
           echo "changed_toml=false" >> $GITHUB_OUTPUT
           exit 0
         fi
+
 
     - name: Create TAG
       id: tag
