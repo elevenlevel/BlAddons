@@ -134,14 +134,12 @@ jobs:
               TAG=${{ steps.tag.outputs.tag }}
               archive_url="https://github.com/$REP/releases/download/$TAG/$zipname"
 
-              toml_fields[${id}_archive_url]="$archive_url"
-              toml_fields[${id}_archive_size]="$size"
-              toml_fields[${id}_archive_hash]="$hash"
+              all_toml_fields[${id}_archive_url]="$archive_url"
+              all_toml_fields[${id}_archive_size]="$size"
+              all_toml_fields[${id}_archive_hash]="$hash"
 
               echo "zipname variable is: $zipname"
               echo "Archiving directory: $dir"
-
-
             
               release_name="${addon_fields["${id}_id"]}_${addon_fields["${id}_version"]}-blender-${addon_fields["${id}_blender_version_min"]}"
               echo "release_name=$release_name" >> $GITHUB_OUTPUT
