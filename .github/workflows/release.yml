@@ -76,7 +76,7 @@ jobs:
           declare -A all_toml_fields # переменная для всех аддонов
 
           for file in $changed_list; do
-            print("process file: ", file)
+            echo "process file: ${file}"
             if [[ "$file" == */blender_manifest.toml ]]; then
               dir=$(dirname "$file")
               id=$(python -c "import toml; print(toml.load('$file')['id'])")
@@ -135,7 +135,7 @@ jobs:
             
               release_name="${addon_fields["${id}_id"]}_${addon_fields["${id}_version"]}-blender-${addon_fields["${id}_blender_version_min"]}"
               echo "release_name=$release_name" >> $GITHUB_OUTPUT
-              
+
               addon_name="${addon_fields["${id}_name"]}"
               echo "addon_name=$addon_name" >> $GITHUB_OUTPUT
             fi
