@@ -293,7 +293,8 @@ jobs:
       uses: ncipollo/release-action@v1
       with:
         tag: ${{ steps.tag.outputs.tag }}  # обязательный параметр!
-        name: ${{ steps.pack.outputs.addon_name }}_latest
+        # name: ${{ steps.pack.outputs.addon_name }}_latest
+        name: XD_Blender_Addons_latest
         body: |
           Версия релиза: ${{ steps.pack.outputs.release_name }}
 
