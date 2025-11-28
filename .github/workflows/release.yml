@@ -42,6 +42,7 @@ jobs:
 
         echo "files=$files_list" >> $GITHUB_OUTPUT
         echo "changed_toml=true" >> $GITHUB_OUTPUT
+        echo "files: ${files}"
         
     - name: Create TAG
       id: tag
@@ -68,34 +69,15 @@ jobs:
         if [ "$changed_toml" = "false" ] || [ -z "$changed" ]; then
           echo "No files to process."
           exit 0
-        fi
-
-        # Разбиваем строку по запятым в массив
-        IFS=',' read -r -a changed_list <<< "$changed"
-
-        # проверяем есть ли файл blender_manifest.toml в текущем коммите
-        touched_manifests=0
-        zip_paths=""
-        zip_sizes=""
-        zip_hashes=""
-
-        for file in $changed_list; do
-          if [[ "$file" == */blender_manifest.toml ]]; then
-            touched_manifests=1
-          fi
-        done
-
-        # проверяем есть ли toml файл в текущем коммите
-        if [ $touched_manifests -eq 0 ]; then 
-          echo "No blender_manifest.toml files were processed." 
-          echo "created=false" >> $GITHUB_OUTPUT
-          exit 0
         else
+          # Разбиваем строку по запятым в массив
+          IFS=',' read -r -a changed_list <<< "$changed"
+
           declare -A all_toml_fields # переменная для всех аддонов
 
           for file in $changed_list; do
+            print("process file: ", file)
             if [[ "$file" == */blender_manifest.toml ]]; then
-              
               dir=$(dirname "$file")
               id=$(python -c "import toml; print(toml.load('$file')['id'])")
 
@@ -135,14 +117,10 @@ jobs:
               zipname="${addon_fields["${id}_id"]}_${addon_fields["${id}_version"]}-blender-${addon_fields["${id}_blender_version_min"]}.zip"
               
               (cd "$dir" && zip -r "../$zipname" . -x "__pycache__/*" "*.pyc" ".vscode/*") || (echo "Failed to create zip: $zipname" && exit 1)
-              touched_manifests=1
 
               zip_path="$dir/../$zipname"
               size=$(stat -c%s "$zip_path")
               hash=sha256:$(sha256sum "$zip_path" | cut -d' ' -f1)
-              # _zip_paths+="$zip_path,"
-              # _zip_sizes+="${size},"
-              # _zip_hashes+="${hash},"
               
               REP=${{ steps.rep.outputs.rep }}
               TAG=${{ steps.tag.outputs.tag }}
@@ -157,6 +135,7 @@ jobs:
             
               release_name="${addon_fields["${id}_id"]}_${addon_fields["${id}_version"]}-blender-${addon_fields["${id}_blender_version_min"]}"
               echo "release_name=$release_name" >> $GITHUB_OUTPUT
+              
               addon_name="${addon_fields["${id}_name"]}"
               echo "addon_name=$addon_name" >> $GITHUB_OUTPUT
             fi
@@ -177,68 +156,7 @@ jobs:
           done
           echo "created=true" >> $GITHUB_OUTPUT
 
-          # zip_paths=${_zip_paths%,}
-          # zip_sizes=${_zip_sizes%,}
-          # zip_hashes=${_zip_hashes%,}
-          # echo "zip_paths=$zip_paths" >> $GITHUB_OUTPUT
-          # echo "zip_sizes=$zip_sizes" >> $GITHUB_OUTPUT
-          # echo "zip_hashes=$zip_hashes" >> $GITHUB_OUTPUT
-
           description=""
-
-          # IFS=',' read -r -a paths_array <<< "$zip_paths"
-          # IFS=',' read -r -a sizes_array <<< "$zip_sizes"
-          # IFS=',' read -r -a hashes_array <<< "$zip_hashes"
-
-          # for i in "${!paths_array[@]}"; do
-          #   size_clean=$(echo "${sizes_array[i]}" | xargs)
-          #   hash_clean=$(echo "${hashes_array[i]}" | xargs)
-          #   path_clean=$(echo "${paths_array[i]}" | xargs)
-
-          #   description+="Архив: $path_clean
-          #   Size: $size_clean байт
-          #   Hash: sha256:$hash_clean
-            
-            # "
-          # done
-
-          # echo "release_description<<EOF" >> $GITHUB_OUTPUT
-          # echo "$description" >> $GITHUB_OUTPUT
-          # echo "EOF" >> $GITHUB_OUTPUT
-
-          # if [ $touched_manifests -eq 0 ]; then
-          #   echo "No blender_manifest.toml files were processed."
-          #   echo "created=false" >> $GITHUB_OUTPUT
-          #   exit 0
-          # else
-            # toml_fields[${id}_archive_url]="$archive_url"
-            # toml_fields[${id}_archive_size]="$size_clean"
-            # toml_fields[${id}_archive_hash]="$hash_clean"
-            
-            # echo "created=true" >> $GITHUB_OUTPUT
-            # release_name="${toml_fields["${id}_id"]}_${toml_fields["${id}_version"]}-blender-${toml_fields["${id}_blender_version_min"]}"
-            # echo "release_name=$release_name" >> $GITHUB_OUTPUT
-            # addon_name="${toml_fields["${id}_name"]}"
-            # echo "addon_name=$addon_name" >> $GITHUB_OUTPUT
-            # # echo "toml_fields='${!toml_fields[@]}'" >> $GITHUB_OUTPUT
-            # output=""
-
-            # # выводим весь словарь в переменную toml_fields ===========
-            # for key in "${!toml_fields[@]}"; do
-            #   value="${toml_fields[$key]}"
-            #   output+="|${key}|:|${value}|,"
-            # done
-            
-            # output=${output%,} # Убираем последнюю запятую
-            # echo "toml_fields=$output" >> $GITHUB_OUTPUT
-            # # ============================
-            
-            # # выводим все поля словаря toml_fields для дебага
-            # for key in "${!toml_fields[@]}"; do
-            #   python_key=${key#${id}_}
-            #   echo "toml_fields: $key = ${toml_fields[$key]}"
-            # done
-          # fi
         fi
 
     - name: Edit index.json with Python
