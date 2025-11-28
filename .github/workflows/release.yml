@@ -265,7 +265,7 @@ jobs:
         
         # работаем с каждым аддоном отдельно
         for single_addon_id in addon_ids:
-          id_len = len(single_addon_id)
+          id_len = len(single_addon_id) + 1
           
           # выделяем из all_toml_fields_json поля текущего аддона
           single_toml_fields = {}
