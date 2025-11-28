@@ -53,12 +53,12 @@
       ]
     },
     {
-      "archive_size": "358916",
+      "archive_size": 358914,
       "schema_version": "1.0.0",
       "python_versions": [
         "3.11"
       ],
-      "archive_url": "https://github.com/elevenlevel/BlAddons/releases/download/release-20251128110531/XD_Baker_1.1.9-blender-4.5.1.zip",
+      "archive_url": "https://github.com/elevenlevel/BlAddons/releases/download/release-20251128110810/XD_Baker_1.1.0-blender-4.5.1.zip",
       "website": "https://extreme-developers.ru/",
       "blender_version_max": "20.1.0",
       "license": [
@@ -70,7 +70,7 @@
         "XDevs",
         "BAKER"
       ],
-      "archive_hash": "sha256:832c06368271d4358f5262d8ac84e1321bde163f35452b5b966055b2f62f22c1",
+      "archive_hash": "sha256:9a861db8e5efe63c0ee3fb95caf89eda9f19626cd29ef4a3df81de498b4c708b",
       "type": "add-on",
       "copyright": [
         "2025 Extreme Developers"
@@ -83,7 +83,7 @@
         "/*.zip"
       ],
       "tagline": "Maps bake Addon for Blender",
-      "version": "1.1.9"
+      "version": "1.1.0"
     }
   ]
 }
