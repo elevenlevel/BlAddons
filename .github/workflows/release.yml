@@ -21,21 +21,23 @@ jobs:
     - name: Get changed files
       id: changed_files
       run: |
-        changed_files=$(git ls-tree -r --name-only HEAD | grep 'blender_manifest.toml' || true)
-        
-        # Заменяем слеши на подчёркивания или удаляем их
-        safe_files=$(echo "$changed_files" | tr '/' '\')
-        
-        echo "files=$safe_files" >> $GITHUB_OUTPUT
-        
-        if [ -n "$changed_files" ]; then
-          echo "changed_toml=true" >> $GITHUB_OUTPUT
-        else
-          echo "No blender_manifest.toml found, skipping packaging."
+        git fetch --depth=2
+
+        # Получаем только изменённые blender_manifest.toml (с полными путями)
+        changed_tomls=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | grep 'blender_manifest.toml' || true)
+
+        if [ -z "$changed_tomls" ]; then
+          echo "No changed blender_manifest.toml found, skipping packaging."
           echo "changed_toml=false" >> $GITHUB_OUTPUT
+          echo "files=" >> $GITHUB_OUTPUT
           exit 0
         fi
 
+        # Извлекаем только имена файлов (без путей), объединяем через запятую
+        files_list=$(echo "$changed_tomls" | xargs -L1 basename | tr '\n' ',' | sed 's/,$//')
+
+        echo "files=$files_list" >> $GITHUB_OUTPUT
+        echo "changed_toml=true" >> $GITHUB_OUTPUT
 
     - name: Create TAG
       id: tag
