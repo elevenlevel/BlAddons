@@ -316,8 +316,9 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         shopt -s nullglob
-
-        IFS=',' read -r -a dirs_array <<< "${{ steps.pack.outputs.zip_paths }}"
+        
+        zip_paths_str="${{ steps.pack.outputs.zip_paths }}"
+        IFS=',' read -r -a dirs_array <<< "$zip_paths_str"
         
         set -x
         
