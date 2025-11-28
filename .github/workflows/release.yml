@@ -21,7 +21,7 @@ jobs:
     - name: Get changed files
       id: changed_files
       run: |
-        git fetch --depth=2
+        git fetch --depth=2 origin ${{ github.ref }}  # ← КРИТИЧНО!
         changed_files=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }})
         echo "files=$changed_files" >> $GITHUB_OUTPUT
 
