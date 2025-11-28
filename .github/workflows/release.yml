@@ -294,7 +294,7 @@ jobs:
 
           new_entry = {}
           for key, value in single_toml_fields.items():
-            simple_key = key.replace(single_addon + "_", "")
+            simple_key = key[id_len:]
             if key=="archive_size":
               new_entry[simple_key] = int(value)
             else:
