@@ -272,6 +272,7 @@ jobs:
             if field_key.startswith(single_addon_id):
               id = field_key[id_len:]
               single_toml_fields[id] = field_val
+              print("id: ", id)
           
           # находим блок аддона в data
           addon_item = None # это словарь полей аддона
@@ -293,6 +294,7 @@ jobs:
 
           if addon_item is not None: # если аддон в index.json уже указан
             print("Addon elready exist in index.json")
+
             # Чистим все поля блока аддона
             keys_to_remove = list(addon_item.keys())
             for k in keys_to_remove:
