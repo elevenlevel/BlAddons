@@ -36,6 +36,9 @@
       "archive_url": "https://github.com/elevenlevel/BlAddons/releases/download/release-20251127054156/TestAddon_0.0.5-blender-4.3.0.zip",
       "archive_hash": "sha256:3aa7843149f6a6404e609e7d1dd7e1bee075beb180c04937f08f7059bae699fc",
       "blender_version_max": "20.1.0"
+    },
+    {
+      "XD_Baker": "1.1.4"
     }
   ]
 }
