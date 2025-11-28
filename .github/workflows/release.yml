@@ -136,7 +136,7 @@ jobs:
               all_toml_fields[${id}_archive_size]="$size"
               all_toml_fields[${id}_archive_hash]="$hash"
 
-              zip_paths+=$archive_url
+              zip_paths+=$zip_path
 
               echo "zipname variable is: $zipname"
               echo "Archiving directory: $dir"
