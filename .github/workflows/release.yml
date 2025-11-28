@@ -23,7 +23,7 @@ jobs:
       run: |
         git fetch --depth=2
 
-        # Получаем только изменённые blender_manifest.toml (с полными путями)
+        # Получаем изменённые blender_manifest.toml с полными путями
         changed_tomls=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | grep 'blender_manifest.toml' || true)
 
         if [ -z "$changed_tomls" ]; then
@@ -33,8 +33,11 @@ jobs:
           exit 0
         fi
 
-        # Извлекаем только имена файлов (без путей), объединяем через запятую
-        files_list=$(echo "$changed_tomls" | xargs -L1 basename | tr '\n' ',' | sed 's/,$//')
+        # Заменяем прямые слеши / на обратные \
+        files_escaped=$(echo "$changed_tomls" | sed 's/\//\\/g')
+
+        # Если несколько файлов — объединяем через запятую
+        files_list=$(echo "$files_escaped" | tr '\n' ',' | sed 's/,$//')
 
         echo "files=$files_list" >> $GITHUB_OUTPUT
         echo "changed_toml=true" >> $GITHUB_OUTPUT
