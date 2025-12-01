@@ -21,7 +21,6 @@ def check_nonapplied_transforms(context, check_type, success = "[SUCCESS]"):
         loc = object.location
         rot = object.rotation_euler
         scale = object.scale
-        print("loc: ", str(loc), "rot: ", str(rot), "scale: ", str(scale))
         
         if loc != ZERO_LOC or rot != ZERO_EULER or scale != ONE_SCALE:
             success = set_warning_type(check_type)
