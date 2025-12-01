@@ -63,12 +63,12 @@
       "description": "XXXXXXXXXXXXXXXXXXXX"
     },
     {
-      "archive_size": 38042,
+      "archive_size": 38076,
       "schema_version": "1.0.0",
       "type": "add-on",
-      "archive_hash": "sha256:a3aabe77b372f16ef578e24771c53f9bd0c1c15c824b90514c2305e776616a13",
+      "archive_hash": "sha256:28776743bddfde0f214d882556860acb0ffc5cd49f0313211dd4945c34cbed0e",
       "tagline": "Testing possible problems with scene objects.",
-      "version": "0.1.8",
+      "version": "0.1.9",
       "blender_version_min": "4.5.1",
       "paths_exclude_pattern": [
         "__pycache__/",
@@ -89,7 +89,7 @@
         "XDevs"
       ],
       "maintainer": "Roman Askarov",
-      "archive_url": "https://github.com/elevenlevel/BlAddons/releases/download/release-20251201100424/XD_ModelValidator_0.1.8-blender-4.5.1.zip"
+      "archive_url": "https://github.com/elevenlevel/BlAddons/releases/download/release-20251201114419/XD_ModelValidator_0.1.9-blender-4.5.1.zip"
     }
   ]
 }
