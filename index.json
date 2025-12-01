@@ -59,7 +59,8 @@
         "/*.zip"
       ],
       "tagline": "Maps bake Addon for Blender",
-      "version": "1.1.0"
+      "version": "1.1.0",
+      "description": "XXXXXXXXXXXXXXXXXXXX"
     },
     {
       "archive_size": 38042,
