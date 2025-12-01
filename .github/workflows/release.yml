@@ -103,7 +103,7 @@ jobs:
               addon_fields["${id}_tags"]='["default"]'
               addon_fields["${id}_license"]='["SPDX:GPL-3.0-or-later"]'
               addon_fields["${id}_copyright"]='["2002-%Y Extreme Developers"]'
-#              addon_fields["${id}_python_versions"]='[3.11]'
+              # addon_fields["${id}_python_versions"]='[3.11]'
               addon_fields["${id}_paths_exclude_pattern"]='["__pycache__/", "/.git/", "/*.zip"]'
 
               # пересобираем переменную addon_fields с учетом содержимого файла blender_manifest.toml
