@@ -13,8 +13,9 @@ def __set_foo_attributes(func):
 def check_nonapplied_transforms(context, check_type, success = "[SUCCESS]"):
     checked_objects = {} # [object.name: [bad_faces[], "Faces"]]
 
-    ZERO_VEC = mathutils.Vector((0.0, 0.0, 0.0))
-    ONE_VEC = mathutils.Vector((1.0, 1.0, 1.0))
+    ZERO_LOC = mathutils.Vector((0.0, 0.0, 0.0))
+    ZERO_EULER = mathutils.Euler((0.0, 0.0, 0.0), 'XYZ')
+    ONE_SCALE = mathutils.Vector((1.0, 1.0, 1.0))
 
     for object in select_check_entities("objects"):
         loc = object.location
@@ -22,7 +23,7 @@ def check_nonapplied_transforms(context, check_type, success = "[SUCCESS]"):
         scale = object.scale
         print("loc: ", str(loc), "rot: ", str(rot), "scale: ", str(scale))
         
-        if loc != ZERO_VEC or rot != ZERO_VEC or scale != ONE_VEC:
+        if loc != ZERO_LOC or rot != ZERO_EULER or scale != ONE_SCALE:
             success = set_warning_type(check_type)
             checked_objects[object.name] = ["OBJECT"]
     
