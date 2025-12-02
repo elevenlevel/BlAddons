@@ -1,5 +1,5 @@
 schema_version = "1.0.0"
-id = "XD_ModelValidator" # должен совпадать с именем папки аддона
+id = "com.xd.model_validator" # должен совпадать с именем папки аддона
 name = "XD_Model_Validator"
 website = "https://extreme-developers.ru/"
 version = "0.1.0"
