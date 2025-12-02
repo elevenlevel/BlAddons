@@ -1,12 +1,20 @@
+[manifest]
 schema_version = "1.0.0"
 id = "xd_model_validator" # должен совпадать с именем папки аддона
 name = "XD_Model_Validator"
-website = "https://extreme-developers.ru/"
 version = "0.1.0"
-tagline = "Testing possible problems with scene objects."
-maintainer = "Roman Askarov"
 type = "add-on"
-tags = ["XDevs"]
-blender_version_min = "4.5.1"
-license = ["XDevs Internal License"]
+tagline = "Testing possible problems with scene objects."
 copyright = ["2024 Extreme Developers"]
+
+maintainer = "Roman Askarov"
+license = ["XDevs Internal License"]
+
+[links]
+website = "https://extreme-developers.ru/"
+
+[release]
+blender_version_min = "4.5.1"
+
+[tags]
+tags = ["XDevs"]
