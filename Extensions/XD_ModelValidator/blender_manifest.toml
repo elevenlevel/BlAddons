@@ -1,7 +1,7 @@
 schema_version = "1.0.0"
 id = "XD_ModelValidator" # должен совпадать с именем папки аддона
 name = "XD_Model_Validator"
-version = "0.1.1"
+version = "0.1.2"
 type = "add-on"
 tagline = "Testing possible problems with scene objects."
 copyright = ["2024 Extreme Developers"]
