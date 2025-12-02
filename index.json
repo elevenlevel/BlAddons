@@ -61,6 +61,35 @@
       "tagline": "Maps bake Addon for Blender",
       "version": "1.1.0",
       "description": "XXXXXXXXXXXXXXXXXXXX"
+    },
+    {
+      "archive_size": 38074,
+      "schema_version": "1.0.0",
+      "type": "add-on",
+      "archive_hash": "sha256:7187891fc96e93c25aad3a13df7325d0f940de8691aacffee4cf7f3e1a1de5ae",
+      "tagline": "Testing possible problems with scene objects.",
+      "version": "0.1.2",
+      "blender_version_min": "4.5.1",
+      "paths_exclude_pattern": [
+        "__pycache__/",
+        "/.git/",
+        "/*.zip"
+      ],
+      "blender_version_max": "20.1.0",
+      "website": "https://extreme-developers.ru/",
+      "id": "XD_ModelValidator",
+      "license": [
+        "XDevs Internal License"
+      ],
+      "copyright": [
+        "2024 Extreme Developers"
+      ],
+      "name": "XD_Model_Validator",
+      "tags": [
+        "XDevs"
+      ],
+      "maintainer": "Roman Askarov",
+      "archive_url": "https://github.com/elevenlevel/BlAddons/releases/download/release-20251202092134/XD_ModelValidator_0.1.2-blender-4.5.1.zip"
     }
   ]
 }
