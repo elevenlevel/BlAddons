@@ -1,7 +1,6 @@
 import bpy
 import textwrap
 from bpy.app.handlers import persistent
-print("YYYYYYYYYYYYYYYY")
 
 class AddonAttribs():
     def __init__(self):
@@ -126,7 +125,6 @@ def register():
     for cls in classes:
         bpy.utils.register_class(cls)
 
-    print("XXXXXXXXXXXXXXXX")
     bpy.app.handlers.load_post.append(addon_initialize)
     bpy.app.handlers.depsgraph_update_post.append(update_when_select)
 
