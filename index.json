@@ -61,9 +61,9 @@
       "archive_url": "https://github.com/elevenlevel/BlAddons/releases/download/release-20251202092134/XD_ModelValidator_0.1.2-blender-4.5.1.zip"
     },
     {
-      "archive_size": 358891,
+      "archive_size": 358890,
       "schema_version": "1.0.0",
-      "archive_url": "https://github.com/elevenlevel/BlAddons/releases/download/release-20251202114054/XD_Baker_1.1.9-blender-4.5.1.zip",
+      "archive_url": "https://github.com/elevenlevel/BlAddons/releases/download/release-20251202123314/XD_Baker_1.1.0-blender-4.5.1.zip",
       "website": "https://extreme-developers.ru/",
       "blender_version_max": "20.1.0",
       "license": [
@@ -75,7 +75,7 @@
         "XDevs",
         "BAKER"
       ],
-      "archive_hash": "sha256:cf482ccbc9141bdeb5617d82dd176a918cd1e73a98344cd537624412f566d8e4",
+      "archive_hash": "sha256:39b3988eb1a98456b2da8e719f7a471e153bc7584c584b14c6bbf7a66e9edb1b",
       "type": "add-on",
       "copyright": [
         "2025 Extreme Developers"
@@ -88,7 +88,7 @@
         "/*.zip"
       ],
       "tagline": "Maps bake Addon for Blender",
-      "version": "1.1.9"
+      "version": "1.1.0"
     }
   ]
 }
