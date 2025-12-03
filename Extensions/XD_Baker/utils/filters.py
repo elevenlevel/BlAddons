@@ -1,8 +1,8 @@
     # импорт локального модуля numba
 import sys, os, importlib
 current_script_path = os.path.dirname(os.path.abspath(__file__))
-py_modules_path = os.path.join(current_script_path, 'py_modules')
-sys.path.append(py_modules_path)
+# py_modules_path = os.path.join(current_script_path, 'py_modules')
+# sys.path.append(py_modules_path)
 
 # dither_path = os.path.join(current_script_path, "dither" + "*.pyd")
 # module_path = dither_path[0]  # берем первый найденный файл

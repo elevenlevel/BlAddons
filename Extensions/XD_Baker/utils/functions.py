@@ -1,4 +1,3 @@
-# from . py_modules import cv2 as cv
 import bpy, os, time, gpu, tempfile
 from gpu_extras.batch import batch_for_shader
 import numpy as np
@@ -305,10 +304,10 @@ def create_cage_object(context):
         cage_obj_name += "_1"
 
     cage_obj.name = cage_obj_name
-    
+
     # Добавляем объект в сцену
     context.scene.collection.objects.link(cage_obj)
-    print("cage_obj.name: ", cage_obj.name)
+    
     # Сохраняем ссылку
     context.scene.xd_baker.temp_things.bake_cg_obj = cage_obj
 
