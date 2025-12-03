@@ -304,6 +304,8 @@ def create_cage_object(context):
     while cage_obj_name in bpy.data.objects:
         cage_obj_name += "_1"
 
+    cage_obj.name = cage_obj_name
+    
     # Добавляем объект в сцену
     context.scene.collection.objects.link(cage_obj)
     print("cage_obj.name: ", cage_obj.name)
