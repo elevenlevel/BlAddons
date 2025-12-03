@@ -281,9 +281,6 @@ def create_cage_object(context):
         object_data=bake_low_poly.data.copy()  # Копируем меш
     )
 
-    # cage_obj = bake_low_poly.copy()
-    # cage_obj.data = cage_obj.data.copy()
-
     # Позиция и ориентация (копируем из оригинала)
     cage_obj.matrix_world = bake_low_poly.matrix_world
     
@@ -309,7 +306,7 @@ def create_cage_object(context):
 
     # Добавляем объект в сцену
     context.scene.collection.objects.link(cage_obj)
-    
+    print("cage_obj.name: ", cage_obj.name)
     # Сохраняем ссылку
     context.scene.xd_baker.temp_things.bake_cg_obj = cage_obj
 
