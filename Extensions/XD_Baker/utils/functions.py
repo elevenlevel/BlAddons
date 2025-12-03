@@ -264,25 +264,53 @@ def combine_meshes(context, collection=None, map_name=""):
 
 def create_cage_object(context):
     """создание кейджа для запекания из low_poly объекта"""
+
+    # Проверки на существование данных
+    if not hasattr(context.scene, 'xd_baker'):
+        raise AttributeError("XD Baker addon not initialized")
     
     expand = context.scene.xd_baker.attributes.cage_extrusion
     bake_low_poly = context.scene.xd_baker.temp_things.bake_lp_obj
     
-    cage_obj = bake_low_poly.copy()
-    cage_obj.data = cage_obj.data.copy()
+    if not bake_low_poly:
+        raise ValueError("Low-poly object not found in context")
+    
+    # Создаём новый объект (не просто копию!)
+    cage_obj = bpy.data.objects.new(
+        name="",  # Имя зададим позже
+        object_data=bake_low_poly.data.copy()  # Копируем меш
+    )
+
+    # cage_obj = bake_low_poly.copy()
+    # cage_obj.data = cage_obj.data.copy()
+
+    # Позиция и ориентация (копируем из оригинала)
+    cage_obj.matrix_world = bake_low_poly.matrix_world
     
     bm = bmesh.new()
-    bm.from_mesh(cage_obj.data)
+
+    try:
+        bm.from_mesh(cage_obj.data)
+        for v in bm.verts:
+            v.co += v.normal * expand
+        bm.to_mesh(cage_obj.data)
+    finally:
+        bm.free()
     
-    for v in bm.verts:
-        v.co += v.normal * expand
+    # Формируем уникальное имя
+    if "_low_" in bake_low_poly.name:
+        cage_obj_name = bake_low_poly.name.replace("_low_", "_cage_")
+    else:
+        cage_obj_name = bake_low_poly.name + "_cage"
     
-    bm.to_mesh(cage_obj.data)
-    bm.free()
-    
-    cage_obj_name = bake_low_poly.name.replace("_low_", "_cage_")
-    cage_obj.name = cage_obj_name
+    # Убедимся, что имя уникально
+    while cage_obj_name in bpy.data.objects:
+        cage_obj_name += "_1"
+
+    # Добавляем объект в сцену
     context.scene.collection.objects.link(cage_obj)
+    
+    # Сохраняем ссылку
     context.scene.xd_baker.temp_things.bake_cg_obj = cage_obj
 
 def select_prebaked_objects(context):
