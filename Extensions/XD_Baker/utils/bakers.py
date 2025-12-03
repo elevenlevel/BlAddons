@@ -4,15 +4,15 @@ from .functions import *
 
 
 def bake_diffuse_map(context, map_name):
-    cage_object = context.scene.xd_baker.temp_things.bake_cg_obj
+    cage_object_shortcut = context.scene.xd_baker.temp_things.bake_cg_obj
+    cage_object = bpy.data.objects[cage_object_shortcut.name]
     
     if get_options_var(context, map_name, "Albedo"): 
         p_filter = set({'COLOR'})
     else:
         p_filter = set({'DIRECT', 'INDIRECT', 'COLOR'})
-    print("DIFFUSE cage_object.name: ", cage_object.name)
+    
     bpy.ops.object.bake(type="DIFFUSE", use_selected_to_active=True, use_cage=True, cage_object=cage_object.name, margin=0, pass_filter=p_filter)
-    print("DIFFUSE cage_object.name: ", cage_object.name)
 
 def bake_ao_map(context, map_name):
     cage_object = context.scene.xd_baker.temp_things.bake_cg_obj
