@@ -118,9 +118,6 @@ class XD_Bake_Op(Operator):
     bl_description = "Bake image maps for low and high poly objects" 
     bl_options = {'REGISTER'}
 
-    # def __init__(self):
-    #     pass
-
     def select_and_bake_map(self, context, map_name):
         if map_name == 'Diffuse':
             bake_diffuse_map(context, map_name)

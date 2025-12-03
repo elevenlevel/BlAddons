@@ -12,7 +12,7 @@ def bake_diffuse_map(context, map_name):
     else:
         p_filter = set({'DIRECT', 'INDIRECT', 'COLOR'})
     
-    bpy.ops.object.bake(type="DIFFUSE", use_selected_to_active=True, use_cage=True, cage_object=cage_object.name, margin=0, pass_filter=p_filter)
+    bpy.ops.object.bake(type="DIFFUSE", use_selected_to_active=True, use_cage=True, cage_object=cage_object, margin=0, pass_filter=p_filter)
 
 def bake_ao_map(context, map_name):
     cage_object = context.scene.xd_baker.temp_things.bake_cg_obj
