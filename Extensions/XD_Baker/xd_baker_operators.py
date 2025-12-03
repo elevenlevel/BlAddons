@@ -171,6 +171,7 @@ class XD_Bake_Op(Operator):
                     combine_meshes(context, collection, map_name)
                     print("One")
                     create_cage_object(context)
+                    return
                     print("Two")
                     select_prebaked_objects(context)
                     print("Three")
