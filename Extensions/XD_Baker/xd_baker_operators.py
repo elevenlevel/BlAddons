@@ -169,10 +169,15 @@ class XD_Bake_Op(Operator):
                 
                 try:
                     combine_meshes(context, collection, map_name)
+                    print("One")
                     create_cage_object(context)
+                    print("Two")
                     select_prebaked_objects(context)
+                    print("Three")
                     create_img_node(map_name, map_colorspace, map_alpha)
+                    print("Four")
                     self.select_and_bake_map(context, map_name)
+                    print("Five")
                     
                     if map_name != 'UV Wire':
                         caching_image(context)
