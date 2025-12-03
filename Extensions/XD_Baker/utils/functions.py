@@ -280,8 +280,10 @@ def create_cage_object(context):
     bm.to_mesh(cage_obj.data)
     bm.free()
     print("bake_low_poly.name: ", bake_low_poly.name)
+    print("cage_obj.name: ", cage_obj.name)
     cage_obj_name = bake_low_poly.name.replace("_low_copy", "___cage")
     cage_obj.name = cage_obj_name
+    print("cage_obj.name: ", cage_obj.name)
     context.scene.collection.objects.link(cage_obj)
     context.scene.xd_baker.temp_things.bake_cg_obj = cage_obj
 
