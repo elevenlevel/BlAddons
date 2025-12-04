@@ -511,9 +511,13 @@ def clear_template_things(context): # удаляем временно созда
         thing = getattr(temp_things, thing_name)
 
         if type(thing) is bpy.types.Object:
+            thing_mesh = thing.data
+            thing_mat = thing.active_material
             bpy.data.objects.remove(thing, do_unlink=True)
-        elif type(thing) is bpy.types.Material:
-            bpy.data.materials.remove(thing, do_unlink=True)
+            if thing_mesh is not None:
+                bpy.data.meshes.remove(thing_mesh, do_unlink=True)
+            if thing_mat is not None:
+                bpy.data.materials.remove(thing_mat, do_unlink=True)
 
 def remove_materials(context): # удаляем временно созданные материалы
     scene = context.scene
