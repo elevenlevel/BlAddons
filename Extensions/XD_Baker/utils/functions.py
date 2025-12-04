@@ -304,6 +304,7 @@ def create_cage_object(context):
         cage_obj_name += "_1"
 
     cage_obj.name = cage_obj_name
+    cage_obj.data.name = cage_obj_name + "_mesh"
 
     # Добавляем объект в сцену
     context.scene.collection.objects.link(cage_obj)
