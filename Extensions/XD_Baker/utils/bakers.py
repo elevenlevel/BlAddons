@@ -11,10 +11,10 @@ def bake_diffuse_map(context, map_name):
     else:
         p_filter = set({'DIRECT', 'INDIRECT', 'COLOR'})
     
-    bpy.ops.object.bake(type="DIFFUSE", use_selected_to_active=True, use_cage=True, cage_object=cage_obj, margin=0, pass_filter=p_filter)
+    bpy.ops.object.bake(type="DIFFUSE", use_selected_to_active=True, use_cage=True, cage_object=cage_obj.name, margin=0, pass_filter=p_filter)
 
 def bake_ao_map(context, map_name):
-    cage_object = context.scene.xd_baker.temp_things.bake_cg_obj
+    cage_obj = context.scene.xd_baker.temp_things.bake_cg_obj
     
     nodes, override_mat = prepare_temp_material()
     material_output_node = nodes.get('Material Output')
@@ -32,18 +32,18 @@ def bake_ao_map(context, map_name):
     links.new(ao_node.outputs[0], diffuse_node.inputs[0])
     links.new(diffuse_node.outputs[0], material_output_node.inputs[0])
     
-    bake_temp_material(override_mat, cage_object.name)
+    bake_temp_material(override_mat, cage_obj.name)
 
 def bake_normal_map(context, map_name):
-    cage_object = context.scene.xd_baker.temp_things.bake_cg_obj
+    cage_obj = context.scene.xd_baker.temp_things.bake_cg_obj
     
     y = "POS_Y"
     if get_options_var(context, map_name, "Invert Green"):
         y = "NEG_Y"
-    bpy.ops.object.bake(type="NORMAL", use_selected_to_active=True, use_cage=True, cage_object=cage_object.name, margin=0, normal_r="POS_X", normal_g=y, normal_b="POS_Z")
+    bpy.ops.object.bake(type="NORMAL", use_selected_to_active=True, use_cage=True, cage_object=cage_obj.name, margin=0, normal_r="POS_X", normal_g=y, normal_b="POS_Z")
 
 def bake_normal_os_map(context, map_name):
-    cage_object = context.scene.xd_baker.temp_things.bake_cg_obj
+    cage_obj = context.scene.xd_baker.temp_things.bake_cg_obj
     
     nodes, override_mat = prepare_temp_material()
     material_output_node = nodes.get('Material Output')
@@ -64,10 +64,10 @@ def bake_normal_os_map(context, map_name):
     links.new(normalize_node.outputs[0], mul_add_node.inputs[0])
     links.new(geometry_node.outputs[1], normalize_node.inputs[0])
     
-    bake_temp_material(override_mat, cage_object.name)
+    bake_temp_material(override_mat, cage_obj.name)
 
 def bake_position_map(context, map_name):
-    cage_object = context.scene.xd_baker.temp_things.bake_cg_obj
+    cage_obj = context.scene.xd_baker.temp_things.bake_cg_obj
     
     nodes, override_mat = prepare_temp_material()
     material_output_node = nodes.get('Material Output')
@@ -88,20 +88,20 @@ def bake_position_map(context, map_name):
     links.new(normalize_node.outputs[0], mul_add_node.inputs[0])
     links.new(geometry_node.outputs[0], normalize_node.inputs[0])
     
-    bake_temp_material(override_mat, cage_object.name)
+    bake_temp_material(override_mat, cage_obj.name)
 
 def bake_roughness_map(context, map_name):
-    cage_object = context.scene.xd_baker.temp_things.bake_cg_obj
+    cage_obj = context.scene.xd_baker.temp_things.bake_cg_obj
     
-    bpy.ops.object.bake(type="ROUGHNESS", use_selected_to_active=True, use_cage=True, cage_object=cage_object.name, margin=0)
+    bpy.ops.object.bake(type="ROUGHNESS", use_selected_to_active=True, use_cage=True, cage_object=cage_obj.name, margin=0)
 
 def bake_emission_map(context, map_name):
-    cage_object = context.scene.xd_baker.temp_things.bake_cg_obj
+    cage_obj = context.scene.xd_baker.temp_things.bake_cg_obj
     
-    bpy.ops.object.bake(type="EMIT", use_selected_to_active=True, use_cage=True, cage_object=cage_object.name, margin=0)
+    bpy.ops.object.bake(type="EMIT", use_selected_to_active=True, use_cage=True, cage_object=cage_obj.name, margin=0)
 
 def bake_curvature_map(context, map_name):
-    cage_object = context.scene.xd_baker.temp_things.bake_cg_obj
+    cage_obj = context.scene.xd_baker.temp_things.bake_cg_obj
     
     nodes, override_mat = prepare_temp_material()
     material_output_node = nodes.get('Material Output')
@@ -114,10 +114,10 @@ def bake_curvature_map(context, map_name):
     links.new(diffuse_node.outputs[0], material_output_node.inputs[0])
     links.new(geometry_node.outputs[7], diffuse_node.inputs[0])
     
-    bake_temp_material(override_mat, cage_object.name)
+    bake_temp_material(override_mat, cage_obj.name)
 
 def bake_edge_wear_map(context, map_name):
-    cage_object = context.scene.xd_baker.temp_things.bake_cg_obj
+    cage_obj = context.scene.xd_baker.temp_things.bake_cg_obj
     
     nodes, override_mat = prepare_temp_material()
     material_output_node = nodes.get('Material Output')
@@ -138,10 +138,10 @@ def bake_edge_wear_map(context, map_name):
     links.new(geometry_node.outputs[1], dot_product_node.inputs[1])
     links.new(geometry_node.outputs[1], bevel_node.inputs[1])
     
-    bake_temp_material(override_mat, cage_object.name)
+    bake_temp_material(override_mat, cage_obj.name)
 
 def bake_vertex_color_map(context, map_name):
-    cage_object = context.scene.xd_baker.temp_things.bake_cg_obj
+    cage_obj = context.scene.xd_baker.temp_things.bake_cg_obj
     
     nodes, override_mat = prepare_temp_material()
     material_output_node = nodes.get('Material Output')
@@ -155,20 +155,20 @@ def bake_vertex_color_map(context, map_name):
     links.new(diffuse_node.outputs[0], material_output_node.inputs[0])
     links.new(vertex_color_node.outputs[0], diffuse_node.inputs[0])
     
-    bake_temp_material(override_mat, cage_object.name)
+    bake_temp_material(override_mat, cage_obj.name)
 
 def bake_height_map(context, map_name):
-    cage_object = context.scene.xd_baker.temp_things.bake_cg_obj
+    cage_obj = context.scene.xd_baker.temp_things.bake_cg_obj
     
     # TODO: realize highmap bake
-    #bpy.ops.object.bake(type="EMIT", use_selected_to_active=True, use_cage=True, cage_object=cage_object, margin=0)
+    #bpy.ops.object.bake(type="EMIT", use_selected_to_active=True, use_cage=True, cage_object=cage_obj, margin=0)
     #report({'WARNING'}, "Height map temporary not supported")
     pass
 
 def bake_opacity_map(context, map_name):
-    cage_object = context.scene.xd_baker.temp_things.bake_cg_obj
+    cage_obj = context.scene.xd_baker.temp_things.bake_cg_obj
     
-    bpy.ops.object.bake(type="DIFFUSE", use_selected_to_active=True, use_cage=True, cage_object=cage_object.name, margin=0, pass_filter=set({'COLOR'}))
+    bpy.ops.object.bake(type="DIFFUSE", use_selected_to_active=True, use_cage=True, cage_object=cage_obj.name, margin=0, pass_filter=set({'COLOR'}))
     sdf_expanded = get_options_var(context, map_name, "SDF Expanded")
     sdf_shrinked = get_options_var(context, map_name, "SDF Shrinked")
     
@@ -180,9 +180,9 @@ def bake_opacity_map(context, map_name):
     set_rgb_from_alpha(context, sdf_type)
 
 def bake_custom_map(context, map_name):
-    cage_object = context.scene.xd_baker.temp_things.bake_cg_obj
+    cage_obj = context.scene.xd_baker.temp_things.bake_cg_obj
     # TODO: realize custom map bake
-    #bpy.ops.object.bake(type="EMIT", use_selected_to_active=True, use_cage=True, cage_object=cage_object, margin=0)
+    #bpy.ops.object.bake(type="EMIT", use_selected_to_active=True, use_cage=True, cage_object=cage_obj, margin=0)
     #report({'WARNING'}, "Custom map temporary not supported")
     pass
 
