@@ -40,7 +40,7 @@ def bake_normal_map(context, map_name):
     y = "POS_Y"
     if get_options_var(context, map_name, "Invert Green"):
         y = "NEG_Y"
-    bpy.ops.object.bake(type="NORMAL", use_selected_to_active=True, use_cage=True, cage_object=cage_obj, margin=0, normal_r="POS_X", normal_g=y, normal_b="POS_Z")
+    bpy.ops.object.bake(type="NORMAL", use_selected_to_active=True, use_cage=True, cage_object=cage_obj.name, margin=0, normal_r="POS_X", normal_g=y, normal_b="POS_Z")
 
 def bake_normal_os_map(context, map_name):
     cage_obj = context.scene.xd_baker.temp_things.bake_cg_obj
@@ -161,7 +161,7 @@ def bake_height_map(context, map_name):
     cage_obj = context.scene.xd_baker.temp_things.bake_cg_obj
     
     # TODO: realize highmap bake
-    #bpy.ops.object.bake(type="EMIT", use_selected_to_active=True, use_cage=True, cage_object=cage_obj, margin=0)
+    #bpy.ops.object.bake(type="EMIT", use_selected_to_active=True, use_cage=True, cage_object=cage_obj.name, margin=0)
     #report({'WARNING'}, "Height map temporary not supported")
     pass
 
@@ -182,7 +182,7 @@ def bake_opacity_map(context, map_name):
 def bake_custom_map(context, map_name):
     cage_obj = context.scene.xd_baker.temp_things.bake_cg_obj
     # TODO: realize custom map bake
-    #bpy.ops.object.bake(type="EMIT", use_selected_to_active=True, use_cage=True, cage_object=cage_obj, margin=0)
+    #bpy.ops.object.bake(type="EMIT", use_selected_to_active=True, use_cage=True, cage_object=cage_obj.name, margin=0)
     #report({'WARNING'}, "Custom map temporary not supported")
     pass
 

@@ -179,9 +179,9 @@ class XD_Bake_Op(Operator):
                 except:
                     pass
                 finally:
-                    # clear_template_things(context)
-                    # restore_objects_render_state() # восстанавливаем отображение всех объектов
-                    # restore_objects_selection() # восстанавливаем выделение всех объектов
+                    clear_template_things(context)
+                    restore_objects_render_state() # восстанавливаем отображение всех объектов
+                    restore_objects_selection() # восстанавливаем выделение всех объектов
                     pass
 
     def execute(self, context):
