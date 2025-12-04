@@ -4,8 +4,7 @@ from .functions import *
 
 
 def bake_diffuse_map(context, map_name):
-    cage_object_shortcut = context.scene.xd_baker.temp_things.bake_cg_obj
-    cage_obj = bpy.data.objects[cage_object_shortcut.name]
+    cage_obj = context.scene.xd_baker.temp_things.bake_cg_obj
     
     if get_options_var(context, map_name, "Albedo"): 
         p_filter = set({'COLOR'})
