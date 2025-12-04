@@ -1,4 +1,5 @@
-import bpy, json
+import bpy
+import json
 from .mv_utilities import *
 
 class ISSUES_UL_ReportList(bpy.types.UIList):

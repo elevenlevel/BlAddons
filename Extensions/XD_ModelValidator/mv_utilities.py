@@ -1,6 +1,6 @@
 import bpy
-import time, json, math, mathutils, bmesh
-import datetime
+import time
+import json
 
 def spent_timer(func):
     '''декоратор для подсчета затраченного времени'''

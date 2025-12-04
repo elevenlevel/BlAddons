@@ -1,3 +1,5 @@
+import bmesh
+import math
 from ..mv_utilities import *
 
 def __set_foo_attributes(func):

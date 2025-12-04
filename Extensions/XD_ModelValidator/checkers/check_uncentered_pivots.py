@@ -1,3 +1,5 @@
+import math
+import mathutils
 from ..mv_utilities import *
 
 def __set_foo_attributes(func):

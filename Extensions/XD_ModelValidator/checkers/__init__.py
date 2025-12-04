@@ -1,4 +1,5 @@
-import sys, os
+import sys
+import os
 from os import listdir, path
 
 # добавляем текущий путь в sys.path

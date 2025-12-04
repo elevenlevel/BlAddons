@@ -45,7 +45,6 @@
 
 import bpy
 from bpy.app.handlers import persistent
-from .__version__ import __version__
 import time
 from .mv_panels import *
 from .checkers import *
