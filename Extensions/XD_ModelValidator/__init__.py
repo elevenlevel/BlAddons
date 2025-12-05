@@ -1,51 +1,6 @@
-# АДДОН ДЛЯ ПРОВЕДЕНИЯ РАЗЛИЧНЫХ МЕЛКИХ ТЕСТОВ
-#TODO: состояние чекеров должно сохраняться в сцене Done
-#TODO: нужен функционал выделения коллекции Done
-#TODO: реализовать проверку инвертированных полигонов Done
-#TODO: прописать описания для элементов интерфейса Done
-#TODO: состояние чекеров должно сохраняться в сцене Done
-#TODO: когда заголовок свернут, частичное отображение чекеров должно отображатьтся в значке Done
-#TODO: укоротить └── в списке объектов Done
-#TODO: добавить значки типа объекта перед каждым объектом Done
-#TODO: сделать готовые проверки схлопывающимися Done
-#TODO: progress bar https://blender.stackexchange.com/questions/3219/how-to-show-to-the-user-a-progression-in-a-script
-#TODO: подсчет количества объектов в конце не правильный Done
-#TODO: цветовые маркеры проверок должны сбрасываться сначала на серый при сканировании Done
-#TODO: использовать значения warning и error по умолчанию из словаря Done
-#TODO: Операторы BMesh https://docs.blender.org/api/current/bmesh.ops.html
-#TODO: сделать пересканирование имен чекбоксов при каждом запуске Done
-#TODO: сделать progress bar Done
-#TODO: в репорте перенести стрелочки скрытия влево Done
-#TODO: сохранять состояния скрытия групп в репорте Done
-#TODO: проверять только активную группу и ее содержимое Done
-#TODO: переделать Cyrillic Letters на Non Latinic Letters Done
-#TODO: убрать кнопку uncheck all и реализовать (un)Check All Done
-#TODO: extra symbols проверяет лишнее Done
-#TODO: длинные имена объектов в репорте странно выравниваются Canc
-#TODO: добавить индивидуальные подсказки для каждого чекера Done
-#TODO: снова неправильный подсчет проверенных объектов и коллекций. Взять из select_check_entities Done
-#TODO: потестировать все аргументы template_list Done
-#TODO: добавить затраченное время в каждую проверку Done
-#TODO: сдвинуть саждый оюъект влево Done
-#TODO: пометить медленные методы как (slow) Done
-#TODO: оптимизация Report List Done
-#TODO: превратить функцию подсчета времени в декоратор Done
-#TODO: реализовать проверку non-planar полигонов Done
-#TODO: неравномерные ячейки сетки Done
-#TODO: проверить что за подчеркнутые checkbox_list в этом файле Done
-#TODO: проверить время выполнения пунктов группы Uvs Done
-#TODO: UnfrozenTransforms переделать на конвертацию типа данных Done
-#TODO: добавить диалог с требованием сохранить текущий файл Done
-#TODO: поискать встроенный метод конвертации времени в привычный формат Done
-#TODO: в финальном диалоговом окне неправильное время выполнения Done
-#TODO: оптимизировать долгие проверки Done
-#TODO: сбрасывать таймеры в начале сканирования Done
-#TODO: стартовать progress bar перед первой задачей Done
-
-
 import bpy
-from bpy.app.handlers import persistent
 import time
+from bpy.app.handlers import persistent
 from .mv_panels import *
 from .checkers import *
 
@@ -441,8 +396,6 @@ def start_single_check(context, check_type):
 			method = globals()[method_name]
 			method(context, check_type)
 	return check_type
-
-	
 
 classes = (
 	CheckboxItem,
