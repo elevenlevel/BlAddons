@@ -1,5 +1,6 @@
 import sys
 import os
+import importlib
 from os import listdir, path
 
 # добавляем текущий путь в sys.path
@@ -9,12 +10,34 @@ checkbox_list = {} # словарь свойств модулей
 
 # импорт модулей из папки checkers
 current_dir = path.dirname(__file__)
-for file in listdir(current_dir):
-    if file.endswith('.py') and file != '__init__.py' and "!" not in file:
-        name = file[:-3]
-        exec(f"from .{name} import {name}")
+# for file in listdir(current_dir):
+#     if file.endswith('.py') and file != '__init__.py' and "!" not in file:
+#         name = file[:-3]
+#         exec(f"from .{name} import {name}")
 
-        checkbox_list[globals()[name].name] = { "foo":globals()[name].foo,
-                                                "group":globals()[name].group,
-                                                "report":globals()[name].report,
-                                                "info":globals()[name].info}
+#         checkbox_list[globals()[name].name] = { "foo":globals()[name].foo,
+#                                                 "group":globals()[name].group,
+#                                                 "report":globals()[name].report,
+#                                                 "info":globals()[name].info}
+
+for filename in os.listdir(current_dir):
+    if (filename.endswith('.py') and 
+        filename != '__init__.py' and
+        '!' not in filename):
+        
+        module_name = filename[:-3]  # имя без .py
+        
+        # Импортируем модуль через importlib (безопасно)
+        module = importlib.import_module(f'.{module_name}', package=__package__)
+        
+        # Добавляем в checkbox_list, если у модуля есть атрибут name
+        if hasattr(module, 'name'):
+            checkbox_list[module.name] = {
+                'foo': getattr(module, 'foo', None),
+                'group': getattr(module, 'group', None),
+                'report': getattr(module, 'report', None),
+                'info': getattr(module, 'info', None)
+            }
+
+# Обязательно объявите __all__
+__all__ = ['checkbox_list']

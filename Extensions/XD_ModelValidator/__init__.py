@@ -2,7 +2,8 @@ import bpy
 import time
 from bpy.app.handlers import persistent
 from .mv_panels import *
-from .checkers import __init__
+# from .checkers import __init__
+from .checkers import checkbox_list
 
 #=======ATTRIBUTES==========
 class CheckboxItem(bpy.types.PropertyGroup):
