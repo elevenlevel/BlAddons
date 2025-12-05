@@ -1,13 +1,22 @@
 # TODO: в релизе отсутствует ссылка на архив    
 name: Build and Release ZIP for Changed Blender Addons
 
+
+
 on:
   push:
     branches:
       - main
+    tags:
+      - 'v*'                   # Любой тег, начинающийся с 'v' (v1.0.0, v2.1.0-rc1)
+      - 'release-*'           # Дополнительные шаблоны тегов (опционально)
+
+
 
 permissions:
   contents: write
+
+
 
 jobs:
   build:
@@ -15,10 +24,26 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
+
     - name: Install Python toml parser
       run: pip install toml
+    
+    
+    # === ОПРЕДЕЛЯЕМ РЕЖИМ РАБОТЫ ===
+    # - name: Check if triggered by tag
+    #   id: trigger_mode
+    #   run: |
+    #     if [ -n "${{ github.ref_type }}" ] && [ "${{ github.ref_type }}" == "tag" ]; then
+    #       echo "mode=tag" >> $GITHUB_OUTPUT
+    #       echo "tag_name=${{ github.ref_name }}" >> $GITHUB_OUTPUT
+    #     else
+    #       echo "mode=file_change" >> $GITHUB_OUTPUT
+    #     fi
 
-    - name: Get changed files
+
+    # === РЕЖИМ 1: ПО ИЗМЕНЕНИЮ ФАЙЛОВ ===
+    - name: Get changed files (only in file_change mode)
+      # if: steps.trigger_mode.outputs.mode == 'file_change'
       id: changed_files
       run: |
         git fetch --depth=2
@@ -43,6 +68,22 @@ jobs:
 
         echo "files=$files_list" >> $GITHUB_OUTPUT
         echo "changed_toml=true" >> $GITHUB_OUTPUT
+    
+    
+    # === РЕЖИМ 2: ПО ТЕГУ ===
+    # - name: List all blender_manifest.toml files (only in tag mode)
+    #   if: steps.trigger_mode.outputs.mode == 'tag'
+    #   id: all_manifests
+    #   run: |
+    #     all_tomls=$(find . -type f -name 'blender_manifest.toml' | grep -v '/\.git/' || true)
+    #     if [ -z "$all_tomls" ]; then
+    #       echo "changed_toml=false" >> $GITHUB_OUTPUT
+    #       echo "files=" >> $GITHUB_OUTPUT
+    #       exit 0
+    #     fi
+    #     files_list=$(echo "$all_tomls" | tr '\n' ',' | sed 's/,$//')
+    #     echo "files=$files_list" >> $GITHUB_OUTPUT
+    #     echo "changed_toml=true" >> $GITHUB_OUTPUT
         
         
     - name: Create TAG
