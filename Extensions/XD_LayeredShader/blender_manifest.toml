@@ -1,0 +1,11 @@
+schema_version = "1.0.0"
+id = "XD_LayeredShader" # должен совпадать с именем папки аддона
+name = "XD_LayeredShader"
+version = "0.1.7"
+type = "add-on"
+tagline = "Testing possible problems with scene objects."
+copyright = ["2024 Extreme Developers"]
+maintainer = "Roman Askarov"
+license = ["SPDX:GPL-3.0-or-later"]
+blender_version_min = "4.5.1"
+tags = ["XDevs"]

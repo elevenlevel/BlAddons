@@ -1,0 +1,11 @@
+schema_version = "1.0.0"
+id = "Reboot" # должен совпадать с именем папки аддона
+name = "Reboot"
+version = "0.1.0"
+tagline = "Reboot Blender without save"
+maintainer = "(saidenka) meta-androcto"
+type = "add-on"
+tags = ["System"]
+blender_version_min = "4.2.0"
+license = ["SPDX:GPL-2.0-or-later"]
+copyright = ["_"]
