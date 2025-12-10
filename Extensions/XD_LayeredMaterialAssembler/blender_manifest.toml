@@ -1,0 +1,11 @@
+schema_version = "1.0.0"
+id = "XD_LayeredMaterialAssembler" # должен совпадать с именем папки аддона
+name = "XD Layered Material Assembler"
+version = "0.0.1"
+type = "add-on"
+tagline = "Assemble Layered Shader from Unity"
+copyright = ["2026 Extreme Developers"]
+maintainer = "Roman Askarov"
+license = ["SPDX:GPL-3.0-or-later"]
+blender_version_min = "4.5.1"
+tags = ["XDevs"]
