@@ -42,9 +42,13 @@ class AskToRebuild(bpy.types.Operator):
 	bl_options = {'REGISTER', 'INTERNAL'}
 
 	def execute(self, context):
-		clean_mat_graph()
-		build_mat_graph()
-		print("11111111111111111111111111111111")
+		active_material = get_active_material()
+		if active_material:
+			clean_mat_graph()
+			nodes_count = len(active_material.node_tree.nodes.items())
+			if nodes_count == 0:
+				if active_material.node_tree:
+					build_mat_graph()
 		return {'FINISHED'}
 	
 	def invoke(self, context, event):

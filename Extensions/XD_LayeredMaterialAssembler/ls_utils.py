@@ -3,7 +3,7 @@ import json
 
 def get_matlayers_path():
     return bpy.context.scene.shader_links.path
-    
+
 def get_matlayers_data():
     mat_layers_file = get_matlayers_path()
     # читаем содержиме файла *.MatLayers
@@ -12,7 +12,6 @@ def get_matlayers_data():
             return json.load(f)
     except:
         return None
-
 
 def get_active_material():
     context = bpy.context
@@ -48,7 +47,6 @@ def clean_mat_graph():
             active_material.node_tree.nodes.clear()
             active_material.node_tree.links.clear()
 
-
 def build_mat_graph():
     active_material = get_active_material()
     if active_material:
@@ -58,5 +56,5 @@ def build_mat_graph():
                 # Создаем входной узел
                 input_node = active_material.node_tree.nodes.new('NodeGroupInput')
                 input_node.location = (-300, 0)
-
                 # Создаем выходной узел
+
