@@ -42,13 +42,15 @@ class AskToRebuild(bpy.types.Operator):
 	bl_options = {'REGISTER', 'INTERNAL'}
 
 	def execute(self, context):
-		active_material = get_active_material()
-		if active_material:
-			clean_mat_graph()
-			nodes_count = len(active_material.node_tree.nodes.items())
-			if nodes_count == 0:
-				if active_material.node_tree:
-					build_mat_graph()
+		# active_material = get_active_material()
+		build_mat_graph()
+		
+		# if active_material:
+		# 	clean_mat_graph()
+		# 	nodes_count = len(active_material.node_tree.nodes.items())
+		# 	if nodes_count == 0:
+		# 		if active_material.node_tree:
+		# 			build_mat_graph(active_material)
 		return {'FINISHED'}
 	
 	def invoke(self, context, event):
@@ -74,16 +76,18 @@ class RebuildShader_OP(bpy.types.Operator):
 			return {'CANCELLED'}
 		
 		# получаем активный материал
-		material = get_active_material() # активный материал
+		# material = get_active_material() # активный материал
+		materials = get_object_materials() # материалы активного объекта
 
-		if material is not None:
+		if materials is not None:
 			# если активный материал имеет тип MatLayers
-			if material.get("MatLayers_data"):
-				print("Данный материал имеет тип MatLayers_data. Rebuild материала разрешен")
-				bpy.ops.object.ask_to_rebuild('INVOKE_DEFAULT')
-			else:
-				print("Данный материал стандартный. Rebuild материала запрещен")
-				return{'CANCELLED'}
+			# if material.get("MatLayers_data"):
+			# 	print("Данный материал имеет тип MatLayers_data. Rebuild материала разрешен")
+			# 	bpy.ops.object.ask_to_rebuild('INVOKE_DEFAULT')
+			# else:
+			# 	print("Данный материал стандартный. Rebuild материала запрещен")
+			# 	return{'CANCELLED'}
+			bpy.ops.object.ask_to_rebuild('INVOKE_DEFAULT')
 		else: # если ни один материал не активен
 			print("Material not found")
 
@@ -109,13 +113,13 @@ class RebuildShader_OP(bpy.types.Operator):
 		
 		mat_layers = material.get('MatLayers_data')
 
-		for layer in mat_layers['layers']:
-			albedo = layer['albedo']
-			geometry = layer['geometry']
-			tint = layer['tint']
-			exposure = layer['exposure']
-			smoothnessMultiplier = layer['smoothnessMultiplier']
-			metallic = layer['metallic']
+		# for layer in mat_layers['layers']:
+		# 	albedo = layer['albedo']
+		# 	geometry = layer['geometry']
+		# 	tint = layer['tint']
+		# 	exposure = layer['exposure']
+		# 	smoothnessMultiplier = layer['smoothnessMultiplier']
+		# 	metallic = layer['metallic']
 
 		return {'FINISHED'}
 
