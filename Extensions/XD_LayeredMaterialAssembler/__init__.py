@@ -22,6 +22,7 @@ class ShaderLinks(bpy.types.PropertyGroup):
 	
 	# name : bpy.props.StringProperty(name="Name") # type: ignore
 	path : bpy.props.StringProperty(subtype='FILE_PATH', default = "", update=_collect_me, description="Path to *.MatLayers File") # type: ignore
+	replace : bpy.props.BoolProperty(default=False, description="Replace Node") # type: ignore
 	l_count : bpy.props.IntProperty(default=0, description="Layers count") # type: ignore
 	layers : bpy.props.CollectionProperty(type=Layers)  # type: ignore
 	h_map_path : bpy.props.StringProperty(subtype='FILE_PATH', default = "", description="Path to Height Map") # type: ignore
@@ -34,26 +35,28 @@ def InitAddon(scene):
 	print("Initialize addon")
 
 
-class AskToRebuild(bpy.types.Operator):
+@persistent 
+def update_addon(scene):
+	print("update_addon")
+
+class AskToReplaceNode(bpy.types.Operator):
 	'''Диалоговое окно с запросом на ребилд материала'''
-	bl_idname = "object.ask_to_rebuild"
-	bl_label = "Rebuild Material?"
-	bl_description = "Rebuild Material"
+	bl_idname = "object.ask_to_replace_node"
+	bl_label = "Replace Node?"
+	bl_description = "Replace Node"
 	bl_options = {'REGISTER', 'INTERNAL'}
 
+	target_tree = bpy.props.PointerProperty(type=bpy.types.ShaderNodeTree) # type: ignore
+
 	def execute(self, context):
-		# active_material = get_active_material()
-		build_mat_graph()
-		
-		# if active_material:
-		# 	clean_mat_graph()
-		# 	nodes_count = len(active_material.node_tree.nodes.items())
-		# 	if nodes_count == 0:
-		# 		if active_material.node_tree:
-		# 			build_mat_graph(active_material)
+		"""Выполнение после нажатия OK"""
+		target_tree = self.target_tree
+		remove_group_node(target_tree)
+		create_group_node(target_tree, group_name="XXX")
 		return {'FINISHED'}
 	
 	def invoke(self, context, event):
+		print("ask_to_replace_node")
 		return context.window_manager.invoke_confirm(self, event=event, icon="WARNING", confirm_text="Apply", title="Rebuild Material?", message="Confirm to Rebuild Material!")
 	
 	def draw(self, context):
@@ -76,38 +79,10 @@ class RebuildShader_OP(bpy.types.Operator):
 			return {'CANCELLED'}
 		
 		# получаем активный материал
-		# material = get_active_material() # активный материал
-		materials = get_object_materials() # материалы активного объекта
+		material = get_active_material() # активный материал
+		# materials = get_object_materials() # материалы активного объекта
 
-		if materials is not None:
-			# если активный материал имеет тип MatLayers
-			# if material.get("MatLayers_data"):
-			# 	print("Данный материал имеет тип MatLayers_data. Rebuild материала разрешен")
-			# 	bpy.ops.object.ask_to_rebuild('INVOKE_DEFAULT')
-			# else:
-			# 	print("Данный материал стандартный. Rebuild материала запрещен")
-			# 	return{'CANCELLED'}
-			bpy.ops.object.ask_to_rebuild('INVOKE_DEFAULT')
-		else: # если ни один материал не активен
-			print("Material not found")
-
-			active_obj = bpy.context.active_object
-			obj_materials = active_obj.data.materials
-
-			# находим материал с типом MatLayers_data на активном объекте
-			MatLayers_mat = None
-			for mat in obj_materials:
-				if mat.get("MatLayers_data"):
-					MatLayers_mat = mat
-					break
-
-			# если объект уже имеет материал типа MatLayers
-			if MatLayers_mat is not None:
-				print("Объект уже имеет материал типа MatLayers. Отмена!")
-				return {'CANCELLED'}
-			
-
-			material = create_material()
+		if material:
 			material["MatLayers_path"] = get_matlayers_path()
 			material["MatLayers_data"] = matlayers_data
 		
@@ -121,13 +96,17 @@ class RebuildShader_OP(bpy.types.Operator):
 		# 	smoothnessMultiplier = layer['smoothnessMultiplier']
 		# 	metallic = layer['metallic']
 
+		# bpy.ops.object.ask_to_replace_node('INVOKE_DEFAULT')
+
+		build_mat_graph()
+
 		return {'FINISHED'}
 
 
 classes = (
 	Layers,
 	ShaderLinks,
-	AskToRebuild,
+	AskToReplaceNode,
 	ShaderEditorPanel,
 	RebuildShader_OP
 	)
@@ -137,6 +116,7 @@ def register():
 		bpy.utils.register_class(cls)
 	
 	bpy.app.handlers.load_post.append(InitAddon)
+	bpy.app.handlers.depsgraph_update_post.append(update_addon)
 	
 	if not hasattr(bpy.types.Scene, "shader_links"):
 		bpy.types.Scene.shader_links = bpy.props.PointerProperty(type=ShaderLinks)
@@ -146,6 +126,7 @@ def unregister():
 	for cls in reversed(classes):
 		bpy.utils.unregister_class(cls)
 	
+	bpy.app.handlers.depsgraph_update_post.remove(update_addon)
 	del bpy.types.Scene.shader_links
 
 	if InitAddon in bpy.app.handlers.load_post:

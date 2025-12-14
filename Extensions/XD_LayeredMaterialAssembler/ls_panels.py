@@ -26,7 +26,12 @@ class ShaderEditorPanel(bpy.types.Panel):
 
 		# проверяем валидность активного объекта
 		active_obj = bpy.context.active_object
-		if not active_obj or active_obj.type != 'MESH':
+		# if not active_obj or active_obj.type != 'MESH':
+		
+		space = bpy.context.space_data
+		if space.type == 'NODE_EDITOR' and space.tree_type == 'ShaderNodeTree' and space.node_tree is not None:
+			buttons_row.enabled = True
+		else:
 			buttons_row.enabled = False
 		
 		buttons_row.alignment = 'EXPAND'
