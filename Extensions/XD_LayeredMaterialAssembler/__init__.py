@@ -6,6 +6,7 @@ import subprocess
 import os
 import json
 
+
 class Layers(bpy.types.PropertyGroup):
 	diffuse : bpy.props.StringProperty() # type: ignore
 	geometry : bpy.props.StringProperty() # type: ignore
@@ -20,7 +21,7 @@ class ShaderLinks(bpy.types.PropertyGroup):
 	def _collect_me(self, context):
 		bpy.ops.object.rebuild_shader_op()
 	
-	# name : bpy.props.StringProperty(name="Name") # type: ignore
+	# node_name : bpy.props.StringProperty(name="Name") # type: ignore
 	path : bpy.props.StringProperty(subtype='FILE_PATH', default = "", update=_collect_me, description="Path to *.MatLayers File") # type: ignore
 	replace : bpy.props.BoolProperty(default=False, description="Replace Node") # type: ignore
 	l_count : bpy.props.IntProperty(default=0, description="Layers count") # type: ignore
@@ -34,7 +35,6 @@ def InitAddon(scene):
 	'''Первоначальная настройка аддона'''
 	print("Initialize addon")
 
-
 @persistent 
 def update_addon(scene):
 	print("update_addon")
@@ -46,18 +46,31 @@ class AskToReplaceNode(bpy.types.Operator):
 	bl_description = "Replace Node"
 	bl_options = {'REGISTER', 'INTERNAL'}
 
-	target_tree = bpy.props.PointerProperty(type=bpy.types.ShaderNodeTree) # type: ignore
-
 	def execute(self, context):
 		"""Выполнение после нажатия OK"""
-		target_tree = self.target_tree
-		remove_group_node(target_tree)
-		create_group_node(target_tree, group_name="XXX")
+		# node_name = self.node_name
+		active_tree = get_active_tree()
+		active_node = get_active_node(active_tree)
+		
+		group_parms = {}
+		group_parms["name"] = active_node.name
+		group_parms["label"] = active_node.label
+		group_parms["use_custom_color"] = active_node.use_custom_color
+		group_parms["color"] = active_node.color
+		group_parms["custom_properties"] = active_node.custom_properties
+		group_parms["location"] = active_node.location
+		group_parms["input_sockets"] = []
+		group_parms["output_sockets"] = []
+	
+		remove_group_node(active_tree, active_node)
+		# refresh_group_node(active_tree, group_parms)
+		build_mat_graph()
+		# update_addon(context.scene)
 		return {'FINISHED'}
 	
 	def invoke(self, context, event):
 		print("ask_to_replace_node")
-		return context.window_manager.invoke_confirm(self, event=event, icon="WARNING", confirm_text="Apply", title="Rebuild Material?", message="Confirm to Rebuild Material!")
+		return context.window_manager.invoke_confirm(self, event=event, icon="QUESTION", confirm_text="Apply", title="Refresh Selected Node?", message="Confirm to Refresh Node!")
 	
 	def draw(self, context):
 		layout = self.layout
@@ -95,11 +108,12 @@ class RebuildShader_OP(bpy.types.Operator):
 		# 	exposure = layer['exposure']
 		# 	smoothnessMultiplier = layer['smoothnessMultiplier']
 		# 	metallic = layer['metallic']
-
+		
+		# bpy.ops.object.ask_to_replace_node('INVOKE_DEFAULT')
 		# bpy.ops.object.ask_to_replace_node('INVOKE_DEFAULT')
 
 		build_mat_graph()
-
+		# update_addon(context.scene)
 		return {'FINISHED'}
 
 
