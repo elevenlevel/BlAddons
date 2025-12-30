@@ -36,4 +36,7 @@ class ShaderEditorPanel(bpy.types.Panel):
 		
 		buttons_row.alignment = 'EXPAND'
 		buttons_row.prop(scene.shader_links, "path", text="")
-		buttons_row.operator("object.rebuild_shader_op", text="", icon="FILE_REFRESH")
+		cell = buttons_row.column(align=False)
+		cell.operator("object.build_shader_op", text="", icon="FILE_REFRESH")
+		if scene.shader_links.path == "":
+			cell.enabled = False

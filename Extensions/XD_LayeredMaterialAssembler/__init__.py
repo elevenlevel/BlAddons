@@ -19,7 +19,7 @@ class Layers(bpy.types.PropertyGroup):
 #=======ATTRIBUTES==========
 class ShaderLinks(bpy.types.PropertyGroup):
 	def _collect_me(self, context):
-		bpy.ops.object.rebuild_shader_op()
+		bpy.ops.object.build_shader_op()
 	
 	# node_name : bpy.props.StringProperty(name="Name") # type: ignore
 	path : bpy.props.StringProperty(subtype='FILE_PATH', default = "", update=_collect_me, description="Path to *.MatLayers File") # type: ignore
@@ -40,14 +40,18 @@ def update_addon(scene):
 	print("update_addon")
 
 class AskToReplaceNode(bpy.types.Operator):
-	'''Диалоговое окно с запросом на ребилд материала'''
+	"""
+	Диалоговое окно с запросом на ребилд материала
+	"""
 	bl_idname = "object.ask_to_replace_node"
 	bl_label = "Replace Node?"
 	bl_description = "Replace Node"
 	bl_options = {'REGISTER', 'INTERNAL'}
 
 	def execute(self, context):
-		"""Выполнение после нажатия OK"""
+		"""
+		Выполнение после нажатия OK
+		"""
 		# node_name = self.node_name
 		active_tree = get_active_tree()
 		active_node = get_active_node(active_tree)
@@ -64,8 +68,8 @@ class AskToReplaceNode(bpy.types.Operator):
 	
 		remove_group_node(active_tree, active_node)
 		# refresh_group_node(active_tree, group_parms)
-		build_mat_graph()
-		# update_addon(context.scene)
+		add_node(group_name=active_node.name, node_parms=group_parms)
+		update_addon(context.scene)
 		return {'FINISHED'}
 	
 	def invoke(self, context, event):
@@ -76,9 +80,11 @@ class AskToReplaceNode(bpy.types.Operator):
 		layout = self.layout
 		layout.label(text="Confirm to Rebuild Material?", icon="QUESTION")
 
-class RebuildShader_OP(bpy.types.Operator):
-	'''Пересчет шейдера при замене MatLayers файла или вручную'''
-	bl_idname = "object.rebuild_shader_op"
+class BuildShader_OP(bpy.types.Operator):
+	'''
+	Пересчет шейдера при замене MatLayers файла или вручную
+	'''
+	bl_idname = "object.build_shader_op"
 	bl_label = "Rebuild Shader"
 	bl_description = "Rebuild Shader"
 	bl_options = {'REGISTER', 'INTERNAL'}
@@ -89,6 +95,7 @@ class RebuildShader_OP(bpy.types.Operator):
 		# получаем данные из *.MatLayers файла
 		matlayers_data = get_matlayers_data() # содержимое файла *.MatLayers
 		if matlayers_data is None:
+			print(f"matlayers_data is None!")
 			return {'CANCELLED'}
 		
 		# получаем активный материал
@@ -100,20 +107,25 @@ class RebuildShader_OP(bpy.types.Operator):
 			material["MatLayers_data"] = matlayers_data
 		
 		mat_layers = material.get('MatLayers_data')
+		print(f"matlayers_data: {matlayers_data}")
 
-		# for layer in mat_layers['layers']:
-		# 	albedo = layer['albedo']
-		# 	geometry = layer['geometry']
-		# 	tint = layer['tint']
-		# 	exposure = layer['exposure']
-		# 	smoothnessMultiplier = layer['smoothnessMultiplier']
-		# 	metallic = layer['metallic']
+		# ЗДЕСЬ НУЖНО ЗАПОЛНИТЬ bpy.context.scene.shader_links.layers из mat_layers
+		
+		layers = bpy.context.scene.shader_links.layers
+		
+		for layer in mat_layers['layers']:
+			albedo = layer['albedo']
+			geometry = layer['geometry']
+			tint = layer['tint']
+			exposure = layer['exposure']
+			smoothnessMultiplier = layer['smoothnessMultiplier']
+			metallic = layer['metallic']
 		
 		# bpy.ops.object.ask_to_replace_node('INVOKE_DEFAULT')
 		# bpy.ops.object.ask_to_replace_node('INVOKE_DEFAULT')
 
-		build_mat_graph()
-		# update_addon(context.scene)
+		add_node(group_name="Mat Layers", node_parms=None)
+		update_addon(context.scene)
 		return {'FINISHED'}
 
 
@@ -122,7 +134,7 @@ classes = (
 	ShaderLinks,
 	AskToReplaceNode,
 	ShaderEditorPanel,
-	RebuildShader_OP
+	BuildShader_OP
 	)
 
 def register():
