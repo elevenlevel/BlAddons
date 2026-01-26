@@ -1,3 +1,7 @@
+# TODO: если текстура по пути не сущестствует, то показывать диалоговое окно (продолжить/отмена)
+# TODO: заполнить main_group_node['mat_layers'] содержимым файла
+# TODO: 
+
 import bpy
 from .ls_panels import *
 from .ls_utils import *
@@ -8,7 +12,7 @@ import json
 
 
 class Layers(bpy.types.PropertyGroup):
-	diffuse : bpy.props.StringProperty() # type: ignore
+	albedo : bpy.props.StringProperty() # type: ignore
 	geometry : bpy.props.StringProperty() # type: ignore
 	tint: bpy.props.FloatVectorProperty(name="Tint Color", subtype='COLOR', size=4, min=0.0, max=1.0, default=(1.0, 1.0, 1.0, 1.0), description="Цвет с альфа‑каналом") # type: ignore
 	exposure : bpy.props.FloatProperty() # type: ignore
@@ -33,11 +37,13 @@ class ShaderLinks(bpy.types.PropertyGroup):
 @persistent 
 def InitAddon(scene):
 	'''Первоначальная настройка аддона'''
-	print("Initialize addon")
+	# print("Initialize addon")
+	pass
 
 @persistent 
 def update_addon(scene):
-	print("update_addon")
+	# print("update_addon")
+	pass
 
 class AskToReplaceNode(bpy.types.Operator):
 	"""
@@ -47,12 +53,12 @@ class AskToReplaceNode(bpy.types.Operator):
 	bl_label = "Replace Node?"
 	bl_description = "Replace Node"
 	bl_options = {'REGISTER', 'INTERNAL'}
-
+	
 	def execute(self, context):
 		"""
 		Выполнение после нажатия OK
 		"""
-		# node_name = self.node_name
+		
 		active_tree = get_active_tree()
 		active_node = get_active_node(active_tree)
 		
@@ -61,15 +67,32 @@ class AskToReplaceNode(bpy.types.Operator):
 		group_parms["label"] = active_node.label
 		group_parms["use_custom_color"] = active_node.use_custom_color
 		group_parms["color"] = active_node.color
-		group_parms["custom_properties"] = active_node.custom_properties
+		group_parms["custom_properties"] = active_node['mat_layers']
 		group_parms["location"] = active_node.location
-		group_parms["input_sockets"] = []
-		group_parms["output_sockets"] = []
-	
+		group_parms["width"] = active_node.width
+		group_parms["input_links"] = {}
+		group_parms["output_links"] = {}
+
+		for input in active_node.inputs:
+			if input.links:
+				for link in input.links:
+					group_parms["input_links"][input.name] = link.from_socket
+		
+		for output in active_node.outputs:
+			if output.links:
+				for link in output.links:
+					group_parms["output_links"][output.name] = link.to_socket
+		
+			# group_parms["input_links"] = active_tree.links # выяснить какие линки куда подключены
+			# group_parms["output_links"] = []
+
 		remove_group_node(active_tree, active_node)
-		# refresh_group_node(active_tree, group_parms)
-		add_node(group_name=active_node.name, node_parms=group_parms)
 		update_addon(context.scene)
+		# refresh_group_node(active_tree, group_parms)
+		# add_node(group_name=group_parms.name, node_parms=group_parms)
+		construct_group_node(active_tree, group_parms)
+		update_addon(context.scene)
+		group_parms.clear()
 		return {'FINISHED'}
 	
 	def invoke(self, context, event):
@@ -107,19 +130,28 @@ class BuildShader_OP(bpy.types.Operator):
 			material["MatLayers_data"] = matlayers_data
 		
 		mat_layers = material.get('MatLayers_data')
-		print(f"matlayers_data: {matlayers_data}")
+		# print(f"matlayers_data: {matlayers_data}")
 
 		# ЗДЕСЬ НУЖНО ЗАПОЛНИТЬ bpy.context.scene.shader_links.layers из mat_layers
 		
-		layers = bpy.context.scene.shader_links.layers
+		# layers = bpy.context.scene.shader_links.layers
+		layers = bpy.types.Node.shader_links.layers
 		
 		for layer in mat_layers['layers']:
-			albedo = layer['albedo']
-			geometry = layer['geometry']
-			tint = layer['tint']
-			exposure = layer['exposure']
-			smoothnessMultiplier = layer['smoothnessMultiplier']
-			metallic = layer['metallic']
+			current_path = bpy.context.scene.shader_links.path
+			albedo_rel = layer['albedo']
+			albedo_abs = os.path.abspath(os.path.join(current_path, albedo_rel))
+			geometry_rel = layer['geometry']
+			geometry_abs = os.path.abspath(os.path.join(current_path, geometry_rel))
+
+			new_layer = layers.add()
+
+			new_layer.albedo = albedo_abs
+			new_layer.geometry = geometry_abs
+			new_layer.tint = layer['tint']['r'], layer['tint']['g'], layer['tint']['b'], layer['tint']['a']
+			new_layer.exposure = layer['exposure']
+			new_layer.smoothnessMultiplier = layer['smoothnessMultiplier']
+			new_layer.metallic = layer['metallic']
 		
 		# bpy.ops.object.ask_to_replace_node('INVOKE_DEFAULT')
 		# bpy.ops.object.ask_to_replace_node('INVOKE_DEFAULT')
