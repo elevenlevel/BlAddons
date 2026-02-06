@@ -1,6 +1,8 @@
 import bpy
 import json
 
+from . ls_utils import get_active_tree, get_active_node, def_mat_layers_node
+
 class ShaderEditorPanel(bpy.types.Panel):
 	'''Основное окно аддона'''
 	bl_idname = "OBJECT_PT_layered_shader"
@@ -16,17 +18,17 @@ class ShaderEditorPanel(bpy.types.Panel):
 		return True
     
 	def execute(self, context):
-		scene = bpy.context.scene
 		pass
-    
+
 	def draw(self, context):
-		scene = bpy.context.scene
 		layout = self.layout
 		buttons_row = layout.row(align=True)
-
+		
 		# проверяем валидность активного объекта
-		active_obj = bpy.context.active_object
-		# if not active_obj or active_obj.type != 'MESH':
+		is_mat_layers_node = def_mat_layers_node() # ВОТ ЭТО НАДО ОПТИМИЗИРОВАТЬ ОТСЮДА
+		active_node = get_active_node(get_active_tree())
+		
+		# bpy.context.scene.shader_links = shader_links
 		
 		space = bpy.context.space_data
 		if space.type == 'NODE_EDITOR' and space.tree_type == 'ShaderNodeTree' and space.node_tree is not None:
@@ -35,8 +37,29 @@ class ShaderEditorPanel(bpy.types.Panel):
 			buttons_row.enabled = False
 		
 		buttons_row.alignment = 'EXPAND'
-		buttons_row.prop(bpy.types.Node.shader_links, "path", text="")
-		cell = buttons_row.column(align=False)
-		cell.operator("object.build_shader_op", text="", icon="FILE_REFRESH")
-		if scene.shader_links.path == "":
+		
+		#==========r
+		if is_mat_layers_node:
+			# Двусторонняя синхронизация
+			# if wm.temp_path != active_node.shader_links.path:
+			# 	wm.temp_path = active_node.shader_links.path
+			
+			# Показываем prop который обновляет оба значения
+			buttons_row.prop(active_node.shader_links, "path", text="")
+			
+			# Обновляем temp при изменении
+			# if active_node.shader_links.path != wm.temp_path:
+			# 	wm.temp_path = active_node.shader_links.path
+		else:
+			# Показываем временное значение (пустое или последнее)
+			buttons_row.prop(context.window_manager, "temp_path", text="", placeholder="path to MatLayers file")
+		#============
+
+		if is_mat_layers_node:
+			cell = buttons_row.column(align=False)
+			cell.operator("object.ask_to_replace_node", text="", icon="FILE_REFRESH") # кнопка обновления
+			cell.enabled = True
+		else:
+			cell = buttons_row.column(align=False)
+			cell.operator("object.ask_to_replace_node", text="", icon="FILE_REFRESH") # кнопка обновления
 			cell.enabled = False

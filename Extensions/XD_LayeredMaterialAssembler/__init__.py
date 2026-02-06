@@ -1,14 +1,8 @@
-# TODO: если текстура по пути не сущестствует, то показывать диалоговое окно (продолжить/отмена)
-# TODO: заполнить main_group_node['mat_layers'] содержимым файла
-# TODO: 
+# добавить очистку остатков ноды с свойством MatLayersData
 
 import bpy
 from .ls_panels import *
 from .ls_utils import *
-from bpy.app.handlers import persistent
-import subprocess
-import os
-import json
 
 
 class Layers(bpy.types.PropertyGroup):
@@ -21,29 +15,68 @@ class Layers(bpy.types.PropertyGroup):
 
 
 #=======ATTRIBUTES==========
-class ShaderLinks(bpy.types.PropertyGroup):
-	def _collect_me(self, context):
-		bpy.ops.object.build_shader_op()
-	
-	# node_name : bpy.props.StringProperty(name="Name") # type: ignore
-	path : bpy.props.StringProperty(subtype='FILE_PATH', default = "", update=_collect_me, description="Path to *.MatLayers File") # type: ignore
+old_path = ""
+idx = 0
+refresh = False
+
+
+class NodeShaderLinks(bpy.types.PropertyGroup):
+	def _replace_me(self, context):
+		global idx
+		global refresh
+        
+		if self.path == context.window_manager.temp_path or self.path == "":
+			return None
+		
+		if refresh:
+			refresh = False
+		else:
+			if idx == 0:
+				bpy.ops.object.build_shader_op(lm_path=self.path)
+			else:
+				idx = 0
+				return None
+                
+			idx += 1
+            
+	path : bpy.props.StringProperty(subtype='FILE_PATH', default = "", update=_replace_me, description="Path to *.MatLayers File") # type: ignore
 	replace : bpy.props.BoolProperty(default=False, description="Replace Node") # type: ignore
 	l_count : bpy.props.IntProperty(default=0, description="Layers count") # type: ignore
 	layers : bpy.props.CollectionProperty(type=Layers)  # type: ignore
-	h_map_path : bpy.props.StringProperty(subtype='FILE_PATH', default = "", description="Path to Height Map") # type: ignore
 
 
-# если не понадобится, то удалить
-@persistent 
-def InitAddon(scene):
-	'''Первоначальная настройка аддона'''
-	# print("Initialize addon")
-	pass
+class BadTextures(bpy.types.PropertyGroup):
+	texture : bpy.props.StringProperty(name="Texture Path", default="", subtype='FILE_PATH') # type: ignore
+#============================
 
-@persistent 
-def update_addon(scene):
-	# print("update_addon")
-	pass
+
+class ShowNoTextureDialog(bpy.types.Operator):
+	"""
+	Диалоговое окно с предупрежденем об отсутствующих текстурах
+	"""
+	bl_idname = "object.show_no_texture_dialog"
+	bl_label = "No Texture Dialog"
+	bl_description = "No Texture Dialog"
+	bl_options = {'REGISTER', 'INTERNAL'}
+    
+	def invoke(self, context, event):
+		print("Show no texture dialog")
+        
+		return context.window_manager.invoke_popup(self, width=300)
+        
+	def draw(self, context):
+		layout = self.layout
+		
+		layout.label(text="Texture path is NOT EXIST!", icon="ERROR")
+		sep = layout.separator(type='LINE')
+        
+		for item in context.scene.bad_textures:
+			row = layout.row()
+			row.label(text=str(item.texture))
+	
+	def execute(self, context):
+		return {'FINISHED'}
+
 
 class AskToReplaceNode(bpy.types.Operator):
 	"""
@@ -59,6 +92,8 @@ class AskToReplaceNode(bpy.types.Operator):
 		Выполнение после нажатия OK
 		"""
 		
+		global refresh
+        
 		active_tree = get_active_tree()
 		active_node = get_active_node(active_tree)
 		
@@ -67,12 +102,12 @@ class AskToReplaceNode(bpy.types.Operator):
 		group_parms["label"] = active_node.label
 		group_parms["use_custom_color"] = active_node.use_custom_color
 		group_parms["color"] = active_node.color
-		group_parms["custom_properties"] = active_node['mat_layers']
+		group_parms["custom_properties"] = active_node['mat_layers_data']
 		group_parms["location"] = active_node.location
 		group_parms["width"] = active_node.width
 		group_parms["input_links"] = {}
 		group_parms["output_links"] = {}
-
+        
 		for input in active_node.inputs:
 			if input.links:
 				for link in input.links:
@@ -82,16 +117,16 @@ class AskToReplaceNode(bpy.types.Operator):
 			if output.links:
 				for link in output.links:
 					group_parms["output_links"][output.name] = link.to_socket
-		
-			# group_parms["input_links"] = active_tree.links # выяснить какие линки куда подключены
-			# group_parms["output_links"] = []
-
+        
+		refresh = True
+        
+		lm_path = active_node.shader_links.path
+        
 		remove_group_node(active_tree, active_node)
-		update_addon(context.scene)
-		# refresh_group_node(active_tree, group_parms)
-		# add_node(group_name=group_parms.name, node_parms=group_parms)
-		construct_group_node(active_tree, group_parms)
-		update_addon(context.scene)
+		
+		matlayers_data = get_matlayers_data(lm_path)
+		construct_group_node(active_tree, matlayers_data, group_parms, lm_path)
+        
 		group_parms.clear()
 		return {'FINISHED'}
 	
@@ -103,92 +138,98 @@ class AskToReplaceNode(bpy.types.Operator):
 		layout = self.layout
 		layout.label(text="Confirm to Rebuild Material?", icon="QUESTION")
 
+
 class BuildShader_OP(bpy.types.Operator):
 	'''
 	Пересчет шейдера при замене MatLayers файла или вручную
 	'''
 	bl_idname = "object.build_shader_op"
-	bl_label = "Rebuild Shader"
-	bl_description = "Rebuild Shader"
+	bl_label = "Build Shader"
+	bl_description = "Build Shader"
 	bl_options = {'REGISTER', 'INTERNAL'}
-
+    
+	lm_path : bpy.props.StringProperty(subtype='FILE_PATH', name="Path", default="",) # type: ignore
+    
 	def execute(self, context):
-		print("Rebuild Shader")
+		print("Build Shader")
 		
+		active_tree = get_active_tree()
+		active_node = active_tree.nodes.active
+        
 		# получаем данные из *.MatLayers файла
-		matlayers_data = get_matlayers_data() # содержимое файла *.MatLayers
+		matlayers_data = get_matlayers_data(self.lm_path) # содержимое файла *.MatLayers
+        
 		if matlayers_data is None:
 			print(f"matlayers_data is None!")
 			return {'CANCELLED'}
 		
 		# получаем активный материал
 		material = get_active_material() # активный материал
-		# materials = get_object_materials() # материалы активного объекта
-
-		if material:
-			material["MatLayers_path"] = get_matlayers_path()
-			material["MatLayers_data"] = matlayers_data
+		if not material:
+			return {'CANCELLED'}
+		material["MatLayers_data"] = matlayers_data
 		
-		mat_layers = material.get('MatLayers_data')
-		# print(f"matlayers_data: {matlayers_data}")
-
-		# ЗДЕСЬ НУЖНО ЗАПОЛНИТЬ bpy.context.scene.shader_links.layers из mat_layers
+		# проверяем наличие указанных текстур
+		existing = check_existing_textures(self.lm_path)
 		
-		# layers = bpy.context.scene.shader_links.layers
-		layers = bpy.types.Node.shader_links.layers
-		
-		for layer in mat_layers['layers']:
-			current_path = bpy.context.scene.shader_links.path
-			albedo_rel = layer['albedo']
-			albedo_abs = os.path.abspath(os.path.join(current_path, albedo_rel))
-			geometry_rel = layer['geometry']
-			geometry_abs = os.path.abspath(os.path.join(current_path, geometry_rel))
-
-			new_layer = layers.add()
-
-			new_layer.albedo = albedo_abs
-			new_layer.geometry = geometry_abs
-			new_layer.tint = layer['tint']['r'], layer['tint']['g'], layer['tint']['b'], layer['tint']['a']
-			new_layer.exposure = layer['exposure']
-			new_layer.smoothnessMultiplier = layer['smoothnessMultiplier']
-			new_layer.metallic = layer['metallic']
-		
-		# bpy.ops.object.ask_to_replace_node('INVOKE_DEFAULT')
-		# bpy.ops.object.ask_to_replace_node('INVOKE_DEFAULT')
-
-		add_node(group_name="Mat Layers", node_parms=None)
-		update_addon(context.scene)
+		if not existing:
+			context.window_manager.temp_path = ""
+			context.scene.bad_textures.clear()
+			return {'CANCELLED'}
+        
+		# начинаем построение дерева нод
+		remove_all_trash()
+		add_node(group_name="Mat Layers", node_parms=None, lm_path=self.lm_path)
+        
 		return {'FINISHED'}
 
 
 classes = (
 	Layers,
-	ShaderLinks,
+	NodeShaderLinks,
+	BadTextures,
+	ShowNoTextureDialog,
 	AskToReplaceNode,
 	ShaderEditorPanel,
 	BuildShader_OP
 	)
 
+
 def register():
 	for cls in classes:
 		bpy.utils.register_class(cls)
 	
-	bpy.app.handlers.load_post.append(InitAddon)
-	bpy.app.handlers.depsgraph_update_post.append(update_addon)
-	
-	if not hasattr(bpy.types.Scene, "shader_links"):
-		bpy.types.Scene.shader_links = bpy.props.PointerProperty(type=ShaderLinks)
+	if not hasattr(bpy.types.Node, "shader_links"):
+		bpy.types.Node.shader_links = bpy.props.PointerProperty(type=NodeShaderLinks)
+	if not hasattr(bpy.types.Scene, "bad_textures"):
+		bpy.types.Scene.bad_textures = bpy.props.CollectionProperty(type=BadTextures)
+    
+	def _upd(self, context):
+		global old_path
+		
+		if self.temp_path != old_path and self.temp_path != "":
+			bpy.ops.object.build_shader_op(lm_path = self.temp_path)
+		# self.temp_path = ""
+        
+		old_path = self.temp_path
+    
+	if not hasattr(bpy.types.WindowManager, 'temp_path'):
+		# Создаем временный путь 
+		bpy.types.WindowManager.temp_path = bpy.props.StringProperty(
+			subtype='FILE_PATH',
+			name="Temp Path",
+			default="",
+			update=_upd
+		)
 
 
 def unregister():
 	for cls in reversed(classes):
 		bpy.utils.unregister_class(cls)
 	
-	bpy.app.handlers.depsgraph_update_post.remove(update_addon)
-	del bpy.types.Scene.shader_links
+	del bpy.types.Scene.bad_textures
+	del bpy.types.Node.shader_links
 
-	if InitAddon in bpy.app.handlers.load_post:
-		bpy.app.handlers.load_post.remove(InitAddon)
 
 if __name__ == "__main__":
 	register()
