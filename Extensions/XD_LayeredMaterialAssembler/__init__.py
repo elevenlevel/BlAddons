@@ -123,7 +123,8 @@ class AskToReplaceNode(bpy.types.Operator):
 		lm_path = active_node.shader_links.path
         
 		remove_group_node(active_tree, active_node)
-		
+		remove_ghosted_groups()
+
 		matlayers_data = get_matlayers_data(lm_path)
 		construct_group_node(active_tree, matlayers_data, group_parms, lm_path)
         
@@ -178,7 +179,7 @@ class BuildShader_OP(bpy.types.Operator):
 			return {'CANCELLED'}
         
 		# начинаем построение дерева нод
-		remove_all_trash()
+		remove_ghosted_groups()
 		add_node(group_name="Mat Layers", node_parms=None, lm_path=self.lm_path)
         
 		return {'FINISHED'}

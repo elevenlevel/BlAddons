@@ -251,8 +251,8 @@ def check_existing_textures(lm_path):
     else:
         return True
 
-def remove_all_trash():
-    print('remove_all_trash')
+def remove_ghosted_groups():
+    print('Remove Ghosted Groups')
     
     def find_half_deleted_groups():
         """Находит группы, удаленные через DEL но оставшиеся в файле"""
@@ -854,7 +854,7 @@ def add_node(group_name="Mat Layers", node_parms=None, lm_path=""):
         lm_path = active_node.shader_links.path
         # bpy.ops.object.ask_to_replace_node('INVOKE_DEFAULT', lm_path=lm_path) # спрашиваем, заменить ли ноду и заменяем
     else: # если это НЕ mat_layers, создаем ноду с нуля
-        print(f"Create new Node")
+        print(f"Create new Mat Layers Node")
 
         matlayers_data = get_matlayers_data(lm_path)
         matlayers_layers = matlayers_data['layers']
