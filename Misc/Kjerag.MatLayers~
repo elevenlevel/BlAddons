@@ -1,0 +1,69 @@
+{
+    "layers": [
+        {
+            "albedo": "..\\..\\..\\..\\..\\..\\_ArtCore\\Content\\Texture\\_Seamless\\Stone\\GrayCliff_diffuse.png",
+            "geometry": "..\\..\\..\\..\\..\\..\\_ArtCore\\Content\\Texture\\Nature\\Rock\\LichenRock_geometry.png",
+            "tint": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "exposure": 0.0,
+            "smoothnessMultiplier": 1.0,
+            "metallic": 0.0
+        },
+        {
+            "albedo": "..\\..\\..\\..\\..\\..\\_ArtCore\\Content\\Texture\\Nature\\Rock\\LichenRock_diffuse.png",
+            "geometry": "..\\..\\..\\..\\..\\..\\_ArtCore\\Content\\Texture\\Nature\\Rock\\LichenRock_geometry.png",
+            "tint": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "exposure": 0.0,
+            "smoothnessMultiplier": 1.0,
+            "metallic": 0.0
+        },
+        {
+            "albedo": "..\\..\\..\\..\\..\\..\\_ArtCore\\Content\\Texture\\Nature\\Grass\\FreshGrass_diffuse.png",
+            "geometry": "..\\..\\..\\..\\..\\..\\_ArtCore\\Content\\Texture\\Nature\\Grass\\FreshGrass_geometry.png",
+            "tint": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "exposure": 0.0,
+            "smoothnessMultiplier": 1.0,
+            "metallic": 0.0
+        },
+        {
+            "albedo": "..\\..\\..\\..\\..\\..\\_ArtCore\\Content\\Texture\\_Seamless\\Ground\\Soil\\RoughSoilGround_diffuse.png",
+            "geometry": "..\\..\\..\\..\\..\\..\\_ArtCore\\Content\\Texture\\Nature\\Grass\\FreshGrass_geometry.png",
+            "tint": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "exposure": 0.0,
+            "smoothnessMultiplier": 1.0,
+            "metallic": 0.0
+        },
+        {
+            "albedo": "..\\..\\..\\..\\..\\..\\_ArtCore\\Content\\Texture\\_Seamless\\Ground\\Soil\\FlattenSoilGround_diffuse.png",
+            "geometry": "..\\..\\..\\..\\..\\..\\_ArtCore\\Content\\Texture\\_Seamless\\Ground\\Soil\\FlattenSoilGround_geometry.png",
+            "tint": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "exposure": 0.0,
+            "smoothnessMultiplier": 1.0,
+            "metallic": 0.0
+        }
+    ]
+}
