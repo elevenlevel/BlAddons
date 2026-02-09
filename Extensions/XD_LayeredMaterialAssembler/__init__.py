@@ -1,5 +1,3 @@
-# добавить очистку остатков ноды с свойством MatLayersData
-
 import bpy
 from .ls_panels import *
 from .ls_utils import *
@@ -8,18 +6,24 @@ from .ls_utils import *
 class Layers(bpy.types.PropertyGroup):
 	albedo : bpy.props.StringProperty() # type: ignore
 	geometry : bpy.props.StringProperty() # type: ignore
-	tint: bpy.props.FloatVectorProperty(name="Tint Color", subtype='COLOR', size=4, min=0.0, max=1.0, default=(1.0, 1.0, 1.0, 1.0), description="Цвет с альфа‑каналом") # type: ignore
+	tint: bpy.props.FloatVectorProperty(name="Tint Color",
+										subtype='COLOR',
+										size=4,
+										min=0.0,
+										max=1.0,
+										default=(1.0, 1.0, 1.0, 1.0),
+										description="Цвет с альфа‑каналом") # type: ignore
 	exposure : bpy.props.FloatProperty() # type: ignore
 	smoothnessMultiplier : bpy.props.FloatProperty() # type: ignore
 	metallic : bpy.props.FloatProperty() # type: ignore
 
 
-#=======ATTRIBUTES==========
 old_path = ""
 idx = 0
 refresh = False
 
 
+#=======ATTRIBUTES==========
 class NodeShaderLinks(bpy.types.PropertyGroup):
 	def _replace_me(self, context):
 		global idx
@@ -36,23 +40,29 @@ class NodeShaderLinks(bpy.types.PropertyGroup):
 			else:
 				idx = 0
 				return None
-                
 			idx += 1
             
-	path : bpy.props.StringProperty(subtype='FILE_PATH', default = "", update=_replace_me, description="Path to *.MatLayers File") # type: ignore
-	replace : bpy.props.BoolProperty(default=False, description="Replace Node") # type: ignore
-	l_count : bpy.props.IntProperty(default=0, description="Layers count") # type: ignore
+	path : bpy.props.StringProperty(subtype='FILE_PATH',
+									default = "",
+									update=_replace_me,
+									description="Path to *.MatLayers File") # type: ignore
+	replace : bpy.props.BoolProperty(default=False,
+									description="Replace Node") # type: ignore
+	l_count : bpy.props.IntProperty(default=0,
+									description="Layers count") # type: ignore
 	layers : bpy.props.CollectionProperty(type=Layers)  # type: ignore
 
 
 class BadTextures(bpy.types.PropertyGroup):
-	texture : bpy.props.StringProperty(name="Texture Path", default="", subtype='FILE_PATH') # type: ignore
+	texture : bpy.props.StringProperty(name="Texture Path",
+										default="",
+										subtype='FILE_PATH') # type: ignore
 #============================
 
 
 class ShowNoTextureDialog(bpy.types.Operator):
 	"""
-	Диалоговое окно с предупрежденем об отсутствующих текстурах
+	Окно с предупрежденем об отсутствующих текстурах
 	"""
 	bl_idname = "object.show_no_texture_dialog"
 	bl_label = "No Texture Dialog"
@@ -133,7 +143,12 @@ class AskToReplaceNode(bpy.types.Operator):
 	
 	def invoke(self, context, event):
 		print("ask_to_replace_node")
-		return context.window_manager.invoke_confirm(self, event=event, icon="QUESTION", confirm_text="Apply", title="Refresh Selected Node?", message="Confirm to Refresh Node!")
+		return context.window_manager.invoke_confirm(self,
+													event=event,
+													icon="QUESTION",
+													confirm_text="Apply",
+													title="Refresh Selected Node?",
+													message="Confirm to Refresh Node!")
 	
 	def draw(self, context):
 		layout = self.layout
@@ -149,7 +164,9 @@ class BuildShader_OP(bpy.types.Operator):
 	bl_description = "Build Shader"
 	bl_options = {'REGISTER', 'INTERNAL'}
     
-	lm_path : bpy.props.StringProperty(subtype='FILE_PATH', name="Path", default="",) # type: ignore
+	lm_path : bpy.props.StringProperty(subtype='FILE_PATH',
+										name="Path",
+										default="") # type: ignore
     
 	def execute(self, context):
 		print("Build Shader")
@@ -158,7 +175,7 @@ class BuildShader_OP(bpy.types.Operator):
 		active_node = active_tree.nodes.active
         
 		# получаем данные из *.MatLayers файла
-		matlayers_data = get_matlayers_data(self.lm_path) # содержимое файла *.MatLayers
+		matlayers_data = get_matlayers_data(self.lm_path)
         
 		if matlayers_data is None:
 			print(f"matlayers_data is None!")
@@ -180,7 +197,9 @@ class BuildShader_OP(bpy.types.Operator):
         
 		# начинаем построение дерева нод
 		remove_ghosted_groups()
-		add_node(group_name="Mat Layers", node_parms=None, lm_path=self.lm_path)
+		add_node(group_name="Mat Layers",
+				node_parms=None,
+				lm_path=self.lm_path)
         
 		return {'FINISHED'}
 
@@ -192,8 +211,7 @@ classes = (
 	ShowNoTextureDialog,
 	AskToReplaceNode,
 	ShaderEditorPanel,
-	BuildShader_OP
-	)
+	BuildShader_OP)
 
 
 def register():
@@ -210,7 +228,6 @@ def register():
 		
 		if self.temp_path != old_path and self.temp_path != "":
 			bpy.ops.object.build_shader_op(lm_path = self.temp_path)
-		# self.temp_path = ""
         
 		old_path = self.temp_path
     
@@ -220,8 +237,7 @@ def register():
 			subtype='FILE_PATH',
 			name="Temp Path",
 			default="",
-			update=_upd
-		)
+			update=_upd)
 
 
 def unregister():

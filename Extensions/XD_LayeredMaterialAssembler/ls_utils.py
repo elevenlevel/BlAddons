@@ -452,7 +452,6 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
             ### ALBEDO
             if layer_name == 'Albedo':
                 for i, layer in enumerate(layers):
-                    # Создаем выходы групп
                     numered_layer_name = layer_name+str(i)
                     group_output_socket = group_tree.interface.new_socket(name=f'Layer{i}', in_out='OUTPUT', socket_type=output_type)
 
@@ -469,7 +468,6 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
             ### NORMAL
             elif layer_name == 'Normal':
                 for i, layer in enumerate(layers):
-                    # Создаем выходы групп
                     numered_layer_name = layer_name+str(i)
                     group_output_socket = group_tree.interface.new_socket(name=f'Layer{i}', in_out='OUTPUT', socket_type=output_type)
 
@@ -517,17 +515,12 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
             ### HEIGHT
             elif layer_name == 'Height':
                 for i, layer in enumerate(layers):
-                    # Создаем выходы групп
                     numered_layer_name = layer_name+str(i)
                     group_output_socket = group_tree.interface.new_socket(name=f'Layer{i}', in_out='OUTPUT', socket_type=output_type)
 
                     image_layer_node = add_single_node(group_tree, 'ShaderNodeTexImage', 300, 300 * -i)
                     
                     image, error = get_img_file(layer.geometry)
-
-                    # if error == "NO_TEXTURE":
-                    #     bpy.ops.object.show_no_texture_dialog('INVOKE_DEFAULT')
-                    #     return {'CANCELLED'}
                     
                     image_layer_node.image = image
                     image_layer_node.image.colorspace_settings.name = 'Non-Color'
@@ -542,7 +535,6 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
             ### TINT
             elif layer_name == 'Tint':
                 for i, layer in enumerate(layers):
-                    # Создаем выходы групп
                     numered_layer_name = layer_name+str(i)
                     group_output_socket = group_tree.interface.new_socket(name=f'Layer{i}', in_out='OUTPUT', socket_type=output_type)
 
@@ -555,7 +547,6 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
             ### EXPOSURE
             elif layer_name == 'Exposure':
                 for i, layer in enumerate(layers):
-                    # Создаем выходы групп
                     numered_layer_name = layer_name+str(i)
                     group_output_socket = group_tree.interface.new_socket(name=f'Layer{i}', in_out='OUTPUT', socket_type=output_type)
 
@@ -571,7 +562,6 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
             ### SMOOTHNESS
             elif layer_name == 'Smoothness':
                 for i, layer in enumerate(layers):
-                    # Создаем выходы групп
                     numered_layer_name = layer_name+str(i)
                     group_output_socket = group_tree.interface.new_socket(name=f'Layer{i}', in_out='OUTPUT', socket_type=output_type)
 
@@ -584,7 +574,6 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
             ### METALLIC
             elif layer_name == 'Metallic':
                 for i, layer in enumerate(layers):
-                    # Создаем выходы групп
                     numered_layer_name = layer_name+str(i)
                     group_output_socket = group_tree.interface.new_socket(name=f'Layer{i}', in_out='OUTPUT', socket_type=output_type)
 
@@ -661,13 +650,10 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
             menu_switch_node = add_single_node(switcher_node_tree, 'GeometryNodeMenuSwitch', 300, 0)
 
             # удаляем дефолтные инпуты
-            # menu_switch_node.enum_items[0].name = "Cylinder"
-            # menu_switch_node.enum_items.new("MyNewItem")
             menu_switch_node.enum_items.remove(menu_switch_node.enum_items[1])
             menu_switch_node.enum_items.remove(menu_switch_node.enum_items[0])
 
             # добавляем новые инпуты
-            # print(f"len of switcher_group_input.outputs = {len(switcher_group_input.outputs)}")
             for output in switcher_group_input.outputs:
                 if output.name == 'Layer' or output.name == '':
                     continue
@@ -814,14 +800,11 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
                 mixer_group_tree.links.new(exposure_multiply_node.outputs['Result'], mixer_output_node.inputs['result'])
         
         add_albedo_tint_exposure_mixer(main_group_tree)
-
-        # if main_group_node:
-        #     matlayers_data = get_matlayers_data()['layers']
-            
+        
         # задаем дефолтное значение для меню
         if len(matlayers_data) > 0:
             main_group_node.inputs['Layer'].default_value = 'Layer0'
-
+        
         # делаем ноду активной
         active_tree.nodes.active = main_group_node
         # bpy.context.view_layer.objects.active.select_set(True)
@@ -838,7 +821,7 @@ def def_mat_layers_node() -> bool:
     
     return is_mat_layers_node
 
-def add_node(group_name="Mat Layers", node_parms=None, lm_path=""):
+def add_node(group_name="Mat Layers", node_parms=None, lm_path=""): # TODO ВЕРОЯТНО, ПРОВЕРКА НЕ НУЖНА
     """
     Docstring for add_node
     
@@ -852,7 +835,6 @@ def add_node(group_name="Mat Layers", node_parms=None, lm_path=""):
         print(f"Update selected Node")
         active_node = get_active_node(active_tree)
         lm_path = active_node.shader_links.path
-        # bpy.ops.object.ask_to_replace_node('INVOKE_DEFAULT', lm_path=lm_path) # спрашиваем, заменить ли ноду и заменяем
     else: # если это НЕ mat_layers, создаем ноду с нуля
         print(f"Create new Mat Layers Node")
 

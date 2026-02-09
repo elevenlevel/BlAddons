@@ -1,6 +1,4 @@
 import bpy
-import json
-
 from . ls_utils import get_active_tree, get_active_node, def_mat_layers_node
 
 class ShaderEditorPanel(bpy.types.Panel):
@@ -11,24 +9,18 @@ class ShaderEditorPanel(bpy.types.Panel):
 	bl_region_type = 'UI'
 	bl_category = "Layered Shader"
 	bl_description = "Part of the addon with basic controls"
-	#bl_options = {'DEFAULT_CLOSED'}
     
 	@classmethod
 	def poll(cls, context):
 		return True
-    
-	def execute(self, context):
-		pass
 
 	def draw(self, context):
 		layout = self.layout
 		buttons_row = layout.row(align=True)
 		
 		# проверяем валидность активного объекта
-		is_mat_layers_node = def_mat_layers_node() # ВОТ ЭТО НАДО ОПТИМИЗИРОВАТЬ ОТСЮДА
+		is_mat_layers_node = def_mat_layers_node()
 		active_node = get_active_node(get_active_tree())
-		
-		# bpy.context.scene.shader_links = shader_links
 		
 		space = bpy.context.space_data
 		if space.type == 'NODE_EDITOR' and space.tree_type == 'ShaderNodeTree' and space.node_tree is not None:
@@ -38,22 +30,12 @@ class ShaderEditorPanel(bpy.types.Panel):
 		
 		buttons_row.alignment = 'EXPAND'
 		
-		#==========r
 		if is_mat_layers_node:
-			# Двусторонняя синхронизация
-			# if wm.temp_path != active_node.shader_links.path:
-			# 	wm.temp_path = active_node.shader_links.path
-			
 			# Показываем prop который обновляет оба значения
 			buttons_row.prop(active_node.shader_links, "path", text="")
-			
-			# Обновляем temp при изменении
-			# if active_node.shader_links.path != wm.temp_path:
-			# 	wm.temp_path = active_node.shader_links.path
 		else:
 			# Показываем временное значение (пустое или последнее)
 			buttons_row.prop(context.window_manager, "temp_path", text="", placeholder="path to MatLayers file")
-		#============
 
 		if is_mat_layers_node:
 			cell = buttons_row.column(align=False)
