@@ -1,8 +1,8 @@
 {
     "layers": [
         {
-            "albedo": "..\\..\\..\\..\\..\\_ArtCore\\Content\\Texture\\Nature\\Rock\\Stones1_diffuse.png",
-            "geometry": "..\\..\\..\\..\\..\\_ArtCore\\Content\\Texture\\Nature\\Rock\\Stones1_geometry.png",
+            "albedo": "..\\..\\_ArtCore\\Content\\Texture\\Nature\\Rock\\Stones1_diffuse.png",
+            "geometry": "..\\..\\_ArtCore\\Content\\Texture\\Nature\\Rock\\Stones1_geometry.png",
             "tint": {
                 "r": 1.0,
                 "g": 1.0,
@@ -14,8 +14,8 @@
             "metallic": 0.0
         },
         {
-            "albedo": "..\\..\\..\\..\\..\\_ArtCore\\Content\\Texture\\Nature\\Grass\\Soil_diffuse.png",
-            "geometry": "..\\..\\..\\..\\..\\_ArtCore\\Content\\Texture\\Nature\\Grass\\Soil_geometry.png",
+            "albedo": "..\\..\\_ArtCore\\Content\\Texture\\Nature\\Grass\\Soil_diffuse.png",
+            "geometry": "..\\..\\_ArtCore\\Content\\Texture\\Nature\\Grass\\Soil_geometry.png",
             "tint": {
                 "r": 1.0,
                 "g": 1.0,
@@ -27,8 +27,8 @@
             "metallic": 0.0
         },
         {
-            "albedo": "..\\..\\..\\..\\..\\_ArtCore\\Content\\Texture\\Nature\\Grass\\CrunchyGrass_diffuse.png",
-            "geometry": "..\\..\\..\\..\\..\\_ArtCore\\Content\\Texture\\Nature\\Grass\\CrunchyGrass_geometry.png",
+            "albedo": "..\\..\\_ArtCore\\Content\\Texture\\Nature\\Grass\\CrunchyGrass_diffuse.png",
+            "geometry": "..\\..\\_ArtCore\\Content\\Texture\\Nature\\Grass\\CrunchyGrass_geometry.png",
             "tint": {
                 "r": 1.0,
                 "g": 1.0,
@@ -40,8 +40,8 @@
             "metallic": 0.0
         },
         {
-            "albedo": "..\\..\\..\\..\\..\\_ArtCore\\Content\\Texture\\Nature\\Rock\\Cliff_diffuse.png",
-            "geometry": "..\\..\\..\\..\\..\\_ArtCore\\Content\\Texture\\_Seamless\\Stone\\RockSnow_geometry.png",
+            "albedo": "..\\..\\_ArtCore\\Content\\Texture\\Nature\\Rock\\Cliff_diffuse.png",
+            "geometry": "..\\..\\_ArtCore\\Content\\Texture\\_Seamless\\Stone\\RockSnow_geometry.png",
             "tint": {
                 "r": 1.0,
                 "g": 1.0,
@@ -53,8 +53,8 @@
             "metallic": 0.0
         },
         {
-            "albedo": "..\\..\\..\\..\\..\\_ArtCore\\Content\\Texture\\Nature\\Sand\\MixedSand_diffuse.png",
-            "geometry": "..\\..\\..\\..\\..\\_ArtCore\\Content\\Texture\\Nature\\Sand\\MixedSand_geometry.png",
+            "albedo": "..\\..\\_ArtCore\\Content\\Texture\\Nature\\Sand\\MixedSand_diffuse.png",
+            "geometry": "..\\..\\_ArtCore\\Content\\Texture\\Nature\\Sand\\MixedSand_geometry.png",
             "tint": {
                 "r": 1.0,
                 "g": 1.0,
