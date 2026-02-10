@@ -89,6 +89,36 @@
       ],
       "tagline": "Maps bake Addon for Blender",
       "version": "1.1.6"
+    },
+    {
+      "maintainer": "Roman Askarov",
+      "website": "https://extreme-developers.ru/",
+      "license": [
+        "SPDX:GPL-3.0-or-later"
+      ],
+      "tagline": "Assemble Layered Shader from Unity",
+      "copyright": [
+        "2026 Extreme Developers"
+      ],
+      "version": "1.0.0",
+      "id": "XD_LayeredMaterialAssembler",
+      "blender_version_min": "5.0.0",
+      "archive_size": 13145,
+      "blender_version_max": "20.1.0",
+      "archive_hash": "sha256:b0e762a5799182e678cf8f357b34be873183a237ba489bdd0a0deafbeb980810",
+      "tags": [
+        "XDevs",
+        "BAKER"
+      ],
+      "name": "XD Layered Material Assembler",
+      "paths_exclude_pattern": [
+        "__pycache__/",
+        "/.git/",
+        "/*.zip"
+      ],
+      "type": "add-on",
+      "archive_url": "https://github.com/elevenlevel/BlAddons/releases/download/release-20260210171743/XD_LayeredMaterialAssembler_1.0.0-blender-5.0.0.zip",
+      "schema_version": "1.0.0"
     }
   ]
 }
