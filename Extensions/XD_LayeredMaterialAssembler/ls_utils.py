@@ -3,31 +3,38 @@ import json
 from mathutils import Vector
 import os
 
-def get_matlayers_path(lm_path):
+def get_matlayers_path(ml_path):
     """
     Docstring for get_matlayers_path
+
+    :param ml_path: Description
     """
-    if lm_path == "":
+
+    if ml_path == "":
         return None
     
-    if not lm_path.endswith("~"):
-        lm_path = lm_path + "~"
+    if not ml_path.endswith("~"):
+        ml_path = ml_path + "~"
     
-    return lm_path
+    return ml_path
 
-def get_file_name(lm_path):
+def get_file_name(ml_path):
     """
-    Docstring for get_matlayers_data
+    Возвращает имя MatLayers файла
+
+    :param ml_path: путь до текущего MatLayers файла
     """
 
-    mat_layers_file = get_matlayers_path(lm_path)
+    mat_layers_file = get_matlayers_path(ml_path)
     return os.path.splitext(os.path.basename(mat_layers_file))[0]
 
-def get_matlayers_data(lm_path):
+def get_matlayers_data(ml_path):
     """
-    Docstring for get_matlayers_data
+    Читает дату из MatLayers файла
+
+    :param ml_path: путь до текущего MatLayers файла
     """
-    mat_layers_file = get_matlayers_path(lm_path)
+    mat_layers_file = get_matlayers_path(ml_path)
     
     # читаем содержиме файла *.MatLayers
     try:
@@ -39,7 +46,7 @@ def get_matlayers_data(lm_path):
 
 def get_active_material():
     """
-    Docstring for get_active_material
+    Возвращает текущий активный материал
     """
 
     context = bpy.context
@@ -63,6 +70,7 @@ def create_material():
     """
     Docstring for create_material
     """
+
     active_obj = bpy.context.active_object
     if not active_obj or active_obj.type != 'MESH':
         return None
@@ -75,6 +83,7 @@ def clean_mat_graph():
     """
     Docstring for clean_mat_graph
     """
+
     active_material = get_active_material()
     if active_material:
         if active_material.node_tree:
@@ -85,6 +94,7 @@ def get_active_tree():
     """
     Docstring for get_active_tree
     """
+
     active_material = get_active_material()
     space = get_node_editor()
 
@@ -106,6 +116,7 @@ def get_active_node(target_tree):
     
     :param target_tree: Description
     """
+
     selected_nodes = [node for node in target_tree.nodes if node.select]
 
     if len(selected_nodes) != 0:
@@ -118,7 +129,9 @@ def get_node_editor():
     """
     Docstring for get_node_editor
     """
+
     space = bpy.context.space_data
+
     # Проверяем, что мы в Node Editor
     if space.type != 'NODE_EDITOR':
         return None
@@ -131,6 +144,7 @@ def get_node_editor_center():
     Returns:
         Vector(x, y) — центр в координатах нод, или по нулям если Node Editor не найден
     """
+
     for area in bpy.context.screen.areas:
         if area.type == 'NODE_EDITOR':
             # Находим основную область (где отображаются ноды)
@@ -159,7 +173,12 @@ def get_node_editor_center():
 def find_new_node_location(node_tree, start_pos=Vector((0, 0)), grid_size=50):
     """
     Ищет свободное место на сетке.
+
+    :param node_tree: Description
+    :param start_pos: Description
+    :param grid_size: Description
     """
+
     x, y = start_pos.x, start_pos.y
     
     while True:
@@ -173,49 +192,63 @@ def find_new_node_location(node_tree, start_pos=Vector((0, 0)), grid_size=50):
         if not occupied:
             return Vector((x, y))
         
-        # Сдвигаемся по диагонали
+        # Сдвигаем по диагонали
         x += grid_size
         y -= grid_size
 
 
 def remove_group_node(active_tree,
                     active_node):
-        """
-        Docstring for remove_group_node
-        
-        :param active_tree: Description
-        :param active_node: Description
-        """
+    """
+    Docstring for remove_group_node
+    
+    :param active_tree: Description
+    :param active_node: Description
+    """
 
-        node_tree = active_node.node_tree
-        active_tree.nodes.remove(active_node)
+    node_tree = active_node.node_tree
+    active_tree.nodes.remove(active_node)
 
-        if node_tree:
-            print(f'remove node_tree: {node_tree.name}')
-            bpy.data.node_groups.remove(node_tree)
+    if node_tree:
+        bpy.data.node_groups.remove(node_tree)
 
 
 def add_single_node(tree,
                     node_type: str='ShaderNodeTexImage',
                     loc_x: float=0.0,
                     loc_y: float=0.0):
-        """
-        Docstring for add_single_node
-        """
-        new_node = tree.nodes.new(node_type)
-        new_node.location = (loc_x, loc_y)
+    """
+    Docstring for add_single_node
+    """
 
-        return new_node
+    new_node = tree.nodes.new(node_type)
+    new_node.location = (loc_x, loc_y)
+
+    return new_node
 
 def set_socket_value(node,
                     socket_name: str,
                     value):
-                for input_socket in node.inputs:
-                    if input_socket.name == socket_name:
-                        input_socket.default_value = value  # Красный
-                        break
+    """
+    Docstring for remove_group_node
+    
+    :param node: Description
+    :param socket_name: Description
+    :param value: Description
+    """
+        
+    for input_socket in node.inputs:
+        if input_socket.name == socket_name:
+            input_socket.default_value = value  # Красный
+            break
 
 def get_img_file(layer):
+    """
+    Docstring for get_img_file
+    
+    :param layer: Description
+    """
+
     if os.path.exists(layer):
         img = bpy.data.images.load(layer, check_existing=True)
         return img, None
@@ -231,10 +264,16 @@ def get_img_file(layer):
         
 
 
-def check_existing_textures(lm_path):
-    matlayers_data = get_matlayers_data(lm_path)
+def check_existing_textures(ml_path):
+    """
+    Docstring for check_existing_textures
+    
+    :param ml_path: Description
+    """
+
+    matlayers_data = get_matlayers_data(ml_path)
     matlayers_layers = matlayers_data['layers']
-    file_path = get_matlayers_path(lm_path)
+    file_path = get_matlayers_path(ml_path)
 
     bad_textures = bpy.context.scene.bad_textures
     for layer in matlayers_layers:
@@ -252,10 +291,16 @@ def check_existing_textures(lm_path):
         return True
 
 def remove_ghosted_groups():
+    """
+    Docstring for remove_ghosted_groups
+    """
+
     print('Remove Ghosted Groups')
     
     def find_half_deleted_groups():
-        """Находит группы, удаленные через DEL но оставшиеся в файле"""
+        """
+        Находит группы, удаленные через DEL но оставшиеся в файле
+        """
         
         ghosts = []
         
@@ -288,7 +333,7 @@ def remove_ghosted_groups():
         
         return ghosts
     
-    ghost_groups = find_half_deleted_groups()
+    ghost_groups = find_half_deleted_groups() # Вывести из функции!!!!!!!!!!!!!!!!!!!!!!!!!!
     
     for g in ghost_groups:
         try:
@@ -299,12 +344,14 @@ def remove_ghosted_groups():
 def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
                         matlayers_data: dict,
                         group_parms: str,
-                        lm_path: str) -> None:
+                        ml_path: str) -> None:
         """
-        Docstring for create_group_node
+        Основная
         
         :param active_tree: Description
-        :param group_name: Description
+        :param matlayers_data: Description
+        :param group_parms: Description
+        :param ml_path: Description
         """
         
         if not active_tree:
@@ -312,14 +359,14 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
             return None
     
     ###===БЛОК ПОДГОТОВКИ ДАННЫХ===
-        file_name = get_file_name(lm_path)
+        file_name = get_file_name(ml_path) # имя файла *.MatLayers
 
-        if group_parms == None:
+        if group_parms == None: # Если нода новая
             group_name = f"{file_name} MAT LAYERS"
-        else:
+        else: # Если это апдейт ноды
             group_name = group_parms['name']
         
-        current_path = get_matlayers_path(lm_path)
+        current_path = get_matlayers_path(ml_path)
         matlayers_layers = matlayers_data['layers']
 
 
@@ -327,28 +374,20 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
         # Создаём новое дерево нод (NodeTree) для основной группы
         main_group_tree = bpy.data.node_groups.new(type='ShaderNodeTree', name=group_name)
         
-        # Добавляем ноду‑группу в целевой tree
+        # Добавляем ноду‑группу в целевой NodeTree
         main_group_node = add_single_node(active_tree, 'ShaderNodeGroup', 0, 0)
-
-        layers = main_group_node.shader_links.layers
-
-        # if main_group_node.shader_links.path != "":
-        #     current_path = main_group_node.shader_links.path
-        # else:
-        #     current_path = bpy.context.window_manager.temp_path
-        #main_group_node.shader_links.path = current_path
         
+        layers = main_group_node.shader_links.layers
         
         for layer in matlayers_layers:
-            albedo_rel = layer['albedo']
+            albedo_rel = layer['albedo'] # относительный путь к карте albedo
+            albedo_abs = os.path.abspath(os.path.join(current_path, albedo_rel)) # считаем абсолютнвй путь к карте albedo
+
+            geometry_rel = layer['geometry'] # относительный путь к карте geometry
+            geometry_abs = os.path.abspath(os.path.join(current_path, geometry_rel)) # считаем абсолютнвй путь к карте geometry
             
-            albedo_abs = os.path.abspath(os.path.join(current_path, albedo_rel))
-            geometry_rel = layer['geometry']
-            geometry_abs = os.path.abspath(os.path.join(current_path, geometry_rel))
-
             new_layer = layers.add()
-
-
+            
             new_layer.albedo = albedo_abs
             new_layer.geometry = geometry_abs
             new_layer.tint = layer['tint']['r'], layer['tint']['g'], layer['tint']['b'], layer['tint']['a']
@@ -357,7 +396,7 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
             new_layer.metallic = layer['metallic']
         
         if group_parms == None:
-            #  Позиция новой ноды
+            # Расположение новой ноды
             new_node_loc = find_new_node_location(active_tree)
             
             main_group_node.name = group_name
@@ -385,7 +424,6 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
         main_group_output = add_single_node(main_group_tree, 'NodeGroupOutput', 2000, 0)
         
         # Создаём входы и выходы основной группы
-        # main_group_input_geometry_socket = main_group_tree.interface.new_socket(name='Geometry Map', in_out='INPUT', socket_type='NodeSocketColor') # NodeSocketFloat NodeSocketInt NodeSocketBool NodeSocketVector NodeSocketColor NodeSocketMenu NodeSocketShader NodeSocketBundle NodeSocketClosure
         main_group_input_menu_socket = main_group_tree.interface.new_socket(name='Layer', in_out='INPUT', socket_type='NodeSocketMenu')
         main_group_input_uv_socket = main_group_tree.interface.new_socket(name='uv', in_out='INPUT', socket_type='NodeSocketVector')
         main_group_input_uv_socket.hide_value = True
@@ -395,7 +433,7 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
         main_group_output_height_socket = main_group_tree.interface.new_socket(name='Height', in_out='OUTPUT', socket_type='NodeSocketFloat')
         main_group_output_smoothness_socket = main_group_tree.interface.new_socket(name='Smoothness', in_out='OUTPUT', socket_type='NodeSocketFloat')
         main_group_output_metallic_socket = main_group_tree.interface.new_socket(name='Metallic', in_out='OUTPUT', socket_type='NodeSocketFloat')
-
+        
         if group_parms != None:
             # восстанавливаем входные связи
             for node_socket, other_socket in group_parms["input_links"].items():
@@ -407,22 +445,28 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
                 node_socket = main_group_node.outputs[node_socket]
                 active_tree.links.new(other_socket, node_socket)
         
-        main_group_node.shader_links.path = lm_path
-        bpy.context.window_manager.temp_path = ""
-
-
-
+        main_group_node.shader_links.path = ml_path
+        bpy.context.window_manager.temp_path = "" # очищаем временный путь для пустой строки
+        
+        
+        
     ###===БЛОК СОЗДАНИЯ ГРУПП СО СЛОЯМИ===###
         def create_map_group(node_parms: dict,
                             base_group_tree: bpy.types.ShaderNodeTree,
                             layer_name: str,
                             output_type: str) -> bpy.types.NodeGroup:
+            """
+            Создает группу слоев определенного типа (напр: AlbedoLayersGroup, NormalLayersGroup...)
+            
+            :param node_parms: Параметры типа, цвета и позиции будущей ноды
+            :param base_group_tree: Дерево, где будет располагаться нода (в нашем случае - дерево группы MatLayers)
+            :param layer_name: Имя слоя (Albedo, Normal, Height и т.д.)
+            :param output_type: Тип выхода (цвет, вектор и т.д.)
+            """
             
             layer_name = layer_name.capitalize()
             layer_group_name = layer_name + 'LayersGroup'
-
             
-
             # Добавляем группу
             group_tree = bpy.data.node_groups.new(type='ShaderNodeTree', name=layer_group_name)
             
@@ -440,44 +484,44 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
             # Добавляем входные/выходные ноды albedo группы
             albedo_group_input = add_single_node(group_tree, 'NodeGroupInput', 0, 0)
             albedo_group_output = add_single_node(group_tree, 'NodeGroupOutput', 1000, 0)
-
+            
             albedo_group_input_uv_socket = group_tree.interface.new_socket(name='uv', in_out='INPUT', socket_type='NodeSocketVector')
             
             # подключаем вход ноды albedo group связями
             base_group_tree.links.new(main_group_input.outputs['uv'], group_node.inputs['uv'])
-
+            
             layers = main_group_node.shader_links.layers
-
+            
         ###===БЛОК СОЗДАНИЯ СЛОЕВ===###
             ### ALBEDO
             if layer_name == 'Albedo':
                 for i, layer in enumerate(layers):
                     numered_layer_name = layer_name+str(i)
                     group_output_socket = group_tree.interface.new_socket(name=f'Layer{i}', in_out='OUTPUT', socket_type=output_type)
-
+                    
                     albedo_layer_node = add_single_node(group_tree, 'ShaderNodeTexImage', 300, 300 * -i)
-
+                    
                     image, error = get_img_file(layer.albedo)
                     
                     albedo_layer_node.image = image
-
+                    
                     group_tree.links.new(albedo_group_input.outputs['uv'], albedo_layer_node.inputs['Vector'])
-
+                    
                     group_tree.links.new(albedo_layer_node.outputs['Color'], group_tree.nodes['Group Output'].inputs['Layer'+str(i)])
-            
+                    
             ### NORMAL
             elif layer_name == 'Normal':
                 for i, layer in enumerate(layers):
                     numered_layer_name = layer_name+str(i)
                     group_output_socket = group_tree.interface.new_socket(name=f'Layer{i}', in_out='OUTPUT', socket_type=output_type)
-
+                    
                     image_layer_node = add_single_node(group_tree, 'ShaderNodeTexImage', 300, 300 * -i)
                     
                     image, error = get_img_file(layer.geometry)
                     
                     image_layer_node.image = image
                     image_layer_node.image.colorspace_settings.name = 'Non-Color'
-
+                    
                     separate_xyz_node = add_single_node(group_tree, 'ShaderNodeSeparateXYZ', 600, image_layer_node.location[1])
                     combine_xyz_node_0 = add_single_node(group_tree, 'ShaderNodeCombineXYZ', 900, image_layer_node.location[1]+50)
                     dot_prod_node = add_single_node(group_tree, 'ShaderNodeVectorMath', 1200, image_layer_node.location[1]+70)
@@ -492,8 +536,7 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
                     combide_xyz_node_1 = add_single_node(group_tree, 'ShaderNodeCombineXYZ', 2400, image_layer_node.location[1])
                     normalize_node = add_single_node(group_tree, 'ShaderNodeVectorMath', 2700, image_layer_node.location[1])
                     normalize_node.operation = 'NORMALIZE'
-
-
+                    
                     group_tree.links.new(albedo_group_input.outputs['uv'], image_layer_node.inputs['Vector'])
                     group_tree.links.new(image_layer_node.outputs['Color'], separate_xyz_node.inputs['Vector'])
                     group_tree.links.new(separate_xyz_node.outputs['X'], combine_xyz_node_0.inputs['X'])
@@ -507,9 +550,9 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
                     group_tree.links.new(separate_xyz_node.outputs['X'], combide_xyz_node_1.inputs['X'])
                     group_tree.links.new(separate_xyz_node.outputs['Y'], combide_xyz_node_1.inputs['Y'])
                     group_tree.links.new(combide_xyz_node_1.outputs['Vector'], normalize_node.inputs['Vector'])
-
+                    
                     group_tree.links.new(normalize_node.outputs['Vector'], group_tree.nodes['Group Output'].inputs['Layer'+str(i)])
-
+                    
                     group_tree.nodes['Group Output'].location.x = 3000
                 
             ### HEIGHT
@@ -517,74 +560,74 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
                 for i, layer in enumerate(layers):
                     numered_layer_name = layer_name+str(i)
                     group_output_socket = group_tree.interface.new_socket(name=f'Layer{i}', in_out='OUTPUT', socket_type=output_type)
-
+                    
                     image_layer_node = add_single_node(group_tree, 'ShaderNodeTexImage', 300, 300 * -i)
                     
                     image, error = get_img_file(layer.geometry)
                     
                     image_layer_node.image = image
                     image_layer_node.image.colorspace_settings.name = 'Non-Color'
-
+                    
                     separate_xyz_node = add_single_node(group_tree, 'ShaderNodeSeparateXYZ', 600, image_layer_node.location[1])
-
+                    
                     group_tree.links.new(albedo_group_input.outputs['uv'], image_layer_node.inputs['Vector'])
-
+                    
                     group_tree.links.new(image_layer_node.outputs['Color'], separate_xyz_node.inputs['Vector'])
                     group_tree.links.new(separate_xyz_node.outputs['Z'], group_tree.nodes['Group Output'].inputs['Layer'+str(i)])
-            
+                    
             ### TINT
             elif layer_name == 'Tint':
                 for i, layer in enumerate(layers):
                     numered_layer_name = layer_name+str(i)
                     group_output_socket = group_tree.interface.new_socket(name=f'Layer{i}', in_out='OUTPUT', socket_type=output_type)
-
+                    
                     tint_layer_node = add_single_node(group_tree, 'ShaderNodeRGB', 300, 300 * -i)
-
+                    
                     tint_layer_node.outputs[0].default_value = layer.tint
-
+                    
                     group_tree.links.new(tint_layer_node.outputs['Color'], group_tree.nodes['Group Output'].inputs['Layer'+str(i)])
-            
+                    
             ### EXPOSURE
             elif layer_name == 'Exposure':
                 for i, layer in enumerate(layers):
                     numered_layer_name = layer_name+str(i)
                     group_output_socket = group_tree.interface.new_socket(name=f'Layer{i}', in_out='OUTPUT', socket_type=output_type)
-
+                    
                     exposure_layer_node = add_single_node(group_tree, 'ShaderNodeValue', 300, 300 * -i)
                     exposure_layer_node.outputs[0].default_value = layer.exposure
-
+                    
                     math_add_one_node = add_single_node(group_tree, 'ShaderNodeMath', 600, 300 * -i)
                     math_add_one_node.inputs[1].default_value = 1.0
-
+                    
                     group_tree.links.new(exposure_layer_node.outputs['Value'], math_add_one_node.inputs[0])
                     group_tree.links.new(math_add_one_node.outputs[0], group_tree.nodes['Group Output'].inputs['Layer'+str(i)])
-            
+                    
             ### SMOOTHNESS
             elif layer_name == 'Smoothness':
                 for i, layer in enumerate(layers):
                     numered_layer_name = layer_name+str(i)
                     group_output_socket = group_tree.interface.new_socket(name=f'Layer{i}', in_out='OUTPUT', socket_type=output_type)
-
+                    
                     smoothness_layer_node = add_single_node(group_tree, 'ShaderNodeValue', 300, 300 * -i)
-
+                    
                     smoothness_layer_node.outputs[0].default_value = layer.smoothnessMultiplier
-
+                    
                     group_tree.links.new(smoothness_layer_node.outputs['Value'], group_tree.nodes['Group Output'].inputs['Layer'+str(i)])
-            
+                    
             ### METALLIC
             elif layer_name == 'Metallic':
                 for i, layer in enumerate(layers):
                     numered_layer_name = layer_name+str(i)
                     group_output_socket = group_tree.interface.new_socket(name=f'Layer{i}', in_out='OUTPUT', socket_type=output_type)
-
+                    
                     metallic_layer_node = add_single_node(group_tree, 'ShaderNodeValue', 300, 300 * -i)
-
+                    
                     metallic_layer_node.outputs[0].default_value = layer.metallic
-
+                    
                     group_tree.links.new(metallic_layer_node.outputs['Value'], group_tree.nodes['Group Output'].inputs['Layer'+str(i)])
-        
+                    
             return group_node
-
+            
         node_parms = {
                         'Albedo': ['NodeSocketColor', (0.47, 0.5, 0.61), (900, 0)],
                         'Normal': ['NodeSocketVector', (0.38, 0.37, 0.59), (900, -300)],
@@ -598,18 +641,19 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
         ### ===БЛОК ДОБАВЛЕНИЯ СВИТЧЕРОВ===###
         def create_switcher_group(active_tree,
                                 master_node,
-                                group_name: str="SWITCHER",):
+                                group_name: str="SWITCHER"):
             """
-            Docstring for create_group_node
+            Создаем ноду-свитчер, всю ее внутреннюю структуру и связи
             
-            :param active_tree: Description
-            :param group_name: Description
+            :param active_tree: Дерево, в котором создается нода (в данном случае - дерево внутри ноды MatLayers)
+            :param master_node: Нода, чьи выходы мы будем выбирать данным свитчером
+            :param group_name: Будущее имя текущей ноды-свитчера
             """
             
             if not active_tree:
                 print("Ошибка: active_tree не указан")
                 return None
-            
+                
             main_group_tree = bpy.data.node_groups.new(type='ShaderNodeTree', name=group_name)
             
             # Добавляем ноду‑группу в целевой tree
@@ -622,56 +666,55 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
             switcher_node.location = master_node.location + Vector((300.0, 0.0))
             switcher_node.width = 140
             switcher_node.node_tree = main_group_tree  # Привязываем созданное дерево группы
-
+            
             # Добавляем входные/выходные ноды albedo группы
             switcher_group_input = add_single_node(main_group_tree, 'NodeGroupInput', 0, 0)
             switcher_group_output = add_single_node(main_group_tree, 'NodeGroupOutput', 1000, 0)
-
+            
             switcher_group_input_menu_socket = main_group_tree.interface.new_socket(name='Layer', in_out='INPUT', socket_type='NodeSocketMenu')
-
+            
             # Создаем выходы групп
             switcher_group_output_socket = main_group_tree.interface.new_socket(name='result', in_out='OUTPUT', socket_type='NodeSocketColor')
-
+            
             # соединяем сокеты меню
             input_node = active_tree.nodes.get('Group Input')
             menu_input = input_node.outputs['Layer']
             active_tree.links.new(menu_input, switcher_node.inputs['Layer'])
-
+            
             for i, layer in enumerate(master_node.outputs):
                 switcher_group_input_layer_socket = main_group_tree.interface.new_socket(name=f'Layer{i}', in_out='INPUT', socket_type='NodeSocketColor')
                 
                 set_socket_value(switcher_node, layer.name, (1.0, 0.0, 0.0, 1.0))
-
+                
                 # подключаем вход ноды
                 active_tree.links.new(master_node.outputs[master_node.outputs[i].name], switcher_node.inputs[i+1])
-            
+                
             ### ===БЛОК ДОБАВЛЕНИЯ Menu Switch ВНУТРЬ СВИТЧЕРА===###
             switcher_node_tree = switcher_node.node_tree
             menu_switch_node = add_single_node(switcher_node_tree, 'GeometryNodeMenuSwitch', 300, 0)
-
+            
             # удаляем дефолтные инпуты
             menu_switch_node.enum_items.remove(menu_switch_node.enum_items[1])
             menu_switch_node.enum_items.remove(menu_switch_node.enum_items[0])
-
+            
             # добавляем новые инпуты
             for output in switcher_group_input.outputs:
                 if output.name == 'Layer' or output.name == '':
                     continue
                 menu_switch_node.enum_items.new(output.name)
                 switcher_node_tree.links.new(switcher_node_tree.nodes['Group Input'].outputs[output.name], menu_switch_node.inputs[output.name])
-
+            
             switcher_node_tree.links.new(switcher_node_tree.nodes['Group Input'].outputs['Layer'], menu_switch_node.inputs['Menu'])
             switcher_node_tree.links.new(menu_switch_node.outputs['Output'], switcher_node_tree.nodes['Group Output'].inputs['result'])
-
+            
             return switcher_node
-
-        
+            
         # исполняем методы
         for layer_name in node_parms:
             socket_type = node_parms[layer_name][0]
             layer_name = layer_name.lower()
             map_group = create_map_group(node_parms, main_group_tree, layer_name, socket_type)
-
+            
             if map_group == {'CANCELLED'}:
                 return {'CANCELLED'}
             
@@ -717,12 +760,12 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
                 return
                 
             connect_switcher2output(switchers, main_group_output)
-
+            
         def add_albedo_tint_exposure_mixer(main_group_tree):
             albedo_switcher_node = None
             tint_switcher_node = None
             exposure_switcher_node = None
-
+            
             for node in main_group_tree.nodes:
                 if node.label == 'SWITCHER_albedo':
                     albedo_switcher_node = node
@@ -730,33 +773,33 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
                     tint_switcher_node = node
                 elif node.label == 'SWITCHER_exposure':
                     exposure_switcher_node = node
-            
+                    
             main_group_output = main_group_tree.nodes['Group Output']
-
+            
             # Находим существующий линк
             existing_link = None
             for link in main_group_tree.links:
                 if link.from_node.label == 'SWITCHER_albedo' and link.to_node.name == 'Group Output':
                     existing_link = link
                     break
-                
+                    
             if existing_link:
                 mixer_group_node = main_group_tree.nodes.new('ShaderNodeGroup')
                 mixer_group_node.location = (
                     (existing_link.from_node.location.x + existing_link.to_node.location.x) / 2,
                     (existing_link.from_node.location.y + existing_link.to_node.location.y) / 2
                 )
-
+                
                 mixer_group_node.name = "Mixer Group"
                 mixer_group_node.label = "Mixer Group"
                 mixer_group_node.use_custom_color = True
                 mixer_group_node.color = (0.6, 0.5, 0.5)
                 mixer_group_node.width = 140
-
+                
                 # Новое дерево нод
                 mixer_group_tree = bpy.data.node_groups.new(type='ShaderNodeTree', name='mixer_group_tree')
                 mixer_group_node.node_tree = mixer_group_tree
-
+                
                 # Создаем новые входный и выходные сокеты
                 mixer_albedo_input = mixer_group_tree.interface.new_socket(name='Albedo', in_out='INPUT', socket_type='NodeSocketColor')
                 mixer_tint_input = mixer_group_tree.interface.new_socket(name='Tint', in_out='INPUT', socket_type='NodeSocketColor')
@@ -765,17 +808,17 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
                 set_socket_value(mixer_group_node, 'Albedo', (1.0, 1.0, 1.0, 1.0))
                 set_socket_value(mixer_group_node, 'Tint', (1.0, 1.0, 1.0, 1.0))
                 set_socket_value(mixer_group_node, 'Exposure', 1.0)
-
+                
                 # Удаляем старый линк
                 main_group_tree.links.remove(existing_link)
-
+                
                 # Пробрасываем новые линки
                 main_group_tree.links.new(albedo_switcher_node.outputs['result'], mixer_group_node.inputs['Albedo'])
                 main_group_tree.links.new(tint_switcher_node.outputs['result'], mixer_group_node.inputs['Tint'])
                 main_group_tree.links.new(exposure_switcher_node.outputs['result'], mixer_group_node.inputs['Exposure'])
                 main_group_tree.links.new(mixer_group_node.outputs['result'], main_group_output.inputs['Albedo'])
-
-
+                
+                
                 ### СОЗДАЕМ СТРУКТУРУ ВНУТРИ МИКСЕРА
                 mixer_input_node = add_single_node(mixer_group_tree, 'NodeGroupInput', 0, 0)
                 mixer_output_node = add_single_node(mixer_group_tree, 'NodeGroupOutput', 900, 0)
@@ -791,14 +834,14 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
                 exposure_multiply_node.inputs['A'].name = 'Albedo'
                 tint_multiply_node.inputs['B'].name = 'Tint'
                 exposure_multiply_node.inputs['B'].name = 'Exposure'
-
+                
                 # Пробрасываем линки
                 mixer_group_tree.links.new(mixer_input_node.outputs['Albedo'], tint_multiply_node.inputs['Albedo'])
                 mixer_group_tree.links.new(mixer_input_node.outputs['Tint'], tint_multiply_node.inputs['Tint'])
                 mixer_group_tree.links.new(tint_multiply_node.outputs['Result'], exposure_multiply_node.inputs['Albedo'])
                 mixer_group_tree.links.new(mixer_input_node.outputs['Exposure'], exposure_multiply_node.inputs['Exposure'])
                 mixer_group_tree.links.new(exposure_multiply_node.outputs['Result'], mixer_output_node.inputs['result'])
-        
+                
         add_albedo_tint_exposure_mixer(main_group_tree)
         
         # задаем дефолтное значение для меню
@@ -807,13 +850,16 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
         
         # делаем ноду активной
         active_tree.nodes.active = main_group_node
-        # bpy.context.view_layer.objects.active.select_set(True)
-
+        # bpy.context.view_layer.objects.active.select_set(True) # Оставил, вдруг понадобится
+        
 def def_mat_layers_node() -> bool:
-    # определяем есть ли активная нода и mat_layers ли она
+    """
+    Определяем, являетс ли активная нода MatLayers нодой
+    """
+    
     active_node = get_active_node(get_active_tree())
     is_mat_layers_node = False
-
+    
     if active_node:
         if active_node.type == "GROUP":
             if "mat_layers_data" in active_node:
@@ -821,26 +867,29 @@ def def_mat_layers_node() -> bool:
     
     return is_mat_layers_node
 
-def add_node(group_name="Mat Layers", node_parms=None, lm_path=""): # TODO ВЕРОЯТНО, ПРОВЕРКА НЕ НУЖНА
+def add_node(group_name="Mat Layers", node_parms=None, ml_path=""): # TODO ВЕРОЯТНО, ПРОВЕРКА НЕ НУЖНА
     """
-    Docstring for add_node
+    Создаем новую MatLayers ноду при выборе MatLayers или MatLayers~ файла
     
-    :param group_name: Description
+    :param group_name: Будущее имя новой MatLayers ноды
+    :param node_parms: Параметры будущей ноды, взятые либо из MatLayers файла, либо из старой ноды при замене
+    :param ml_path: Путь до MatLayers файла
     """
+
     active_tree = get_active_tree()
     is_mat_layers_node = def_mat_layers_node()
     
-    # если активная нода - это mat_layers, заменяем ее
+    # если активная нода - это mat_layers, заменяем ее (ВЕРОЯТНО, ЭТО БОЛЬШЕ НЕ АКТУАЛЬНО)
     if is_mat_layers_node:
         print(f"Update selected Node")
         active_node = get_active_node(active_tree)
-        lm_path = active_node.shader_links.path
+        ml_path = active_node.shader_links.path
     else: # если это НЕ mat_layers, создаем ноду с нуля
         print(f"Create new Mat Layers Node")
-
-        matlayers_data = get_matlayers_data(lm_path)
-        matlayers_layers = matlayers_data['layers']
-        file_path = get_matlayers_path(lm_path)
         
-        construct_group_node(active_tree, matlayers_data, None, lm_path=lm_path)
+        matlayers_data = get_matlayers_data(ml_path)
+        matlayers_layers = matlayers_data['layers']
+        file_path = get_matlayers_path(ml_path)
+        
+        construct_group_node(active_tree, matlayers_data, None, ml_path=ml_path)
     node_c_props = None

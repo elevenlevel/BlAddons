@@ -36,7 +36,7 @@ class NodeShaderLinks(bpy.types.PropertyGroup):
 			refresh = False
 		else:
 			if idx == 0:
-				bpy.ops.object.build_shader_op(lm_path=self.path)
+				bpy.ops.object.build_shader_op(ml_path=self.path)
 			else:
 				idx = 0
 				return None
@@ -130,19 +130,18 @@ class AskToReplaceNode(bpy.types.Operator):
         
 		refresh = True
         
-		lm_path = active_node.shader_links.path
+		ml_path = active_node.shader_links.path
         
 		remove_group_node(active_tree, active_node)
 		remove_ghosted_groups()
 
-		matlayers_data = get_matlayers_data(lm_path)
-		construct_group_node(active_tree, matlayers_data, group_parms, lm_path)
+		matlayers_data = get_matlayers_data(ml_path)
+		construct_group_node(active_tree, matlayers_data, group_parms, ml_path)
         
 		group_parms.clear()
 		return {'FINISHED'}
 	
 	def invoke(self, context, event):
-		print("ask_to_replace_node")
 		return context.window_manager.invoke_confirm(self,
 													event=event,
 													icon="QUESTION",
@@ -164,7 +163,7 @@ class BuildShader_OP(bpy.types.Operator):
 	bl_description = "Build Shader"
 	bl_options = {'REGISTER', 'INTERNAL'}
     
-	lm_path : bpy.props.StringProperty(subtype='FILE_PATH',
+	ml_path : bpy.props.StringProperty(subtype='FILE_PATH',
 										name="Path",
 										default="") # type: ignore
     
@@ -175,7 +174,7 @@ class BuildShader_OP(bpy.types.Operator):
 		active_node = active_tree.nodes.active
         
 		# получаем данные из *.MatLayers файла
-		matlayers_data = get_matlayers_data(self.lm_path)
+		matlayers_data = get_matlayers_data(self.ml_path)
         
 		if matlayers_data is None:
 			print(f"matlayers_data is None!")
@@ -188,7 +187,7 @@ class BuildShader_OP(bpy.types.Operator):
 		material["MatLayers_data"] = matlayers_data
 		
 		# проверяем наличие указанных текстур
-		existing = check_existing_textures(self.lm_path)
+		existing = check_existing_textures(self.ml_path)
 		
 		if not existing:
 			context.window_manager.temp_path = ""
@@ -199,7 +198,7 @@ class BuildShader_OP(bpy.types.Operator):
 		remove_ghosted_groups()
 		add_node(group_name="Mat Layers",
 				node_parms=None,
-				lm_path=self.lm_path)
+				ml_path=self.ml_path)
         
 		return {'FINISHED'}
 
@@ -227,7 +226,7 @@ def register():
 		global old_path
 		
 		if self.temp_path != old_path and self.temp_path != "":
-			bpy.ops.object.build_shader_op(lm_path = self.temp_path)
+			bpy.ops.object.build_shader_op(ml_path = self.temp_path)
         
 		old_path = self.temp_path
     
