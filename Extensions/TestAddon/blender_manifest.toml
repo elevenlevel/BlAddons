@@ -1,6 +1,7 @@
 schema_version = "1.0.0"
-id = "TestAddon" # должен совпадать с именем папки аддона
-name = "Test Addon"
+
+id = "TestAddon"
+name = "TEST ADDON"
 version = "0.0.5"
 tagline = "Test Addon"
 maintainer = "Roman Askarov"
