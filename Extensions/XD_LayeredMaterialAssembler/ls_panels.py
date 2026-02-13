@@ -2,7 +2,10 @@ import bpy
 from . ls_utils import get_active_tree, get_active_node, def_mat_layers_node
 
 class ShaderEditorPanel(bpy.types.Panel):
-	'''Основное окно аддона'''
+	'''
+	Основное окно аддона
+	'''
+
 	bl_idname = "OBJECT_PT_layered_shader"
 	bl_label = "Layered Shader"
 	bl_space_type = 'NODE_EDITOR'
@@ -39,9 +42,9 @@ class ShaderEditorPanel(bpy.types.Panel):
 
 		if is_mat_layers_node:
 			cell = buttons_row.column(align=False)
-			cell.operator("object.ask_to_replace_node", text="", icon="FILE_REFRESH") # кнопка обновления
+			cell.operator("scene.ask_to_replace_node", text="", icon="FILE_REFRESH") # кнопка обновления
 			cell.enabled = True
 		else:
 			cell = buttons_row.column(align=False)
-			cell.operator("object.ask_to_replace_node", text="", icon="FILE_REFRESH") # кнопка обновления
+			cell.operator("scene.ask_to_replace_node", text="", icon="FILE_REFRESH") # кнопка обновления
 			cell.enabled = False

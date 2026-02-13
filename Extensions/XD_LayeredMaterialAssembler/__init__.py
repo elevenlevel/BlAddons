@@ -36,7 +36,7 @@ class NodeShaderLinks(bpy.types.PropertyGroup):
 			refresh = False
 		else:
 			if idx == 0:
-				bpy.ops.object.build_shader_op(ml_path=self.path)
+				bpy.ops.scene.build_shader_op(ml_path=self.path)
 			else:
 				idx = 0
 				return None
@@ -64,7 +64,8 @@ class ShowNoTextureDialog(bpy.types.Operator):
 	"""
 	Окно с предупрежденем об отсутствующих текстурах
 	"""
-	bl_idname = "object.show_no_texture_dialog"
+
+	bl_idname = "scene.show_no_texture_dialog"
 	bl_label = "No Texture Dialog"
 	bl_description = "No Texture Dialog"
 	bl_options = {'REGISTER', 'INTERNAL'}
@@ -88,11 +89,36 @@ class ShowNoTextureDialog(bpy.types.Operator):
 		return {'FINISHED'}
 
 
+class ShowBadDataDialog(bpy.types.Operator):
+	"""
+	Окно с предупрежденем о несоответствии файла
+	"""
+
+	bl_idname = "scene.show_bad_data_dialog"
+	bl_label = "Bad Data Dialog"
+	bl_description = "Bad Data Dialog"
+	bl_options = {'REGISTER', 'INTERNAL'}
+    
+	def invoke(self, context, event):
+		print("Show no texture dialog")
+		self.report({'WARNING'}, "Важная информация!")
+		return context.window_manager.invoke_popup(self, width=300)
+        
+	def draw(self, context):
+		layout = self.layout
+		
+		layout.label(text="Selected File is Wrong!", icon="ERROR")
+	
+	def execute(self, context):
+		return {'FINISHED'}
+
+
 class AskToReplaceNode(bpy.types.Operator):
 	"""
 	Диалоговое окно с запросом на ребилд материала
 	"""
-	bl_idname = "object.ask_to_replace_node"
+
+	bl_idname = "scene.ask_to_replace_node"
 	bl_label = "Replace Node?"
 	bl_description = "Replace Node"
 	bl_options = {'REGISTER', 'INTERNAL'}
@@ -102,6 +128,8 @@ class AskToReplaceNode(bpy.types.Operator):
 		Выполнение после нажатия OK
 		"""
 		
+		print('Replace Node after ask')
+
 		global refresh
         
 		active_tree = get_active_tree()
@@ -156,9 +184,10 @@ class AskToReplaceNode(bpy.types.Operator):
 
 class BuildShader_OP(bpy.types.Operator):
 	'''
-	Пересчет шейдера при замене MatLayers файла или вручную
+	Создание ноды MatLayers
 	'''
-	bl_idname = "object.build_shader_op"
+
+	bl_idname = "scene.build_shader_op"
 	bl_label = "Build Shader"
 	bl_description = "Build Shader"
 	bl_options = {'REGISTER', 'INTERNAL'}
@@ -177,7 +206,7 @@ class BuildShader_OP(bpy.types.Operator):
 		matlayers_data = get_matlayers_data(self.ml_path)
         
 		if matlayers_data is None:
-			print(f"matlayers_data is None!")
+			bpy.ops.scene.show_bad_data_dialog('INVOKE_DEFAULT')
 			return {'CANCELLED'}
 		
 		# получаем активный материал
@@ -208,6 +237,7 @@ classes = (
 	NodeShaderLinks,
 	BadTextures,
 	ShowNoTextureDialog,
+	ShowBadDataDialog,
 	AskToReplaceNode,
 	ShaderEditorPanel,
 	BuildShader_OP)
@@ -226,7 +256,7 @@ def register():
 		global old_path
 		
 		if self.temp_path != old_path and self.temp_path != "":
-			bpy.ops.object.build_shader_op(ml_path = self.temp_path)
+			bpy.ops.scene.build_shader_op(ml_path = self.temp_path)
         
 		old_path = self.temp_path
     
