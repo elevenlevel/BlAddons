@@ -20,15 +20,15 @@
         "/*.zip"
       ],
       "schema_version": "1.0.0",
-      "name": "Test Addon",
+      "name": "TEST ADDON",
       "version": "0.0.5",
       "tags": [
         "test"
       ],
-      "archive_size": 1163,
+      "archive_size": 1388,
       "type": "add-on",
-      "archive_url": "https://github.com/elevenlevel/BlAddons/releases/download/release-20251127054156/TestAddon_0.0.5-blender-4.3.0.zip",
-      "archive_hash": "sha256:3aa7843149f6a6404e609e7d1dd7e1bee075beb180c04937f08f7059bae699fc",
+      "archive_url": "https://github.com/elevenlevel/BlAddons/releases/download/release-20260213051557/TestAddon_0.0.5-blender-4.3.0.zip",
+      "archive_hash": "sha256:bbe606c86bca66e7c4c9734b6c8244a2a6b4730431c8126c3e3e6ae0b952adae",
       "blender_version_max": "20.1.0"
     },
     {
@@ -100,12 +100,12 @@
       "copyright": [
         "2026 Extreme Developers"
       ],
-      "version": "1.0.0",
+      "version": "0.0.5",
       "id": "XD_LayeredMaterialAssembler",
       "blender_version_min": "5.0.0",
-      "archive_size": 13145,
+      "archive_size": 13533,
       "blender_version_max": "20.1.0",
-      "archive_hash": "sha256:b0e762a5799182e678cf8f357b34be873183a237ba489bdd0a0deafbeb980810",
+      "archive_hash": "sha256:afb215382e0c15d460d27657c8a5640ea7ec1549b882366a0a6c360cd8530241",
       "tags": [
         "XDevs",
         "BAKER"
@@ -117,7 +117,7 @@
         "/*.zip"
       ],
       "type": "add-on",
-      "archive_url": "https://github.com/elevenlevel/BlAddons/releases/download/release-20260210171743/XD_LayeredMaterialAssembler_1.0.0-blender-5.0.0.zip",
+      "archive_url": "https://github.com/elevenlevel/BlAddons/releases/download/release-20260213051557/XD_LayeredMaterialAssembler_0.0.5-blender-5.0.0.zip",
       "schema_version": "1.0.0"
     }
   ]
