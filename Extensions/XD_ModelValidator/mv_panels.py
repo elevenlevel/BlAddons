@@ -3,7 +3,10 @@ import json
 from .mv_utilities import *
 
 class ISSUES_UL_ReportList(bpy.types.UIList):
-	'''Список пройденных проверок в панели Report'''
+	'''
+	Список пройденных проверок в панели Report
+	'''
+
 	'''
 	@classmethod
 	def item_height(self, context, item):
@@ -13,16 +16,16 @@ class ISSUES_UL_ReportList(bpy.types.UIList):
 		extra_lines = len(eval(item.text)) if item.text else 0
 		return base_height + extra_lines * 20  # assuming 20 pixels per line
 	'''
+
 	def draw_item(self, context, layout, data, item, icon, active_data, active_propname):
 		el_type_dict = {"FACE": "faces", "EDGE": "edges", "VERT": "vertices"}
 		color_icons_dict = {"[WARNING]" : "STRIP_COLOR_03", "[FAILED]" : "STRIP_COLOR_01", "[SUCCESS]" : "STRIP_COLOR_04"} # type: ignore
 		icon_value = color_icons_dict[item.success]
 		grid = layout.grid_flow(row_major=True, columns=1, align=True)
-
+		
 		header_row = grid.row(align=True)
 		header_row.alignment = 'EXPAND'
 
-		# заголовок с типом проверки
 		# стрелка скрытия содержимого
 		if item.success != "[SUCCESS]":
 			header_row.prop(item, "hide_state", text="", icon="DISCLOSURE_TRI_RIGHT" if item.hide_state else "DISCLOSURE_TRI_DOWN", emboss=False)
@@ -130,8 +133,12 @@ def set_check_row(self, context, main_column, item):
 	#check_column.separator()
 	check_column.prop(item, "state", text="")
 
+
 class CheckListWindowPanel(bpy.types.Panel):
-	'''Основное окно аддона'''
+	'''
+	Основное окно аддона
+	'''
+
 	bl_idname = "OBJECT_PT_check_list_window"
 	bl_label = "Model Validator"
 	bl_space_type = 'VIEW_3D'
@@ -145,6 +152,7 @@ class CheckListWindowPanel(bpy.types.Panel):
 
 	def draw(self, context):
 		layout = self.layout
+		
 		# нижние кнопки левой колонки
 		buttons_row = layout.row(align=True)
 		buttons_row.alignment = 'CENTER'
@@ -164,8 +172,12 @@ class CheckListWindowPanel(bpy.types.Panel):
 				if item.group_state and checkbox.group == item.group:
 					set_check_row(self, context, layout, checkbox)
 
+
 class ReportListPanel(bpy.types.Panel):
-	'''Окно с отчетом'''
+	'''
+	Окно с отчетом
+	'''
+
 	bl_idname = "OBJECT_PT_report_list"
 	bl_label = "Report List"
 	bl_space_type = 'VIEW_3D'
@@ -213,7 +225,7 @@ class ReportListPanel(bpy.types.Panel):
 		
 		# Список найденных проблем
 		list_row = layout.row(align=True)
-
+		
 		list_row.template_list("ISSUES_UL_ReportList",
 								list_id="sosiska",
 								dataptr=bpy.context.scene, propname="formate_report",
@@ -231,7 +243,10 @@ class ReportListPanel(bpy.types.Panel):
 
 
 class SaveDialog(bpy.types.Operator):
-	'''Требование сохраниться если сцена не сохранена'''
+	'''
+	Требование сохраниться если сцена не сохранена
+	'''
+
 	bl_idname = "object.save_dialog"
 	bl_label = "Save"
 	bl_description = "Save scene"
@@ -248,8 +263,12 @@ class SaveDialog(bpy.types.Operator):
 		#return self.invoke_confirm(context, event)
 		return context.window_manager.invoke_confirm(self, event=event, icon="WARNING", confirm_text="Save", title="Scene is not saved!", message="Save scene?")
 
+
 class FinishDialog(bpy.types.Operator):
-	'''Финальный диалог с информацией о полном тайминге'''
+	'''
+	Финальный диалог с информацией о полном тайминге
+	'''
+
 	bl_idname = "object.finish_dialog"
 	bl_label = "Done!"
 	bl_description = "Finish dialog with spent time"

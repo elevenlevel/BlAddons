@@ -2,12 +2,26 @@ import bmesh
 import math
 from ..mv_utilities import *
 
+# Единый источник истины
+MODULE_NAME = "Cross Border"
+MODULE_FOO = "check_cross_border"
+MODULE_GROUP = "uvs"
+MODULE_REPORT = "warning"
+MODULE_INFO = "Проверка UVs объектов на пересечения границ UV"
+
+# Для импорта через importlib
+name = MODULE_NAME
+foo = MODULE_FOO
+group = MODULE_GROUP
+report = MODULE_REPORT
+info = MODULE_INFO
+
 def __set_foo_attributes(func):
-    func.name = "Cross Border"
-    func.foo = "check_cross_border"
-    func.group = "uvs"
-    func.report = "warning"
-    func.info = "Проверка UVs объектов на пересечения границ UV"
+    func.name = MODULE_NAME
+    func.foo = MODULE_FOO
+    func.group = MODULE_GROUP
+    func.report = MODULE_REPORT
+    func.info = MODULE_INFO
     return func
 
 @__set_foo_attributes

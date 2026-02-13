@@ -39,5 +39,5 @@ for filename in os.listdir(current_dir):
                 'info': getattr(module, 'info', None)
             }
 
-# Обязательно объявите __all__
+# Обязательно объявляем __all__
 __all__ = ['checkbox_list']

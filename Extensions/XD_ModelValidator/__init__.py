@@ -68,7 +68,10 @@ class AddonAttributes(bpy.types.PropertyGroup):
 
 @persistent 
 def pre_expand_checkboxes(scene):
-	'''Первоначальная настройка аддона'''
+	'''
+	Инициализация аддона
+	'''
+
 	# ЧТОБЫ ОЧИСТИТЬ СПИСОК ЧЕКБОКСОВ НУЖНО РАСКОММЕНТИРОВАТЬ СТРОКИ НИЖЕ
 	#getattr(bpy.context.scene.mv_attributes, "checkboxes").clear()
 
@@ -108,6 +111,7 @@ def pre_expand_checkboxes(scene):
 					ch_box.warning_type = False
 	
 	update_checkboxes_count()
+	print(len(initial_checkboxes), len(checkbox_list))
 
 
 class SelectBad(bpy.types.Operator):
@@ -391,6 +395,7 @@ class RunChecksOnSelected(bpy.types.Operator):
 
 @spent_timer
 def start_single_check(context, check_type):
+	print(f'checkbox_list: {checkbox_list}')
 	for check_name, items in checkbox_list.items():
 		if check_name == check_type:
 			method_name = items["foo"]
