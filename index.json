@@ -100,12 +100,12 @@
       "copyright": [
         "2026 Extreme Developers"
       ],
-      "version": "0.0.5",
+      "version": "0.1.1",
       "id": "XD_LayeredMaterialAssembler",
       "blender_version_min": "5.0.0",
-      "archive_size": 13533,
+      "archive_size": 13534,
       "blender_version_max": "20.1.0",
-      "archive_hash": "sha256:afb215382e0c15d460d27657c8a5640ea7ec1549b882366a0a6c360cd8530241",
+      "archive_hash": "sha256:ff0d4e252fd18df57b717b32a3f9f07dadd41fae595e418b2be8a5a5f032452d",
       "tags": [
         "XDevs",
         "BAKER"
@@ -117,7 +117,7 @@
         "/*.zip"
       ],
       "type": "add-on",
-      "archive_url": "https://github.com/elevenlevel/BlAddons/releases/download/release-20260213051557/XD_LayeredMaterialAssembler_0.0.5-blender-5.0.0.zip",
+      "archive_url": "https://github.com/elevenlevel/BlAddons/releases/download/release-20260213080929/XD_LayeredMaterialAssembler_0.1.1-blender-5.0.0.zip",
       "schema_version": "1.0.0"
     }
   ]
