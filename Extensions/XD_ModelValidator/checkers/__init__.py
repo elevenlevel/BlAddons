@@ -10,15 +10,17 @@ checkbox_list = {} # словарь свойств модулей
 
 # импорт модулей из папки checkers
 current_dir = path.dirname(__file__)
-# for file in listdir(current_dir):
-#     if file.endswith('.py') and file != '__init__.py' and "!" not in file:
-#         name = file[:-3]
-#         exec(f"from .{name} import {name}")
 
-#         checkbox_list[globals()[name].name] = { "foo":globals()[name].foo,
-#                                                 "group":globals()[name].group,
-#                                                 "report":globals()[name].report,
-#                                                 "info":globals()[name].info}
+for file in listdir(current_dir):
+    if file.endswith('.py') and file != '__init__.py' and "!" not in file:
+        name = file[:-3]
+        exec(f"from .{name} import {name}")
+
+        checkbox_list[globals()[name].name] = { "foo":globals()[name].foo,
+                                                "group":globals()[name].group,
+                                                "report":globals()[name].report,
+                                                "function": globals()[name],
+                                                "info":globals()[name].info}
 
 for filename in os.listdir(current_dir):
     if (filename.endswith('.py') and 
@@ -29,7 +31,8 @@ for filename in os.listdir(current_dir):
         
         # Импортируем модуль через importlib (безопасно)
         module = importlib.import_module(f'.{module_name}', package=__package__)
-        
+        # print(exec(f"from .{name} import {name}"))
+        # break
         # Добавляем в checkbox_list, если у модуля есть атрибут name
         if hasattr(module, 'name'):
             checkbox_list[module.name] = {

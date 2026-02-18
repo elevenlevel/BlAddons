@@ -74,18 +74,18 @@ def pre_expand_checkboxes(scene):
 
 	# ЧТОБЫ ОЧИСТИТЬ СПИСОК ЧЕКБОКСОВ НУЖНО РАСКОММЕНТИРОВАТЬ СТРОКИ НИЖЕ
 	#getattr(bpy.context.scene.mv_attributes, "checkboxes").clear()
-
 	# настройка аддона при первой инициализации
 	initial_checkboxes = bpy.context.scene.mv_attributes.checkboxes
 
 	# создание чекбоксов из словаря
 	if len(initial_checkboxes) != len(checkbox_list):
 		initial_checkboxes.clear()
-
-		for item in checkbox_list:
+		
+		for item, value in checkbox_list.items():
+			# print(value['group'])
 			new_checkbox = initial_checkboxes.add()
 			new_checkbox.name = item
-			new_checkbox.group = checkbox_list[item]["group"]
+			new_checkbox.group = value['group']
 			new_checkbox.group_state = False
 			new_checkbox.state = False
 			new_checkbox.color = 'GRAY'
@@ -395,11 +395,12 @@ class RunChecksOnSelected(bpy.types.Operator):
 
 @spent_timer
 def start_single_check(context, check_type):
-	print(f'checkbox_list: {checkbox_list}')
 	for check_name, items in checkbox_list.items():
 		if check_name == check_type:
 			method_name = items["foo"]
-			method = globals()[method_name]
+			# print(f'method_name: {method_name}')
+			# method = globals()[method_name]
+			method = items["function"]
 			method(context, check_type)
 	return check_type
 

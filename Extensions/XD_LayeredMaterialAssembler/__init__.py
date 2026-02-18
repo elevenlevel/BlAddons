@@ -1,3 +1,15 @@
+# Smoothness в альфе albedo
+# smoothness multiplier оставить
+# рассчет нормалки убрать
+# roughness убрать
+# normal.b - это окклюзия
+# normal.a - это высота
+
+# убрать смуснесс. Сделать вывод альюедо и альбедо альфа
+# убрать нормал и хейт. Сделать геометри и геометри альфа
+
+
+
 import bpy
 from .ls_panels import *
 from .ls_utils import *
@@ -14,7 +26,7 @@ class Layers(bpy.types.PropertyGroup):
 										default=(1.0, 1.0, 1.0, 1.0),
 										description="Цвет с альфа‑каналом") # type: ignore
 	exposure : bpy.props.FloatProperty() # type: ignore
-	smoothnessMultiplier : bpy.props.FloatProperty() # type: ignore
+	smoothness_multiplier : bpy.props.FloatProperty() # type: ignore
 	metallic : bpy.props.FloatProperty() # type: ignore
 
 

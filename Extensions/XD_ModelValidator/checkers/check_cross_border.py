@@ -10,11 +10,11 @@ MODULE_REPORT = "warning"
 MODULE_INFO = "Проверка UVs объектов на пересечения границ UV"
 
 # Для импорта через importlib
-name = MODULE_NAME
-foo = MODULE_FOO
-group = MODULE_GROUP
-report = MODULE_REPORT
-info = MODULE_INFO
+# name = MODULE_NAME
+# foo = MODULE_FOO
+# group = MODULE_GROUP
+# report = MODULE_REPORT
+# info = MODULE_INFO
 
 def __set_foo_attributes(func):
     func.name = MODULE_NAME

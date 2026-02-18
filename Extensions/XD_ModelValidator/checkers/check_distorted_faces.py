@@ -1,12 +1,26 @@
 import bmesh
 from ..mv_utilities import *
 
+# Единый источник истины
+MODULE_NAME = "Distorted Faces"
+MODULE_FOO = "check_distorted_faces"
+MODULE_GROUP = "topology"
+MODULE_REPORT = "warning"
+MODULE_INFO = "Проверка на наличие искаженных полигонов"
+
+# Для импорта через importlib
+# foo = MODULE_FOO
+# name = MODULE_NAME
+# group = MODULE_GROUP
+# report = MODULE_REPORT
+# info = MODULE_INFO
+
 def __set_foo_attributes(func):
-    func.foo = "check_distorted_faces"
-    func.name = "Distorted Faces"
-    func.group = "topology"
-    func.report = "warning"
-    func.info = "Проверка на наличие искаженных полигонов"
+    func.foo = MODULE_FOO
+    func.name = MODULE_NAME
+    func.group = MODULE_GROUP
+    func.report = MODULE_REPORT
+    func.info = MODULE_INFO
     return func
 
 @__set_foo_attributes
