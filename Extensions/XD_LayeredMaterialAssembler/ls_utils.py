@@ -232,6 +232,7 @@ def get_img_file(layer):
 
     if os.path.exists(layer):
         img = bpy.data.images.load(layer, check_existing=True)
+        img.alpha_mode = 'CHANNEL_PACKED'
         return img, None
     else:
         return None, "NO_TEXTURE"  # Флаг ошибки
@@ -389,8 +390,7 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
         
         main_group_output_albedo_rgb_socket = main_group_tree.interface.new_socket(name='ALBEDO_RGB', in_out='OUTPUT', socket_type='NodeSocketColor')
         main_group_output_albedo_a_socket = main_group_tree.interface.new_socket(name='ALBEDO_A', in_out='OUTPUT', socket_type='NodeSocketFloat')
-        main_group_output_geometry_xy_socket = main_group_tree.interface.new_socket(name='GEOMETRY_XY', in_out='OUTPUT', socket_type='NodeSocketVector')
-        main_group_output_geometry_z_socket = main_group_tree.interface.new_socket(name='GEOMETRY_Z', in_out='OUTPUT', socket_type='NodeSocketFloat')
+        main_group_output_geometry_xyz_socket = main_group_tree.interface.new_socket(name='GEOMETRY_XYZ', in_out='OUTPUT', socket_type='NodeSocketColor')
         main_group_output_geometry_a_socket = main_group_tree.interface.new_socket(name='GEOMETRY_A', in_out='OUTPUT', socket_type='NodeSocketFloat')
         main_group_output_smoothness_multiplier_socket = main_group_tree.interface.new_socket(name='SMOOTHNESS_MULTIPLIER', in_out='OUTPUT', socket_type='NodeSocketFloat')
         main_group_output_metallic_socket = main_group_tree.interface.new_socket(name='METALLIC', in_out='OUTPUT', socket_type='NodeSocketFloat')
@@ -426,8 +426,7 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
             :param layer_name: Имя слоя (Albedo, Geometry и т.д.)
             :param output_type: Тип выхода (цвет, вектор и т.д.)
             """
-            
-            # layer_name = layer_name.title()
+
             layer_group_name = layer_name + '_LAYERS_GROUP'
             
             # Добавляем группу
@@ -445,14 +444,8 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
             group_node.node_tree = group_tree  # Привязываем созданное дерево группы
             
             # Добавляем входные/выходные ноды albedo группы
-            albedo_group_input = add_single_node(group_tree, 'NodeGroupInput', 0, 0)
-            albedo_group_output = add_single_node(group_tree, 'NodeGroupOutput', 1000, 0)
-            
-            # Добавляем входные сокеты
-            albedo_group_input_uv_socket = group_tree.interface.new_socket(name='uv', in_out='INPUT', socket_type='NodeSocketVector')
-            
-            # подключаем вход ноды albedo group связями
-            base_group_tree.links.new(main_group_input.outputs['uv'], group_node.inputs['uv'])
+            current_group_input = add_single_node(group_tree, 'NodeGroupInput', 0, 0)
+            current_group_output = add_single_node(group_tree, 'NodeGroupOutput', 1000, 0)
             
             layers = main_group_node.shader_links.layers
             
@@ -463,10 +456,15 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
             if layer_name == 'ALBEDO':
                 albedo_rgb_outputs, albedo_a_outputs = [], []
 
+                # Добавляем входной сокет uv
+                current_group_input_uv_socket = group_tree.interface.new_socket(name='uv', in_out='INPUT', socket_type='NodeSocketVector')
+
                 for i, layer in enumerate(layers):
                     numered_layer_name = layer_name+str(i)
+
                     output0_name = f'ALBEDO_RGB_LAYER{i}'
                     output1_name = f'ALBEDO_A_LAYER{i}'
+
                     albedo_output_socket = group_tree.interface.new_socket(name=output0_name, in_out='OUTPUT', socket_type=output_type)
                     smoothness_output_socket = group_tree.interface.new_socket(name=output1_name, in_out='OUTPUT', socket_type='NodeSocketFloat')
                     
@@ -478,49 +476,53 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
                     image, error = get_img_file(layer.albedo)
                     
                     albedo_layer_node.image = image
-                    # albedo_layer_node.interpolation = 'Closest'
                     
-                    group_tree.links.new(albedo_group_input.outputs['uv'], albedo_layer_node.inputs['Vector'])
+                    group_tree.links.new(current_group_input.outputs['uv'], albedo_layer_node.inputs['Vector'])
                     
                     group_tree.links.new(albedo_layer_node.outputs['Color'], group_tree.nodes['Group Output'].inputs[output0_name])
                     group_tree.links.new(albedo_layer_node.outputs['Alpha'], group_tree.nodes['Group Output'].inputs[output1_name])
                 
                 outputs_list['ALBEDO_RGB'] = albedo_rgb_outputs
                 outputs_list['ALBEDO_A'] = albedo_a_outputs
+                
+                # подключаем вход ноды albedo group связями
+                base_group_tree.links.new(main_group_input.outputs['uv'], group_node.inputs['uv'])
             
             ### GEOMETRY
             elif layer_name == 'GEOMETRY':
-                geometry_xy_outputs, geometry_z_outputs, geometry_a_outputs = [], [], []
+                geometry_xyz_outputs, geometry_a_outputs = [], []
+
+                # Добавляем входной сокет uv
+                current_group_input_uv_socket = group_tree.interface.new_socket(name='uv', in_out='INPUT', socket_type='NodeSocketVector')
                 
                 for i, layer in enumerate(layers):
                     numered_layer_name = layer_name+str(i)
-                    output0_name = f'GEOMERY_XY_LAYER{i}'
-                    output1_name = f'GEOMETRY_Z_LAYER{i}'
-                    output2_name = f'GEOMETRY_A_LAYER{i}'
-                    geometry_xy_output_socket = group_tree.interface.new_socket(name=output0_name, in_out='OUTPUT', socket_type=output_type)
-                    geometry_z_output_socket = group_tree.interface.new_socket(name=output1_name, in_out='OUTPUT', socket_type='NodeSocketFloat')
-                    geometry_a_output_socket = group_tree.interface.new_socket(name=output2_name, in_out='OUTPUT', socket_type='NodeSocketFloat')
+
+                    output0_name = f'GEOMERY_XYZ_LAYER{i}'
+                    output1_name = f'GEOMETRY_A_LAYER{i}'
+
+                    geometry_xyz_output_socket = group_tree.interface.new_socket(name=output0_name, in_out='OUTPUT', socket_type=output_type)
+                    geometry_a_output_socket = group_tree.interface.new_socket(name=output1_name, in_out='OUTPUT', socket_type='NodeSocketFloat')
                     
-                    geometry_xy_outputs.append(geometry_xy_output_socket)
-                    geometry_z_outputs.append(geometry_z_output_socket)
+                    geometry_xyz_outputs.append(geometry_xyz_output_socket)
                     geometry_a_outputs.append(geometry_a_output_socket)
                     
                     image_layer_node = add_single_node(group_tree, 'ShaderNodeTexImage', 300, 300 * -i)
-                    z_separate_node = add_single_node(group_tree, 'ShaderNodeSeparateXYZ', 600, 300 * -i - 20)
                     
                     image, error = get_img_file(layer.geometry)
                     
                     image_layer_node.image = image
                     image_layer_node.image.colorspace_settings.name = 'Non-Color'
-                    
-                    group_tree.links.new(image_layer_node.outputs['Color'], z_separate_node.inputs['Vector'])
-                    
-                    group_tree.links.new(image_layer_node.outputs['Color'], group_tree.nodes['Group Output'].inputs[output0_name]) # ВЫВОД
-                    group_tree.links.new(z_separate_node.outputs['Z'], group_tree.nodes['Group Output'].inputs[output1_name]) # ВЫВОД
                 
-                outputs_list['GEOMETRY_XY'] = geometry_xy_outputs
-                outputs_list['GEOMETRY_Z'] = geometry_z_outputs
+                    group_tree.links.new(current_group_input.outputs['uv'], image_layer_node.inputs['Vector']) # ВВОД
+                    group_tree.links.new(image_layer_node.outputs['Color'], group_tree.nodes['Group Output'].inputs[output0_name]) # ВЫВОД
+                    group_tree.links.new(image_layer_node.outputs['Alpha'], group_tree.nodes['Group Output'].inputs[output1_name]) # ВЫВОД
+                
+                outputs_list['GEOMETRY_XYZ'] = geometry_xyz_outputs
                 outputs_list['GEOMETRY_A'] = geometry_a_outputs
+                
+                # подключаем вход ноды albedo group связями
+                base_group_tree.links.new(main_group_input.outputs['uv'], group_node.inputs['uv'])
 
             ### TINT
             elif layer_name == 'TINT':
@@ -528,6 +530,7 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
 
                 for i, layer in enumerate(layers):
                     numered_layer_name = layer_name+str(i)
+
                     group_output_socket = group_tree.interface.new_socket(name=f'LAYER{i}', in_out='OUTPUT', socket_type=output_type)
                     tint_outputs.append(group_output_socket)
                     
@@ -544,6 +547,7 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
                 exposure_outputs = []
                 for i, layer in enumerate(layers):
                     numered_layer_name = layer_name+str(i)
+
                     group_output_socket = group_tree.interface.new_socket(name=f'LAYER{i}', in_out='OUTPUT', socket_type=output_type)
                     exposure_outputs.append(group_output_socket)
                     
@@ -564,6 +568,7 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
 
                 for i, layer in enumerate(layers):
                     numered_layer_name = layer_name+str(i)
+
                     group_output_socket = group_tree.interface.new_socket(name=f'LAYER{i}', in_out='OUTPUT', socket_type=output_type)
                     smoothness_multiplier_outputs.append(group_output_socket)
                     
@@ -581,6 +586,7 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
 
                 for i, layer in enumerate(layers):
                     numered_layer_name = layer_name+str(i)
+                    
                     group_output_socket = group_tree.interface.new_socket(name=f'LAYER{i}', in_out='OUTPUT', socket_type=output_type)
                     metallic_outputs.append(group_output_socket)
                     
@@ -616,8 +622,9 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
             :param master_node: Нода, чьи выходы мы будем выбирать данным свитчером
             :param group_name: Будущее имя текущей ноды-свитчера
             """
+
             group_name = f'SWITCHER_{group_type}'
-            # print(f'len(outputs_list.keys()): {len(outputs_list.keys())}')
+            
             if not active_tree:
                 print("Ошибка: active_tree не указан")
                 return None
@@ -632,7 +639,7 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
             switcher_node.label = group_name
             switcher_node.use_custom_color = True
             switcher_node.color = (0.28, 0.2, 0.3)
-            switcher_node.location = master_node.location + Vector((300.0, 0.0))
+            switcher_node.location = master_node.location + Vector((600.0, 0.0))
             switcher_node.width = 140
             switcher_node.node_tree = main_group_tree  # Привязываем созданное дерево группы
             switcher_node.hide = True
@@ -653,23 +660,19 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
             
             layers_count = 0
             
-            # for i, layer in enumerate(master_node.outputs):
+            # создаем входы по количеству слоев ноды LAYERS
             for i, layer in enumerate(parent_outputs):
-                # print(layer)
                 layers_count += 1
                 switcher_group_input_layer_socket = main_group_tree.interface.new_socket(name=f'LAYER{i}', in_out='INPUT', socket_type='NodeSocketColor')
                 
                 set_socket_value(switcher_node, layer.name, (1.0, 0.0, 0.0, 1.0))
-                
-                # подключаем вход ноды
-                # active_tree.links.new(master_node.outputs[master_node.outputs[i].name], switcher_node.inputs[i+1])
-                active_tree.links.new(master_node.outputs[layer.name], switcher_node.inputs[i+1])
             
             switcher_node_tree = switcher_node.node_tree
 
-            mix_color_nodes_list = []
+            compare_nodes_list = []
             add_vector_nodes_list = []
             i = 0
+            
             for output in switcher_group_input.outputs:
                 if output.name == 'LAYER ID' or output.name == '':
                     continue
@@ -679,92 +682,110 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
                 compare_node = add_single_node(switcher_node_tree, 'ShaderNodeMath', 300, y_loc)
                 compare_node.use_clamp = False
                 compare_node.operation = 'COMPARE'
-                compare_node.inputs[-1].default_value = 0
+                compare_node.inputs[-1].default_value = 0.5
                 compare_node.inputs[1].default_value = i
 
-                mix_color_node = add_single_node(switcher_node_tree, 'ShaderNodeMix', 600, y_loc)
-                mix_color_node.data_type = 'RGBA'
-                mix_color_node.clamp_result = False
-                mix_color_node.clamp_factor = False
-                mix_color_node.inputs['A'].default_value = [0.0, 0.0, 0.0, 0.0]
-                mix_color_nodes_list.append(mix_color_node)
+                multiply_layer_compare_node = add_single_node(switcher_node_tree, 'ShaderNodeVectorMath', 600, y_loc)
+                multiply_layer_compare_node.operation = 'MULTIPLY'
+                compare_nodes_list.append(multiply_layer_compare_node) # ЗАЧЕМ ЭТО???
 
                 switcher_node_tree.links.new(switcher_group_input.outputs['LAYER ID'], compare_node.inputs[0])
-                switcher_node_tree.links.new(switcher_group_input.outputs[f'LAYER{i}'], mix_color_node.inputs['B'])
-                switcher_node_tree.links.new(compare_node.outputs[0], mix_color_node.inputs['Factor'])
+                switcher_node_tree.links.new(switcher_group_input.outputs[f'LAYER{i}'], multiply_layer_compare_node.inputs[0])
+                switcher_node_tree.links.new(compare_node.outputs[0], multiply_layer_compare_node.inputs[1])
 
                 if i<(layers_count-1): # Чтобы создать на одну ноду add_color_node меньше
                     add_vector_node = add_single_node(switcher_node_tree, 'ShaderNodeVectorMath', 900 + i*300, y_loc)
-                    # add_vector_node.data_type = 'RGBA'
                     add_vector_node.operation = 'ADD'
-                    # add_vector_node.clamp_result = False
-                    # add_vector_node.clamp_factor = False
-                    # add_vector_node.inputs['Factor'].default_value = 1.0
                     add_vector_nodes_list.append(add_vector_node)
 
                     # Сдвигаем выходную ноду правее всех нод
                     switcher_group_output.location = [add_vector_node.location[0] + 300, switcher_group_output.location[1]]
                 i+=1
             
-            for i, mix_node in enumerate(mix_color_nodes_list):
+            for i, mix_node in enumerate(compare_nodes_list):
                 if i==0:
-                    switcher_node_tree.links.new(mix_node.outputs['Result'], add_vector_nodes_list[i].inputs[0])
+                    switcher_node_tree.links.new(mix_node.outputs[0], add_vector_nodes_list[i].inputs[0])
                 elif i>0 and i<len(add_vector_nodes_list):
                     switcher_node_tree.links.new(add_vector_nodes_list[i-1].outputs[0], add_vector_nodes_list[i].inputs[0])
-                    switcher_node_tree.links.new(mix_node.outputs['Result'], add_vector_nodes_list[i-1].inputs[1])
+                    switcher_node_tree.links.new(mix_node.outputs[0], add_vector_nodes_list[i-1].inputs[1])
                 elif i==len(add_vector_nodes_list):
-                    switcher_node_tree.links.new(mix_node.outputs['Result'], add_vector_nodes_list[i-1].inputs[1])
+                    switcher_node_tree.links.new(mix_node.outputs[0], add_vector_nodes_list[i-1].inputs[1])
 
 
             switcher_node_tree.links.new(add_vector_nodes_list[-1].outputs[0], switcher_group_output.inputs[0]) # ВЫВОД
             
             return switcher_node
-            
+        
         # исполняем методы
+        first_switcher = None
+        last_switcher = None
+        last_layers_node = None
+
         for layer_name in node_parms:
             socket_type = node_parms[layer_name][0]
-            # layer_name = layer_name.lower()
+
             map_group, outputs_list = create_map_group(node_parms, main_group_tree, layer_name, socket_type)
+            
+            # дополнительно ранжируем layers ноды по вертикали
+            if last_layers_node != None:
+                map_group.location[1] = last_layers_node.location[1] - (len(map_group.outputs) * 30)
+            last_layers_node = map_group
             
             if map_group == {'CANCELLED'}:
                 return {'CANCELLED'}
             
             switchers = []
 
-            if not "SWITCHER" in main_group_tree.nodes:
-                iter = 0
+            for key, value in outputs_list.items():
+                if first_switcher == None:
+                    iter = 0
 
-                for key, value in outputs_list.items():
+                    
                     parent_outputs = value
-                    switcher_group = create_switcher_group(main_group_tree, map_group, "SWITCHER", key, parent_outputs)
+
+                    '''
+                    socket_type = parent_outputs[0].socket_type
                     
-                    switcher_group.location.y -= iter * 100
+                    if socket_type == 'NodeSocketColor' or socket_type == 'NodeSocketVector':
+                        data_type = 'COLOR'
+                    else:
+                        data_type = 'FLOAT'
+                    '''
+
+                    first_switcher = create_switcher_group(main_group_tree, map_group, "SWITCHER", key, parent_outputs)
+                    first_switcher.location.y -= iter * 100
                     
-                    switchers.append(switcher_group)
+                    switchers.append(first_switcher)
+                    
+                    last_switcher = first_switcher
 
                     iter += 1
-            else:
-                switcher_group = main_group_tree.nodes["SWITCHER"]
-                switcher_group_tree = switcher_group.node_tree
+                else:
+                    if first_switcher == None:
+                        return
+                    
+                    first_switcher_copy = add_single_node(main_group_tree, 'ShaderNodeGroup', 0, 0)
+                    
+                    first_switcher_copy.name = key
+                    first_switcher_copy.label = "SWITCHER" + "_" + key
+                    first_switcher_copy.use_custom_color = True
+                    first_switcher_copy.color = (0.16, 0.18, 0.28)
+                    first_switcher_copy.location = Vector((map_group.location[0] + 600.0, last_switcher.location[1] - 100.0))
+                    first_switcher_copy.width = 140
+                    first_switcher_copy.node_tree = first_switcher.node_tree
+                    first_switcher_copy.hide = True
+                    
+                    # подключаем ID из главного входа
+                    main_group_tree.links.new(main_group_tree.nodes['Group Input'].outputs[0], first_switcher_copy.inputs[0])
+                    
+                    switchers.append(first_switcher_copy)
+
+                    last_switcher = first_switcher_copy
                 
-                switcher_group_copy = add_single_node(main_group_tree, 'ShaderNodeGroup', 0, 0)
-                
-                switcher_group_copy.name = layer_name
-                switcher_group_copy.label = "SWITCHER" + "_" + layer_name
-                switcher_group_copy.use_custom_color = True
-                switcher_group_copy.color = (0.28, 0.2, 0.3)
-                switcher_group_copy.location = map_group.location + Vector((300.0, 0.0))
-                switcher_group_copy.width = 140
-                switcher_group_copy.node_tree = switcher_group_tree
-                
-                main_group_tree.links.new(main_group_tree.nodes['Group Input'].outputs[0], switcher_group_copy.inputs[0])
-                
-                for i, input in enumerate(switcher_group.inputs):
-                    if i < len(switcher_group_copy.inputs) - 1:
-                        main_group_tree.links.new(map_group.outputs[i], switcher_group_copy.inputs[i+1])
-                
-                switcher_group_copy.update()
-                switchers.append(switcher_group_copy)
+                # пробрасываем линки между нодой LAYERS и нодой SWITCHER
+                for i, input in enumerate(value):
+                    main_group_tree.links.new(map_group.outputs[input.name], last_switcher.inputs[i+1])
+
             
             def connect_switcher2output(switchers, output):
                 if switchers == []:
@@ -776,15 +797,6 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
 
                     if switcher_type in output.inputs:
                         main_group_tree.links.new(switcher_output, output.inputs[switcher_type])
-                    
-                    # if switcher_type == "Smoothness":
-                    #     invert_node = add_single_node(main_group_tree, 'ShaderNodeMath', 0, 0)
-                    #     invert_node.operation = 'SUBTRACT'
-                    #     invert_node.inputs[0].default_value = 1
-                    #     invert_node.location = [switcher.location[0] + 300, switcher.location[1]]
-
-                    #     main_group_tree.links.new(switcher_output, invert_node.inputs[1])
-                    #     main_group_tree.links.new(invert_node.outputs['Value'], output.inputs['Roughness'])
                 return
                 
             connect_switcher2output(switchers, main_group_output)
@@ -809,7 +821,6 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
             for link in main_group_tree.links:
                 if link.from_node.label == 'SWITCHER_ALBEDO_RGB' and link.to_node.name == 'Group Output':
                     existing_link = link
-                    print(f'existing_link: {existing_link}')
                     break
                     
             if existing_link:
@@ -835,7 +846,7 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
                 mixer_exposure_input = mixer_group_tree.interface.new_socket(name='EXPOSURE', in_out='INPUT', socket_type='NodeSocketFloat')
 
                 mixer_albedo_output = mixer_group_tree.interface.new_socket(name='ALBEDO_RGB', in_out='OUTPUT', socket_type='NodeSocketColor')
-                # mixer_smoothness_output = mixer_group_tree.interface.new_socket(name='Smoothness', in_out='OUTPUT', socket_type='NodeSocketFloat')
+                
                 set_socket_value(mixer_group_node, 'ALBEDO_RGB', (1.0, 1.0, 1.0, 1.0))
                 set_socket_value(mixer_group_node, 'TINT', (1.0, 1.0, 1.0, 1.0))
                 set_socket_value(mixer_group_node, 'EXPOSURE', 1.0)
@@ -845,40 +856,30 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
                 
                 # Пробрасываем новые линки
                 main_group_tree.links.new(albedo_switcher_node.outputs['RESULT'], mixer_group_node.inputs['ALBEDO_RGB'])
-                # main_group_tree.links.new(smoothness_switcher_node.outputs['result'], mixer_group_node.inputs['Albedo A'])
-                # main_group_tree.links.new(normal_switcher_node.outputs['result'], mixer_group_node.inputs['Geometry'])
-                # main_group_tree.links.new(occlusion_switcher_node.outputs['result'], mixer_group_node.inputs['Geometry A'])
                 main_group_tree.links.new(tint_switcher_node.outputs['RESULT'], mixer_group_node.inputs['TINT'])
                 main_group_tree.links.new(exposure_switcher_node.outputs['RESULT'], mixer_group_node.inputs['EXPOSURE'])
 
                 main_group_tree.links.new(mixer_group_node.outputs['ALBEDO_RGB'], main_group_output.inputs['ALBEDO_RGB'])
-                # main_group_tree.links.new(mixer_group_node.outputs['Smoothness'], main_group_output.inputs['Smoothness'])
-                
                 
                 ### СОЗДАЕМ СТРУКТУРУ ВНУТРИ МИКСЕРА
                 mixer_input_node = add_single_node(mixer_group_tree, 'NodeGroupInput', 0, 0)
                 mixer_output_node = add_single_node(mixer_group_tree, 'NodeGroupOutput', 900, 0)
 
-                tint_multiply_node = add_single_node(mixer_group_tree, 'ShaderNodeMix', 300, 0)
-                exposure_multiply_node = add_single_node(mixer_group_tree, 'ShaderNodeMix', 600, 0)
+                tint_multiply_node = add_single_node(mixer_group_tree, 'ShaderNodeVectorMath', 300, 0)
+                exposure_exponent_node = add_single_node(mixer_group_tree, 'ShaderNodeMath', 300, -200)
+                tint_exposure_multiply_node = add_single_node(mixer_group_tree, 'ShaderNodeVectorMath', 600, 0)
 
-                tint_multiply_node.data_type = 'RGBA'
-                exposure_multiply_node.data_type = 'RGBA'
-                tint_multiply_node.blend_type = 'MULTIPLY'
-                exposure_multiply_node.blend_type = 'MULTIPLY'
-                tint_multiply_node.inputs['Factor'].default_value = 1.0
-                exposure_multiply_node.inputs['Factor'].default_value = 1.0
-                tint_multiply_node.inputs['A'].name = 'ALBEDO_RGB'
-                exposure_multiply_node.inputs['A'].name = 'ALBEDO_RGB'
-                tint_multiply_node.inputs['B'].name = 'TINT'
-                exposure_multiply_node.inputs['B'].name = 'EXPOSURE'
-                
+                tint_multiply_node.operation = "MULTIPLY"
+                exposure_exponent_node.operation = 'EXPONENT'
+                tint_exposure_multiply_node.operation = "MULTIPLY"
+
                 # Пробрасываем линки
-                mixer_group_tree.links.new(mixer_input_node.outputs['ALBEDO_RGB'], tint_multiply_node.inputs['ALBEDO_RGB'])
-                mixer_group_tree.links.new(mixer_input_node.outputs['TINT'], tint_multiply_node.inputs['TINT'])
-                mixer_group_tree.links.new(tint_multiply_node.outputs['Result'], exposure_multiply_node.inputs['ALBEDO_RGB'])
-                mixer_group_tree.links.new(mixer_input_node.outputs['EXPOSURE'], exposure_multiply_node.inputs['EXPOSURE'])
-                mixer_group_tree.links.new(exposure_multiply_node.outputs['Result'], mixer_output_node.inputs['ALBEDO_RGB'])
+                mixer_group_tree.links.new(mixer_input_node.outputs['ALBEDO_RGB'], tint_multiply_node.inputs[0])
+                mixer_group_tree.links.new(mixer_input_node.outputs['TINT'], tint_multiply_node.inputs[1])
+                mixer_group_tree.links.new(mixer_input_node.outputs['EXPOSURE'], exposure_exponent_node.inputs[0])
+                mixer_group_tree.links.new(tint_multiply_node.outputs[0], tint_exposure_multiply_node.inputs[0])
+                mixer_group_tree.links.new(exposure_exponent_node.outputs[0], tint_exposure_multiply_node.inputs[1])
+                mixer_group_tree.links.new(tint_exposure_multiply_node.outputs[0], mixer_output_node.inputs['ALBEDO_RGB'])
                 
         add_albedo_tint_exposure_mixer(main_group_tree)
         
