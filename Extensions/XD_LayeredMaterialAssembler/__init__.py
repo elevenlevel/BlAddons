@@ -9,7 +9,6 @@
 # убрать нормал и хейт. Сделать геометри и геометри альфа
 
 
-
 import bpy
 from .ls_panels import *
 from .ls_utils import *

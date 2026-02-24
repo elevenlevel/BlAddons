@@ -711,7 +711,6 @@ def construct_group_node(active_tree: bpy.types.ShaderNodeTree,
                 elif i==len(add_vector_nodes_list):
                     switcher_node_tree.links.new(mix_node.outputs[0], add_vector_nodes_list[i-1].inputs[1])
 
-
             switcher_node_tree.links.new(add_vector_nodes_list[-1].outputs[0], switcher_group_output.inputs[0]) # ВЫВОД
             
             return switcher_node
