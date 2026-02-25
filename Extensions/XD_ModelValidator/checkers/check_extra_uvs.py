@@ -1,16 +1,23 @@
 from ..mv_utilities import *
 
+# Единый источник истины
+MODULE_NAME = "Extra UVs"
+MODULE_FOO = "check_extra_uvs"
+MODULE_GROUP = "uvs"
+MODULE_REPORT = "warning"
+MODULE_INFO = "Если объект имеет больше 2х uv атрибутов"
+
 def __set_foo_attributes(func):
-    func.name = "Extra UVs"
-    func.foo = "check_extra_uvs"
-    func.group = "uvs"
-    func.report = "warning"
-    func.info = "Если объект имеет больше 2х uv атрибутов"
+    func.name = MODULE_NAME
+    func.foo = MODULE_FOO
+    func.group = MODULE_GROUP
+    func.report = MODULE_REPORT
+    func.info = MODULE_INFO
     return func
 
 @__set_foo_attributes
 @rest_editor_state
-def check_extra_uvs(context, check_type, success = "[SUCCESS]"):
+def check_extra_uvs(context, check_type, success="[SUCCESS]"):
     checked_objects = {} # [object.name: [bad_faces[], "Faces"]]
 
     for object in select_check_entities("objects"):

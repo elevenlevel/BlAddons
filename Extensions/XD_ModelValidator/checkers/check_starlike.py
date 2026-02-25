@@ -1,12 +1,18 @@
 import bmesh
 from ..mv_utilities import *
 
+MODULE_NAME = "Starlike Points"
+MODULE_FOO = "check_starlike"
+MODULE_GROUP = "topology"
+MODULE_REPORT = "warning"
+MODULE_INFO = "Когда в одну точку сходятся больше 4 ребер"
+
 def __set_foo_attributes(func):
-    func.name = "Starlike Points"
-    func.foo = "check_starlike"
-    func.group = "topology"
-    func.report = "warning"
-    func.info = "Когда в одну точку сходятся больше 4 ребер"
+    func.name = MODULE_NAME
+    func.foo = MODULE_FOO
+    func.group = MODULE_GROUP
+    func.report = MODULE_REPORT
+    func.info = MODULE_INFO
     return func
 
 @__set_foo_attributes

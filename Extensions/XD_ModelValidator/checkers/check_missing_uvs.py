@@ -1,11 +1,17 @@
 from ..mv_utilities import *
 
+MODULE_NAME = "Missing UVs"
+MODULE_FOO = "check_missing_uvs"
+MODULE_GROUP = "uvs"
+MODULE_REPORT = "warning"
+MODULE_INFO = "Если объект не имеет uv атрибута"
+
 def __set_foo_attributes(func):
-    func.name = "Missing UVs"
-    func.foo = "check_missing_uvs"
-    func.group = "uvs"
-    func.report = "warning"
-    func.info = "Если объект не имеет uv атрибута"
+    func.name = MODULE_NAME
+    func.foo = MODULE_FOO
+    func.group = MODULE_GROUP
+    func.report = MODULE_REPORT
+    func.info = MODULE_INFO
     return func
 
 @__set_foo_attributes

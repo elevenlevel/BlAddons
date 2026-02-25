@@ -1,12 +1,18 @@
 import bmesh
 from .. mv_utilities import *
 
+MODULE_NAME = "Non Manifold Edges"
+MODULE_FOO = "check_non_manifold_edges"
+MODULE_GROUP = "topology"
+MODULE_REPORT = "failed"
+MODULE_INFO = "Если ребро имеет больше двух полигонов"
+
 def __set_foo_attributes(func):
-    func.name = "Non Manifold Edges"
-    func.foo = "check_non_manifold_edges"
-    func.group = "topology"
-    func.report = "failed"
-    func.info = "Если ребро имеет больше двух полигонов"
+    func.name = MODULE_NAME
+    func.foo = MODULE_FOO
+    func.group = MODULE_GROUP
+    func.report = MODULE_REPORT
+    func.info = MODULE_INFO
     return func
 
 @__set_foo_attributes

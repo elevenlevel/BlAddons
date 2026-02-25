@@ -2,12 +2,18 @@ import bmesh
 import mathutils
 from ..mv_utilities import *
 
+MODULE_NAME = "Overlapping UVs (slow)"
+MODULE_FOO = "check_overlapping_uvs"
+MODULE_GROUP = "uvs"
+MODULE_REPORT = "warning"
+MODULE_INFO = "Проверка на перекрытие одних uv полигонов другими"
+
 def __set_foo_attributes(func):
-    func.name = "Overlapping UVs (slow)"
-    func.foo = "check_overlapping_uvs"
-    func.group = "uvs"
-    func.report = "warning"
-    func.info = "Проверка на перекрытие одних uv полигонов другими"
+    func.name = MODULE_NAME
+    func.foo = MODULE_FOO
+    func.group = MODULE_GROUP
+    func.report = MODULE_REPORT
+    func.info = MODULE_INFO
     return func
 
 @__set_foo_attributes

@@ -257,7 +257,7 @@ class RunCheckboxGroup(bpy.types.Operator):
 		context.scene.mv_attributes.progress_factor = 0.0
 
 		# отображение диалогового окна
-		if time.time() - start_time > 0.5: # отображать диалог через 0.5 попугаев
+		if time.time() - start_time > 1.0: # отображать диалог через 1.0 попугаев
 			bpy.ops.object.finish_dialog('INVOKE_DEFAULT')
 		return {'FINISHED'}
 

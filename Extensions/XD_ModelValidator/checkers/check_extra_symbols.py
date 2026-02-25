@@ -1,11 +1,18 @@
 from ..mv_utilities import *
 
+# Единый источник истины
+MODULE_NAME = "Extra Symbols"
+MODULE_FOO = "check_extra_symbols"
+MODULE_GROUP = "naming"
+MODULE_REPORT = "warning"
+MODULE_INFO = "Проверка на всякие непонятные символы в имени"
+
 def __set_foo_attributes(func):
-    func.name = "Extra Symbols"
-    func.foo = "check_extra_symbols"
-    func.group = "naming"
-    func.report = "warning"
-    func.info = "Проверка на всякие непонятные символы в имени"
+    func.name = MODULE_NAME
+    func.foo = MODULE_FOO
+    func.group = MODULE_GROUP
+    func.report = MODULE_REPORT
+    func.info = MODULE_INFO
     return func
 
 @__set_foo_attributes

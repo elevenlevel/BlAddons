@@ -1,12 +1,18 @@
 import bmesh
 from ..mv_utilities import *
 
+MODULE_NAME = "Zero Length Edges"
+MODULE_FOO = "check_zero_length_edges"
+MODULE_GROUP = "topology"
+MODULE_REPORT = "failed"
+MODULE_INFO = "Проверка на наличие ребер с нулевой длиной"
+
 def __set_foo_attributes(func):
-    func.name = "Zero Length Edges"
-    func.foo = "check_zero_length_edges"
-    func.group = "topology"
-    func.report = "failed"
-    func.info = "Проверка на наличие ребер с нулевой длиной"
+    func.name = MODULE_NAME
+    func.foo = MODULE_FOO
+    func.group = MODULE_GROUP
+    func.report = MODULE_REPORT
+    func.info = MODULE_INFO
     return func
 
 @__set_foo_attributes

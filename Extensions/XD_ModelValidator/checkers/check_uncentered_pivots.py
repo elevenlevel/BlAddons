@@ -2,12 +2,18 @@ import math
 import mathutils
 from ..mv_utilities import *
 
+MODULE_NAME = "Uncentered Pivots"
+MODULE_FOO = "check_uncentered_pivots"
+MODULE_GROUP = "general"
+MODULE_REPORT = "warning"
+MODULE_INFO = "Если Pivot не в центре объекта"
+
 def __set_foo_attributes(func):
-    func.name = "Uncentered Pivots"
-    func.foo = "check_uncentered_pivots"
-    func.group = "general"
-    func.report = "warning"
-    func.info = "Если Pivot не в центре объекта"
+    func.name = MODULE_NAME
+    func.foo = MODULE_FOO
+    func.group = MODULE_GROUP
+    func.report = MODULE_REPORT
+    func.info = MODULE_INFO
     return func
 
 @__set_foo_attributes

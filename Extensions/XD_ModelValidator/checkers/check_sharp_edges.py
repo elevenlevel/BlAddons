@@ -1,11 +1,17 @@
 from ..mv_utilities import *
 
+MODULE_NAME = "Sharp Edges"
+MODULE_FOO = "check_sharp_edges"
+MODULE_GROUP = "topology"
+MODULE_REPORT = "warning"
+MODULE_INFO = "Проверка на ребра с жесткими нормалями"
+
 def __set_foo_attributes(func):
-    func.name = "Sharp Edges"
-    func.foo = "check_sharp_edges"
-    func.group = "topology"
-    func.report = "warning"
-    func.info = "Проверка на ребра с жесткими нормалями"
+    func.name = MODULE_NAME
+    func.foo = MODULE_FOO
+    func.group = MODULE_GROUP
+    func.report = MODULE_REPORT
+    func.info = MODULE_INFO
     return func
 
 @__set_foo_attributes

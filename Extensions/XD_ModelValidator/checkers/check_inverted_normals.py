@@ -1,12 +1,18 @@
 import bmesh
 from ..mv_utilities import *
 
+MODULE_NAME = "Inverted Normals"
+MODULE_FOO = "check_inverted_normals"
+MODULE_GROUP = "topology"
+MODULE_REPORT = "failed"
+MODULE_INFO = "Проверка на наличие инвертированных полигонов"
+
 def __set_foo_attributes(func):
-    func.name = "Inverted Normals"
-    func.foo = "check_inverted_normals"
-    func.group = "topology"
-    func.report = "failed"
-    func.info = "Проверка на наличие инвертированных полигонов"
+    func.name = MODULE_NAME
+    func.foo = MODULE_FOO
+    func.group = MODULE_GROUP
+    func.report = MODULE_REPORT
+    func.info = MODULE_INFO
     return func
 
 @__set_foo_attributes

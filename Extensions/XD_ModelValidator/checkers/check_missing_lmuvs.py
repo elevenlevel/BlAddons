@@ -1,11 +1,17 @@
 from ..mv_utilities import *
 
+MODULE_NAME = "Missing Lightmap UVs"
+MODULE_FOO = "check_missing_lmuvs"
+MODULE_GROUP = "uvs"
+MODULE_REPORT = "warning"
+MODULE_INFO = "Если объект не имеет uv для lightmap"
+
 def __set_foo_attributes(func):
-    func.name = "Missing Lightmap UVs"
-    func.foo = "check_missing_lmuvs"
-    func.group = "uvs"
-    func.report = "warning"
-    func.info = "Если объект не имеет uv для lightmap"
+    func.name = MODULE_NAME
+    func.foo = MODULE_FOO
+    func.group = MODULE_GROUP
+    func.report = MODULE_REPORT
+    func.info = MODULE_INFO
     return func
 
 @__set_foo_attributes

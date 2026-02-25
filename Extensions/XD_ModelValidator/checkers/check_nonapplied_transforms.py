@@ -1,12 +1,18 @@
 import mathutils
 from ..mv_utilities import *
 
+MODULE_NAME = "Nonapplied Transforms"
+MODULE_FOO = "check_nonapplied_transforms"
+MODULE_GROUP = "general"
+MODULE_REPORT = "warning" # failed, warning
+MODULE_INFO = "Если Location и Rotation объекта не равны нулю или Scale объекта не равен единице"
+
 def __set_foo_attributes(func):
-    func.name = "Nonapplied Transforms"
-    func.foo = "check_nonapplied_transforms"
-    func.group = "general"
-    func.report = "warning" # failed, warning
-    func.info = "Если Location и Rotation объекта не равны нулю или Scale объекта не равен единице"
+    func.name = MODULE_NAME
+    func.foo = MODULE_FOO
+    func.group = MODULE_GROUP
+    func.report = MODULE_REPORT
+    func.info = MODULE_INFO
     return func
 
 @__set_foo_attributes

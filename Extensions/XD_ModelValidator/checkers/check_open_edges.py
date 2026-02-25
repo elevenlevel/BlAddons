@@ -1,12 +1,18 @@
 import bmesh
 from ..mv_utilities import *
 
+MODULE_NAME = "Open Edges"
+MODULE_FOO = "check_open_edges"
+MODULE_GROUP = "topology"
+MODULE_REPORT = "warning"
+MODULE_INFO = "Проверка на наличие открытых ребер"
+
 def __set_foo_attributes(func):
-    func.name = "Open Edges"
-    func.foo = "check_open_edges"
-    func.group = "topology"
-    func.report = "warning"
-    func.info = "Проверка на наличие открытых ребер"
+    func.name = MODULE_NAME
+    func.foo = MODULE_FOO
+    func.group = MODULE_GROUP
+    func.report = MODULE_REPORT
+    func.info = MODULE_INFO
     return func
 
 @__set_foo_attributes

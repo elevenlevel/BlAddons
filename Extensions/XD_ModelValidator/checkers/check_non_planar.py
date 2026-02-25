@@ -1,12 +1,18 @@
 import bmesh
 from ..mv_utilities import *
 
+MODULE_NAME = "check_non_planar"
+MODULE_FOO = "Non Planar"
+MODULE_GROUP = "topology"
+MODULE_REPORT = "warning"
+MODULE_INFO = "Проверка на наличие не плоских полигонов"
+
 def __set_foo_attributes(func):
-    func.foo = "check_non_planar"
-    func.name = "Non Planar"
-    func.group = "topology"
-    func.report = "warning"
-    func.info = "Проверка на наличие не плоских полигонов"
+    func.foo = MODULE_NAME
+    func.name = MODULE_FOO
+    func.group = MODULE_GROUP
+    func.report = MODULE_REPORT
+    func.info = MODULE_INFO
     return func
 
 @__set_foo_attributes

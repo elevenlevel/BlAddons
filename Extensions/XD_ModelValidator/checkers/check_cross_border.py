@@ -2,19 +2,11 @@ import bmesh
 import math
 from ..mv_utilities import *
 
-# Единый источник истины
 MODULE_NAME = "Cross Border"
 MODULE_FOO = "check_cross_border"
 MODULE_GROUP = "uvs"
 MODULE_REPORT = "warning"
 MODULE_INFO = "Проверка UVs объектов на пересечения границ UV"
-
-# Для импорта через importlib
-# name = MODULE_NAME
-# foo = MODULE_FOO
-# group = MODULE_GROUP
-# report = MODULE_REPORT
-# info = MODULE_INFO
 
 def __set_foo_attributes(func):
     func.name = MODULE_NAME
@@ -26,12 +18,12 @@ def __set_foo_attributes(func):
 
 @__set_foo_attributes
 @rest_editor_state
-def check_cross_border(context, check_type, success = "[SUCCESS]"):
+def check_cross_border(context, check_type, success="[SUCCESS]"):
     checked_objects = {} # [object.name: [bad_faces[], "Faces"]]
-
+    
     for object in select_check_entities("objects"):
         if object.type != "MESH":
-            return
+            continue
         
         bpy.context.view_layer.objects.active = object
 
@@ -63,9 +55,10 @@ def check_cross_border(context, check_type, success = "[SUCCESS]"):
         if len(bad_faces) > 0:
             checked_objects[object.name] = ["FACE", bad_faces]
             success = set_warning_type(check_type)
+            print(success)
     
         formate_result_string(context, check_type, success, checked_objects)
-
+'''
 @__set_foo_attributes
 @rest_editor_state
 def _check_cross_border(context, check_type, success = "[SUCCESS]"):
@@ -112,3 +105,4 @@ def _check_cross_border(context, check_type, success = "[SUCCESS]"):
             success = set_warning_type(check_type)
     
         formate_result_string(context, check_type, success, checked_objects)
+'''

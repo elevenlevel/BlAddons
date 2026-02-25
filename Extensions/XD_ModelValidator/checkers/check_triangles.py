@@ -1,12 +1,18 @@
 import bmesh
 from ..mv_utilities import *
 
+MODULE_NAME = "Triangles"
+MODULE_FOO = "check_triangles"
+MODULE_GROUP = "topology"
+MODULE_REPORT = "warning"
+MODULE_INFO = "Проверка на наличие треугольников"
+
 def __set_foo_attributes(func):
-    func.name = "Triangles"
-    func.foo = "check_triangles"
-    func.group = "topology"
-    func.report = "warning"
-    func.info = "Проверка на наличие треугольников"
+    func.name = MODULE_NAME
+    func.foo = MODULE_FOO
+    func.group = MODULE_GROUP
+    func.report = MODULE_REPORT
+    func.info = MODULE_INFO
     return func
 
 @__set_foo_attributes

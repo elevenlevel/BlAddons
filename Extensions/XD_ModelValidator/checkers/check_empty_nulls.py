@@ -1,11 +1,18 @@
 from ..mv_utilities import *
 
+# Единый источник истины
+MODULE_NAME = "Empty Nulls"
+MODULE_FOO = "check_empty_nulls"
+MODULE_GROUP = "general"
+MODULE_REPORT = "warning"
+MODULE_INFO = "Если в пустышке нет объектов"
+
 def __set_foo_attributes(func):
-    func.name = "Empty Nulls"
-    func.foo = "check_empty_nulls"
-    func.group = "general"
-    func.report = "warning"
-    func.info = "Если в пустышке нет объектов"
+    func.name = MODULE_NAME
+    func.foo = MODULE_FOO
+    func.group = MODULE_GROUP
+    func.report = MODULE_REPORT
+    func.info = MODULE_INFO
     return func
 
 @__set_foo_attributes

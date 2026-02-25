@@ -66,7 +66,10 @@ class ISSUES_UL_ReportList(bpy.types.UIList):
 
 #===========================
 def set_header_row(self, context, main_column, item):
-	'''Заголовок блоков левой колонки'''
+	'''
+	Заголовок блоков левой колонки
+	'''
+
 	group_name = item.group
 	row_name = "RUN " + group_name.capitalize() # RUN GENERAL
 
@@ -76,7 +79,7 @@ def set_header_row(self, context, main_column, item):
 	# стрелка сворачивания блока
 	column1 = header_row.column(align=True)
 	column1.prop(item, "group_state", text="", icon='TRIA_RIGHT' if not getattr(item, "group_state") else 'TRIA_DOWN', emboss=False)
-	print(f'group_name: {group_name}')
+	# print(f'group_name: {group_name}')
 	# кнопка запуска проверки всего блока
 	column2 = header_row.column(align=False)
 	column2.operator("object.run_checkboxes_button", text=row_name, icon="NONE").group_name = group_name
@@ -102,8 +105,12 @@ def set_header_row(self, context, main_column, item):
 	column3.operator("object.select_checkboxes_button", text="", icon=group_check_icon, emboss=False).group_name = group_name
 	column3.alignment = 'LEFT'
 
+
 def set_check_row(self, context, main_column, item):
-	'''Строка с чекбоксом левой колонки'''
+	'''
+	Строка с чекбоксом левой колонки
+	'''
+
 	check_row = main_column.row(align=True)
 	check_row.scale_y = 0.66
 
@@ -251,6 +258,8 @@ class SaveDialog(bpy.types.Operator):
 	bl_label = "Save"
 	bl_description = "Save scene"
 	bl_options = {'REGISTER', 'INTERNAL', 'BLOCKING'}
+
+	group_name: bpy.props.StringProperty() # type: ignore
 
 	def execute(self, context):
 		save_scene()

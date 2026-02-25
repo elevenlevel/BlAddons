@@ -1,11 +1,17 @@
 from ..mv_utilities import *
 
+MODULE_NAME = "Prefix Numbers"
+MODULE_FOO = "check_prefix_numbers"
+MODULE_GROUP = "naming"
+MODULE_REPORT = "warning"
+MODULE_INFO = "Проверка на числа в начале имени"
+
 def __set_foo_attributes(func):
-    func.name = "Prefix Numbers"
-    func.foo = "check_prefix_numbers"
-    func.group = "naming"
-    func.report = "warning"
-    func.info = "Проверка на числа в начале имени"
+    func.name = MODULE_NAME
+    func.foo = MODULE_FOO
+    func.group = MODULE_GROUP
+    func.report = MODULE_REPORT
+    func.info = MODULE_INFO
     return func
 
 @__set_foo_attributes

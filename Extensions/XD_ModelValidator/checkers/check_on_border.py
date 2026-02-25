@@ -1,12 +1,18 @@
 import bmesh
 from ..mv_utilities import *
 
+MODULE_NAME = "On Border"
+MODULE_FOO = "check_on_border"
+MODULE_GROUP = "uvs"
+MODULE_REPORT = "warning"
+MODULE_INFO = "Когда uv вертексы очень близко к границам UV"
+
 def __set_foo_attributes(func):
-    func.name = "On Border"
-    func.foo = "check_on_border"
-    func.group = "uvs"
-    func.report = "warning"
-    func.info = "Когда uv вертексы очень близко к границам UV"
+    func.name = MODULE_NAME
+    func.foo = MODULE_FOO
+    func.group = MODULE_GROUP
+    func.report = MODULE_REPORT
+    func.info = MODULE_INFO
     return func
 
 @__set_foo_attributes
