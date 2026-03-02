@@ -1,0 +1,12 @@
+schema_version = "1.0.0"
+id = "XD_Assets" # должен совпадать с именем папки аддона
+name = "XD Assets"
+version = "0.0.1"
+type = "add-on"
+tagline = "Assets Collection"
+copyright = ["2026 Extreme Developers"]
+maintainer = "Roman Askarov"
+license = ["XDevs Internal License"]
+website = "https://extreme-developers.ru/"
+blender_version_min = "5.0.1"
+tags = ["XDevs", "Assets]
