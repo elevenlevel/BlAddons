@@ -119,6 +119,36 @@
       "type": "add-on",
       "archive_url": "https://github.com/elevenlevel/BlAddons/releases/download/release-20260220120214/XD_LayeredMaterialAssembler_0.1.4-blender-5.0.0.zip",
       "schema_version": "1.0.0"
+    },
+    {
+      "version": "0.0.1",
+      "type": "add-on",
+      "maintainer": "Roman Askarov",
+      "website": "https://extreme-developers.ru/",
+      "id": "XD_Assets",
+      "tagline": "Assets Collection",
+      "archive_url": "https://github.com/elevenlevel/BlAddons/releases/download/release-20260303035325/XD_Assets_0.0.1-blender-5.0.1.zip",
+      "schema_version": "1.0.0",
+      "archive_size": 591221,
+      "archive_hash": "sha256:0eb1e70a402a0ff0c054f76d1b6e1b8d3e9e6b85e4d0f7d4dc5bd8748b97bbbc",
+      "license": [
+        "XDevs Internal License"
+      ],
+      "copyright": [
+        "2026 Extreme Developers"
+      ],
+      "blender_version_min": "5.0.1",
+      "blender_version_max": "20.1.0",
+      "tags": [
+        "XDevs",
+        "Assets"
+      ],
+      "paths_exclude_pattern": [
+        "__pycache__/",
+        "/.git/",
+        "/*.zip"
+      ],
+      "name": "XD Assets"
     }
   ]
 }
