@@ -82,7 +82,6 @@ def pre_expand_checkboxes(scene):
 		initial_checkboxes.clear()
 		
 		for item, value in checkbox_list.items():
-			# print(value['group'])
 			new_checkbox = initial_checkboxes.add()
 			new_checkbox.name = item
 			new_checkbox.group = value['group']
@@ -111,7 +110,6 @@ def pre_expand_checkboxes(scene):
 					ch_box.warning_type = False
 	
 	update_checkboxes_count()
-	print(len(initial_checkboxes), len(checkbox_list))
 
 
 class SelectBad(bpy.types.Operator):
@@ -398,8 +396,6 @@ def start_single_check(context, check_type):
 	for check_name, items in checkbox_list.items():
 		if check_name == check_type:
 			method_name = items["foo"]
-			# print(f'method_name: {method_name}')
-			# method = globals()[method_name]
 			method = items["function"]
 			method(context, check_type)
 	return check_type

@@ -79,7 +79,7 @@ def set_header_row(self, context, main_column, item):
 	# стрелка сворачивания блока
 	column1 = header_row.column(align=True)
 	column1.prop(item, "group_state", text="", icon='TRIA_RIGHT' if not getattr(item, "group_state") else 'TRIA_DOWN', emboss=False)
-	# print(f'group_name: {group_name}')
+	
 	# кнопка запуска проверки всего блока
 	column2 = header_row.column(align=False)
 	column2.operator("object.run_checkboxes_button", text=row_name, icon="NONE").group_name = group_name

@@ -4,7 +4,7 @@ import importlib
 from os import listdir, path
 
 # добавляем текущий путь в sys.path
-sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
+# sys.path.insert(0, os.path.abspath(os.path.dirname(__file__))) # это вызывало warning
 
 checkbox_list = {} # словарь свойств модулей
 
@@ -13,14 +13,14 @@ current_dir = path.dirname(__file__)
 
 for file in listdir(current_dir):
     if file.endswith('.py') and file != '__init__.py' and "!" not in file:
-        name = file[:-3]
-        exec(f"from .{name} import {name}")
+        module_name = file[:-3]
+        exec(f"from .{module_name} import {module_name}")
 
-        checkbox_list[globals()[name].name] = { "foo":globals()[name].foo,
-                                                "group":globals()[name].group,
-                                                "report":globals()[name].report,
-                                                "function": globals()[name],
-                                                "info":globals()[name].info}
+        checkbox_list[globals()[module_name].name] = { "foo":globals()[module_name].foo,
+                                                "group":globals()[module_name].group,
+                                                "report":globals()[module_name].report,
+                                                "function": globals()[module_name],
+                                                "info":globals()[module_name].info}
 
 for filename in os.listdir(current_dir):
     if (filename.endswith('.py') and 
@@ -31,8 +31,7 @@ for filename in os.listdir(current_dir):
         
         # Импортируем модуль через importlib (безопасно)
         module = importlib.import_module(f'.{module_name}', package=__package__)
-        # print(exec(f"from .{name} import {name}"))
-        # break
+        
         # Добавляем в checkbox_list, если у модуля есть атрибут name
         if hasattr(module, 'name'):
             checkbox_list[module.name] = {
